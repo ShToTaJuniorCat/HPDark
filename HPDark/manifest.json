@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "HPDark",
+  "version": "0.1",
+  "description": "Applies custom made dark mode for HPortal.co.il. Go easy on your eyes!",
+ 
+  "icons": { "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "content_scripts": [{
+    "css": ["styles.css"],
+    "matches": ["*://hportal.co.il/*"]
+  }]
+
+}

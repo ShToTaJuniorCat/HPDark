@@ -1,0 +1,67 @@
+/*
+Bip boop. Boop bip?
+
+Made as a part of HPordark. 
+*/
+
+
+.post1, .post2, #QUOTE, #CODE, .tablepad { 
+	background-color: #353535 !important; 
+}
+
+.row5, .darkrow3, .row6, .row10, .darkrow3, .darkrow1, .darkrow2 { 
+	background-image: url(../style_images/4/tile_sub.png) !important;
+}
+
+.row5, .darkrow3, .post1, .post2, #QUOTE, #CODE, .signature, .row10, .signature a, fieldset a, .row4, .row4 b, .row4 a, .postcolor, .pformleft b, .pformright, .pformright a, .row2, .row2 a, #ucpmenu, #ucpmenu a, .row1, .row1 a, .darkrow1, .pformstrip, .pname, .pname a, .psubtitle, .pname h3, .pname strong, .nameminiprofile, .pname div, .pmaintitle, .row7, .row7 a, .row8, .row8 a, #ucpcontent, #ucpcontent a, .darkrow2, .row9, .tableborder, .tableborder a, .tableborder p, .tableborder td, .dlight, .dlight a {
+	color: #BABABA !important;;
+}
+
+.tablepod, .row1, .row4, .pformleft, .pformright, .tablefill, .row2, .row2 a, .pname, .psubtitle, .vcjb, .nameminiprofile, .mainminiprofile, .row7, .row7 a, .row8, .row8 a, #ucpmenu, #ucpcontent, .row9, .tableborder, .dlight, .row3, .pformleftw {
+	background-color: #353535 !important;
+}
+
+.tablepod a {
+	color: #fff !important;
+}
+
+.textinput, .forminput, .codebuttons {
+	background-color: #222323 !important;
+	color: white !important;
+}
+
+.row4 {
+	background-color: #454545 !important;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #555; 
+}
+ 
+::-webkit-scrollbar-thumb {
+	background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #000; 
+}
+
+.desc {
+	color: #bababa !important;
+}
+
+button, input[type=button], input[type=submit] {
+	border-radius: 5px !important;
+}
+
+span[style*="color:yellow"], span[style*="color:AliceBlue"], span[style*="color:LightCyan"], span[style*="color:Aqua"], span[style*="color:Cyan"], span[style*="color:LightYellow"], span[style*="color:Cornsilk"], span[style*="color:White"], span[style*="color:Snow"], span[style*="color:Honeydew"], span[style*="color:MintCream"], span[style*="color:Azure"], span[style*="color:GhostWhite"], span[style*="color:WhiteSmoke"], span[style*="color:FloralWhite"], span[style*="color:Ivory"], span[style*="color:LavenderBlush"] {
+	color: #373727 !important;
+}
+
+span[style*="color:yellow"]:active, span[style*="color:AliceBlue"]:active, span[style*="color:LightCyan"]:active, span[style*="color:Aqua"]:active, span[style*="color:Cyan"]:active, span[style*="color:LightYellow"]:active, span[style*="color:Cornsilk"]:active, span[style*="color:White"]:active, span[style*="color:Snow"]:active, span[style*="color:Honeydew"]:active, span[style*="color:MintCream"]:active, span[style*="color:Azure"]:active, span[style*="color:GhostWhite"]:active, span[style*="color:WhiteSmoke"]:active, span[style*="color:FloralWhite"]:active, span[style*="color:Ivory"]:active, span[style*="color:LavenderBlush"]:active {
+	color: yellow !important;
+}
