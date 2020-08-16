@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "HPDark",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Applies custom made dark mode for HPortal.co.il. Go easy on your eyes!",
  
   "icons": { "16": "icon16.png",
