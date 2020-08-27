@@ -65,3 +65,7 @@ span[style*="color:yellow"], span[style*="color:AliceBlue"], span[style*="color:
 span[style*="color:yellow"]:active, span[style*="color:AliceBlue"]:active, span[style*="color:LightCyan"]:active, span[style*="color:Aqua"]:active, span[style*="color:Cyan"]:active, span[style*="color:LightYellow"]:active, span[style*="color:Cornsilk"]:active, span[style*="color:White"]:active, span[style*="color:Snow"]:active, span[style*="color:Honeydew"]:active, span[style*="color:MintCream"]:active, span[style*="color:Azure"]:active, span[style*="color:GhostWhite"]:active, span[style*="color:WhiteSmoke"]:active, span[style*="color:FloralWhite"]:active, span[style*="color:Ivory"]:active, span[style*="color:LavenderBlush"]:active {
 	color: yellow !important;
 }
+
+option {
+	color: white !important;
+}
