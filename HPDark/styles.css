@@ -1,71 +1,69 @@
 /*
 Bip boop. Boop bip?
 
-Made as a part of HPordark. 
+Applys custom dark mode to HPortal.co.il.
+
+Made as a part of HPDark. 
 */
 
 
 .post1, .post2, #QUOTE, #CODE, .tablepad { 
-	background-color: #353535 !important; 
+	/* Comments in topics, User information (to the right of comments), QUOTE block, CODE block, Quick meassage sending */
+    background-color: #353535 !important; 
 }
 
 .row5, .darkrow3, .row6, .row10, .darkrow3, .darkrow1, .darkrow2 { 
-	background-image: url(../style_images/4/tile_sub.png) !important;
-}
-
-.row5, .darkrow3, .post1, .post2, #QUOTE, #CODE, .signature, .row10, .signature a, fieldset a, .row4, .row4 b, .row4 a, .postcolor, .pformleft b, .pformright, .pformright a, .row2, .row2 a, #ucpmenu, #ucpmenu a, .row1, .row1 a, .darkrow1, .pformstrip, .pname, .pname a, .psubtitle, .pname h3, .pname strong, .nameminiprofile, .pname div, .pmaintitle, .row7, .row7 a, .row8, .row8 a, #ucpcontent, #ucpcontent a, .darkrow2, .row9, .tableborder, .tableborder a, .tableborder p, .tableborder td, .dlight, .dlight a {
-	color: #BABABA !important;;
+	/* f */
+    background-image: url(../style_images/4/tile_sub.png) !important;
 }
 
 .tablepod, .row1, .row4, .pformleft, .pformright, .tablefill, .row2, .row2 a, .pname, .psubtitle, .vcjb, .nameminiprofile, .mainminiprofile, .row7, .row7 a, .row8, .row8 a, #ucpmenu, #ucpcontent, .row9, .tableborder, .dlight, .row3, .pformleftw {
-	background-color: #353535 !important;
-}
-
-.tablepod a {
-	color: #fff !important;
+    background-color: #353535 !important;
 }
 
 .textinput, .forminput, .codebuttons {
-	background-color: #222323 !important;
-	color: white !important;
+    background-color: #222323 !important;
+    color: white !important;
 }
-
 .row4 {
-	background-color: #454545 !important;
+    background-color: #454545 !important;
 }
-
 ::-webkit-scrollbar {
-	width: 10px;
+    width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-	background: #555; 
+    background: #555; 
 }
- 
 ::-webkit-scrollbar-thumb {
-	background: #888; 
+    background: #888; 
 }
-
 ::-webkit-scrollbar-thumb:hover {
-	background: #000; 
+    background: #000; 
+}
+.desc {
+    color: #bababa !important;
 }
 
-.desc {
-	color: #bababa !important;
+.row5, .darkrow3, .post1, .post2, #QUOTE, #CODE, .signature, .row10, .signature a, fieldset a, .row4, .row4 a, .postcolor, .pformleft b, .pformright, .pformright a, .row2, .row2 a, #ucpmenu, #ucpmenu a, .row1, .row1 a, .darkrow1, .pformstrip, .pname, .pname a, .psubtitle, .pname h3, .pname strong, .nameminiprofile, .pname div, .pmaintitle, .row7, .row7 a, .row8, .row8 a, #ucpcontent, #ucpcontent a, .darkrow2, .row9, .tableborder, .tableborder a, .tableborder p, .tableborder td, .dlight, .dlight a {
+    color: #BABABA !important;
 }
 
 button, input[type=button], input[type=submit] {
-	border-radius: 5px !important;
-}
-
-span[style*="color:yellow"], span[style*="color:AliceBlue"], span[style*="color:LightCyan"], span[style*="color:Aqua"], span[style*="color:Cyan"], span[style*="color:LightYellow"], span[style*="color:Cornsilk"], span[style*="color:White"], span[style*="color:Snow"], span[style*="color:Honeydew"], span[style*="color:MintCream"], span[style*="color:Azure"], span[style*="color:GhostWhite"], span[style*="color:WhiteSmoke"], span[style*="color:FloralWhite"], span[style*="color:Ivory"], span[style*="color:LavenderBlush"] {
-	color: #373727 !important;
-}
-
-span[style*="color:yellow"]:active, span[style*="color:AliceBlue"]:active, span[style*="color:LightCyan"]:active, span[style*="color:Aqua"]:active, span[style*="color:Cyan"]:active, span[style*="color:LightYellow"]:active, span[style*="color:Cornsilk"]:active, span[style*="color:White"]:active, span[style*="color:Snow"]:active, span[style*="color:Honeydew"]:active, span[style*="color:MintCream"]:active, span[style*="color:Azure"]:active, span[style*="color:GhostWhite"]:active, span[style*="color:WhiteSmoke"]:active, span[style*="color:FloralWhite"]:active, span[style*="color:Ivory"]:active, span[style*="color:LavenderBlush"]:active {
-	color: yellow !important;
+    border-radius: 5px !important;
 }
 
 option {
-	color: white !important;
+    color: white !important;
+}
+
+.tablepod a {
+    color: #fff !important;
+}
+
+div:not(.thin) span[style*="color:yellow"], div:not(.thin) span[style*="color:AliceBlue"], div:not(.thin) span[style*="color:LightCyan"], div:not(.thin) span[style*="color:Aqua"], div:not(.thin) span[style*="color:Cyan"], div:not(.thin) span[style*="color:LightYellow"], div:not(.thin) span[style*="color:Cornsilk"], div:not(.thin) span[style*="color:White"], div:not(.thin) span[style*="color:Snow"], div:not(.thin) span[style*="color:Honeydew"], div:not(.thin) span[style*="color:MintCream"], div:not(.thin) span[style*="color:Azure"], div:not(.thin) span[style*="color:GhostWhite"], div:not(.thin) span[style*="color:WhiteSmoke"], div:not(.thin) span[style*="color:FloralWhite"], div:not(.thin) span[style*="color:Ivory"], div:not(.thin) span[style*="color:LavenderBlush"] {
+    color: #373727 !important;
+}
+
+div:not(.thin) span[style*="color:yellow"]:active, div:not(.thin) span[style*="color:AliceBlue"]:active, div:not(.thin) span[style*="color:LightCyan"]:active, div:not(.thin) span[style*="color:Aqua"]:active, div:not(.thin) span[style*="color:Cyan"]:active, div:not(.thin) span[style*="color:LightYellow"]:active, div:not(.thin) span[style*="color:Cornsilk"]:active, div:not(.thin) span[style*="color:White"]:active, div:not(.thin) span[style*="color:Snow"]:active, div:not(.thin) span[style*="color:Honeydew"]:active, div:not(.thin) span[style*="color:MintCream"]:active, div:not(.thin) span[style*="color:Azure"]:active, div:not(.thin) span[style*="color:GhostWhite"]:active, div:not(.thin) span[style*="color:WhiteSmoke"]:active, div:not(.thin) span[style*="color:FloralWhite"]:active, div:not(.thin) span[style*="color:Ivory"]:active, div:not(.thin) span[style*="color:LavenderBlush"]:active {
+   color: yellow !important;
 }
