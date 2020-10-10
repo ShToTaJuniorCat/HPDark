@@ -11,6 +11,7 @@
 
   "content_scripts": [{
     "css": ["styles.css"],
+    "js": ["script.js"],
     "matches": ["*://hportal.co.il/*"]
   }]
 

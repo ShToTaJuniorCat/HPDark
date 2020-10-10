@@ -7,63 +7,194 @@ Made as a part of HPDark.
 */
 
 
-.post1, .post2, #QUOTE, #CODE, .tablepad { 
+body.darkModeOn .post1, 
+    body.darkModeOn .post2, 
+    body.darkModeOn #QUOTE, 
+    body.darkModeOn #CODE, 
+    body.darkModeOn .tablepad { 
 	/* Comments in topics, User information (to the right of comments), QUOTE block, CODE block, Quick meassage sending */
-    background-color: #353535 !important; 
+        background-color: #353535 !important; 
 }
 
-.row5, .darkrow3, .row6, .row10, .darkrow3, .darkrow1, .darkrow2 { 
+body.darkModeOn .row5, 
+    body.darkModeOn .darkrow3, 
+    body.darkModeOn .row6, 
+    body.darkModeOn .row10, 
+    body.darkModeOn .darkrow3, 
+    body.darkModeOn .darkrow1, 
+    body.darkModeOn .darkrow2 { 
 	/* f */
-    background-image: url(../style_images/4/tile_sub.png) !important;
+        background-image: url(../style_images/4/tile_sub.png) !important;
 }
 
-.tablepod, .row1, .row4, .pformleft, .pformright, .tablefill, .row2, .row2 a, .pname, .psubtitle, .vcjb, .nameminiprofile, .mainminiprofile, .row7, .row7 a, .row8, .row8 a, #ucpmenu, #ucpcontent, .row9, .tableborder, .dlight, .row3, .pformleftw {
-    background-color: #353535 !important;
+body.darkModeOn .tablepod, 
+    body.darkModeOn .row1, 
+    body.darkModeOn .row4, 
+    body.darkModeOn .pformleft, 
+    body.darkModeOn .pformright, 
+    body.darkModeOn .tablefill, 
+    body.darkModeOn .row2, 
+    body.darkModeOn .row2 a, 
+    body.darkModeOn .pname, 
+    body.darkModeOn .psubtitle, 
+    body.darkModeOn .vcjb, 
+    body.darkModeOn .nameminiprofile, 
+    body.darkModeOn .mainminiprofile, 
+    body.darkModeOn .row7, 
+    body.darkModeOn .row7 a, 
+    body.darkModeOn .row8, 
+    body.darkModeOn .row8 a, 
+    body.darkModeOn #ucpmenu, 
+    body.darkModeOn #ucpcontent, 
+    body.darkModeOn .row9, 
+    body.darkModeOn .tableborder, 
+    body.darkModeOn .dlight, /* Private Messages */
+    body.darkModeOn .row3, 
+    body.darkModeOn .pformleftw {
+        background-color: #353535 !important;
 }
 
-.textinput, .forminput, .codebuttons {
-    background-color: #222323 !important;
-    color: white !important;
+body.darkModeOn .hlight,
+    body.darkModeOn .hlight a {
+        background-color: #464646;
+        color: #bababa;
 }
-.row4 {
+
+body.darkModeOn .textinput, 
+    body.darkModeOn .forminput, 
+    body.darkModeOn .codebuttons {
+        background-color: #222323 !important;
+        color: white !important;
+}
+body.darkModeOn .row4 {
     background-color: #454545 !important;
 }
-::-webkit-scrollbar {
+body.darkModeOn ::-webkit-scrollbar {
     width: 10px;
 }
-::-webkit-scrollbar-track {
+body.darkModeOn ::-webkit-scrollbar-track {
     background: #555; 
 }
-::-webkit-scrollbar-thumb {
+body.darkModeOn ::-webkit-scrollbar-thumb {
     background: #888; 
 }
-::-webkit-scrollbar-thumb:hover {
+body.darkModeOn ::-webkit-scrollbar-thumb:hover {
     background: #000; 
 }
-.desc {
+body.darkModeOn .desc {
     color: #bababa !important;
 }
 
-.row5, .darkrow3, .post1, .post2, #QUOTE, #CODE, .signature, .row10, .signature a, fieldset a, .row4, .row4 a, .postcolor, .pformleft b, .pformright, .pformright a, .row2, .row2 a, #ucpmenu, #ucpmenu a, .row1, .row1 a, .darkrow1, .pformstrip, .pname, .pname a, .psubtitle, .pname h3, .pname strong, .nameminiprofile, .pname div, .pmaintitle, .row7, .row7 a, .row8, .row8 a, #ucpcontent, #ucpcontent a, .darkrow2, .row9, .tableborder, .tableborder a, .tableborder p, .tableborder td, .dlight, .dlight a {
-    color: #BABABA !important;
+body.darkModeOn .row5,
+    body.darkModeOn .darkrow3,
+    body.darkModeOn .post1, 
+    body.darkModeOn .post2, 
+    body.darkModeOn #QUOTE, 
+    body.darkModeOn #CODE, 
+    body.darkModeOn .signature, 
+    body.darkModeOn .row10, 
+    body.darkModeOn .signature a, 
+    body.darkModeOn fieldset a, 
+    body.darkModeOn .row4, 
+    body.darkModeOn .row4 a, 
+    body.darkModeOn .postcolor, 
+    body.darkModeOn .pformleft b, 
+    body.darkModeOn .pformright, 
+    body.darkModeOn .pformright a, 
+    body.darkModeOn .row2, 
+    body.darkModeOn .row2 a, 
+    body.darkModeOn #ucpmenu, 
+    body.darkModeOn #ucpmenu a, 
+    body.darkModeOn .row1, 
+    body.darkModeOn .row1 a, 
+    body.darkModeOn .darkrow1, 
+    body.darkModeOn .pformstrip, 
+    body.darkModeOn .pname, 
+    body.darkModeOn .pname a, 
+    body.darkModeOn .psubtitle, 
+    body.darkModeOn .pname h3, 
+    body.darkModeOn .pname strong, 
+    body.darkModeOn .nameminiprofile, 
+    body.darkModeOn .pname div, 
+    body.darkModeOn .pmaintitle, 
+    body.darkModeOn .row7, 
+    body.darkModeOn .row7 a, 
+    body.darkModeOn .row8, 
+    body.darkModeOn .row8 a, 
+    body.darkModeOn #ucpcontent, 
+    body.darkModeOn #ucpcontent a, 
+    body.darkModeOn .darkrow2, 
+    body.darkModeOn .row9, 
+    body.darkModeOn .tableborder, 
+    body.darkModeOn .tableborder a, 
+    body.darkModeOn .tableborder p, 
+    body.darkModeOn .tableborder td, 
+    body.darkModeOn .dlight, /* Private Messages */
+    body.darkModeOn .dlight a /* Private Messages links */ {
+        color: #BABABA !important;
 }
 
-button, input[type=button], input[type=submit] {
-    border-radius: 5px !important;
+body.darkModeOn button, 
+    body.darkModeOn input[type=button], 
+    body.darkModeOn input[type=submit] {
+        border-radius: 5px !important;
 }
 
-option {
+body.darkModeOn option {
     color: white !important;
 }
 
-.tablepod a {
+body.darkModeOn .tablepod a {
     color: #fff !important;
 }
 
-div:not(.thin) span[style*="color:yellow"], div:not(.thin) span[style*="color:AliceBlue"], div:not(.thin) span[style*="color:LightCyan"], div:not(.thin) span[style*="color:Aqua"], div:not(.thin) span[style*="color:Cyan"], div:not(.thin) span[style*="color:LightYellow"], div:not(.thin) span[style*="color:Cornsilk"], div:not(.thin) span[style*="color:White"], div:not(.thin) span[style*="color:Snow"], div:not(.thin) span[style*="color:Honeydew"], div:not(.thin) span[style*="color:MintCream"], div:not(.thin) span[style*="color:Azure"], div:not(.thin) span[style*="color:GhostWhite"], div:not(.thin) span[style*="color:WhiteSmoke"], div:not(.thin) span[style*="color:FloralWhite"], div:not(.thin) span[style*="color:Ivory"], div:not(.thin) span[style*="color:LavenderBlush"] {
-    color: #373727 !important;
+body.darkModeOn div:not(.thin) span[style*="color:yellow"],
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue"],
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan"],
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan"], 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk"], 
+    body.darkModeOn div:not(.thin) span[style*="color:White"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew"], 
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Azure"], 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite"],
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"], 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"], 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory"], 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush"] {
+        color: #373727 !important;
 }
 
-div:not(.thin) span[style*="color:yellow"]:active, div:not(.thin) span[style*="color:AliceBlue"]:active, div:not(.thin) span[style*="color:LightCyan"]:active, div:not(.thin) span[style*="color:Aqua"]:active, div:not(.thin) span[style*="color:Cyan"]:active, div:not(.thin) span[style*="color:LightYellow"]:active, div:not(.thin) span[style*="color:Cornsilk"]:active, div:not(.thin) span[style*="color:White"]:active, div:not(.thin) span[style*="color:Snow"]:active, div:not(.thin) span[style*="color:Honeydew"]:active, div:not(.thin) span[style*="color:MintCream"]:active, div:not(.thin) span[style*="color:Azure"]:active, div:not(.thin) span[style*="color:GhostWhite"]:active, div:not(.thin) span[style*="color:WhiteSmoke"]:active, div:not(.thin) span[style*="color:FloralWhite"]:active, div:not(.thin) span[style*="color:Ivory"]:active, div:not(.thin) span[style*="color:LavenderBlush"]:active {
-   color: yellow !important;
+body.darkModeOn div:not(.thin) span[style*="color:yellow"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:White"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew"]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream"]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:Azure"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush"]:active {
+        color: yellow !important;
+}
+
+.darkSwitch {
+    position: fixed;
+    top: 0;
+    border-radius: 50%;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background-image: url("https://www.flaticon.com/svg/static/icons/svg/3608/3608837.svg");
+    background-size: 50px;
 }
