@@ -1,0 +1,2 @@
+ DONEs:
+    - Dark Mode switch: Toggles Dark Mode on and off.

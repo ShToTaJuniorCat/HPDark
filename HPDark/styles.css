@@ -142,6 +142,7 @@ body.darkModeOn button,
 
 body.darkModeOn option {
     color: white !important;
+    background-color: #222323;
 }
 
 body.darkModeOn .tablepod a {

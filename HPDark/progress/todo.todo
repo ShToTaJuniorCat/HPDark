@@ -1,0 +1,38 @@
+TODOs (Ordered by expected amount of effort to make each):
+    - Break long words
+    - Hide large signatures
+    - Resize large images
+    - Choose if "Edited by" line is displayed by default or not
+    - Change default values in inputs to placeholders (HTML attribute)
+    - Jump to page in forums
+    - Add a button in a profile to send sickles (This is how you say חרמשים in english, according to my true love) to that user
+    - More colors in the color selection GUI
+    - More font-sizes in font-size selection GUI
+    - Hide QUOTE/CODE blocks in a single comment/thread
+    - More tags buttons
+        + Examples: [S], [HTML], [SQl], others (maybe customiseable for future updates if needed)
+    - Add source of quote and date in quote tag
+    - Jump to page in home page
+    - Separate yellow emojis from onions
+    - Customiseable emojis and onions
+    - Customiseable colors in color selection bar
+    - Customiseable gender
+        + Check if possible
+    - List of categories in home page
+    - More keyboard shortcuts
+    - Personal helper
+        + IDK if there are enough features in the built-in one, I might need to make a customised one
+    - Copy comment's code without quoting it
+        + Probably will rely on quoting it in iFrame or something similar.
+        + Therefore, probably wouldnt be possible in locked threads
+    - Send sickles or PMs to many users at the same time
+    - Split or merge long/many PMs into long one/many short ones
+        + Customiseable length to spliting 
+    - WYSIWYG - What You See Is What You Get 
+    - Better user-blocking
+    - Auto-save text like threads, PMs, etc.
+    - Different skins
+    - Follow user's content, get notifications on new threads/comments
+    - Track threads' new comments
+    - Notifications on @me, quotes, comments in ur thread, etc. 
+        + All can be turned off, if I'll have enough energy to do so
