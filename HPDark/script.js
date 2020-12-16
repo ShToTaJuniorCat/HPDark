@@ -33,40 +33,6 @@ function switchDarkMode() {
     }
 }
 
-/*
-Used to develop WYSIWYG
-
-function BBCodeToHTML($str) {
-    // Converts BBCode to HTML using regex. Function from stackoverflow
-
-    // The array of regex patterns to look for
-    $format_search =  [
-        /\[b\](.*?)\[\/b\]/ig,
-        /\[i\](.*?)\[\/i\]/ig,
-        /\[u\](.*?)\[\/u\]/ig
-    ]; // note: NO comma after the last entry
-
-    // The matching array of strings to replace matches with
-    $format_replace = [
-        '<strong>$1</strong>',
-        '<em>$1</em>',
-        '<span style="text-decoration: underline;">$1</span>'
-    ];
-
-    // Perform the actual conversion
-    for (var i =0;i<$format_search.length;i++) {
-      $str = $str.replace($format_search[i], $format_replace[i]);
-    }
-    return $str;
-}
-
-function showComment() {
-    
-
-    document.getElementById("finalComment").innerHTML = BBCodeToHTML(textarea.value);
-}
-*/
-
 // --------------------------------------------
 // By default, dark mode is turned on.
 if(getCookie("darkMode") == null) {
@@ -95,4 +61,31 @@ window.onload = function () {
     console.log("Dark Mode switch created");
     document.getElementById("darkSwitch").onclick = switchDarkMode;
     // --------------------------------------------
+
+    // --------------------------------------------
+    // Resize large images
+    var images = document.getElementsByTagName("img");
+
+    for (let index = 0; index < images.length; index++) {
+        const image = images[index];
+        if (image.width > screen.width * 0.40781) {
+            image.width = screen.width * 0.40781;
+        }
+    }
+    // --------------------------------------------
+
+
+    /*
+    var wysiwygDiv = document.createElement("DIV");
+    wysiwygDiv.setAttribute("id", "wysiwygDiv");
+    wysiwygDiv.innerHTML = '<form action="" method="post">\n    <div>\n        <textarea id="example" style="height:300px;width:600px;"></textarea>\n    </div>\n</form>';
+    document.body.appendChild(wysiwygDiv);
+    */
+
+
+    var textarea = document.getElementsByName('Post')[0];
+	sceditor.create(textarea, {
+		format: 'bbcode',
+        icons: 'monocons',
+	});
 }

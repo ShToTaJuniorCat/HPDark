@@ -19,8 +19,8 @@
   ],
 
   "content_scripts": [{
-    "css": ["styles.css"],
-    "js": ["script.js"],
+    "css": ["styles.css", "/wysiwyg/wysiwyg.css"],
+    "js": ["script.js", "/wysiwyg/wysiwyg.js"],
     "matches": ["*://hportal.co.il/*"]
   }]
 

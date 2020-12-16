@@ -1,2 +1,5 @@
 TESTs:
-    - Better Spoilers: Marks spoiler colors as a color that is hard to see, and clears it upon clicking. 
+    - Better spoilers: Marks spoiler colors as a color that is hard to see, and clears it upon clicking.
+        + Needs testing over different platforms and devices on all colors.
+    - Resize large images: Resizes large images into smaller versions.
+        + Needs testing over different platforms, devices, sizes, browsers and settings.
