@@ -324,11 +324,11 @@
         return o
     }
     var n, p, m, ct = {
-        toolbar: "bold,italic,underline,strike|left,center,right|font,size,color|bulletlist|code,quote|image,email,link,unlink|youtube,date,time|ltr,rtl|source",
+        toolbar: "bold,italic,underline,strike|left,center,right|font,size,color,removeformat|bulletlist|code,quote|image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|source",
         toolbarExclude: null,
         style: "jquery.sceditor.default.css",
         fonts: "Arial,Arial Black,Comic Sans MS,Courier New,Georgia,Impact,Sans-serif,Serif,Times New Roman,Trebuchet MS,Verdana",
-        colors: "blue,red,purple,orange|yellow,gray,green,indigo|DarkBlue,Brown,Silver,Gold|HotPink,Cyan,YellowGreen,White",
+        colors: "ggsgrrgr,red,purple,orange|yellow,gray,green,indigo|DarkBlue,Brown,Silver,Gold|HotPink,Cyan,YellowGreen,White",
         locale: Ae(document.documentElement, "lang") || "en",
         charset: "utf-8",
         emoticonsCompat: !1,
@@ -336,39 +336,99 @@
         emoticonsRoot: "",
         emoticons: {
             dropdown: {
-                ":)": "emoticons/smile.png",
-                ":angel:": "emoticons/angel.png",
-                ":angry:": "emoticons/angry.png",
-                "8-)": "emoticons/cool.png",
-                ":'(": "emoticons/cwy.png",
-                ":ermm:": "emoticons/ermm.png",
-                ":D": "emoticons/grin.png",
-                "<3": "emoticons/heart.png",
-                ":(": "emoticons/sad.png",
-                ":O": "emoticons/shocked.png",
-                ":P": "emoticons/tongue.png",
-                ";)": "emoticons/wink.png"
+                ":-)": "https://hportal.co.il/html//emoticons/smile.gif ",
+                ":כועס:": "https://hportal.co.il/html//emoticons/angry2.gif",
+                ":חםלי:": "https://hportal.co.il/html//emoticons/64caf316.gif",
+                "מלווו": "https://hportal.co.il/html//emoticons/mellow.gif",
+                ":P": "https://hportal.co.il/html//emoticons/tongue.gif",
+                "=/": "https://hportal.co.il/html//emoticons/ohhh.gif",
+                ":שאלה:": "https://hportal.co.il/html//emoticons/huh2.gif",
+                ":מאושר:": "https://hportal.co.il/html//emoticons/d16c4689.gif",
+                ":אוהב:": "https://hportal.co.il/html//emoticons/inlove.gif",
+                ":חכם:": "https://hportal.co.il/html//emoticons/dodrjmkhnmcz.gif",
+                ":צוחק:": "https://hportal.co.il/html//emoticons/XD.gif",
+                ":שורק:": "https://hportal.co.il/html//emoticons/da4c2d5e.gif"
             },
             more: {
-                ":alien:": "emoticons/alien.png",
-                ":blink:": "emoticons/blink.png",
-                ":blush:": "emoticons/blush.png",
-                ":cheerful:": "emoticons/cheerful.png",
-                ":devil:": "emoticons/devil.png",
-                ":dizzy:": "emoticons/dizzy.png",
-                ":getlost:": "emoticons/getlost.png",
-                ":happy:": "emoticons/happy.png",
-                ":kissing:": "emoticons/kissing.png",
-                ":ninja:": "emoticons/ninja.png",
-                ":pinch:": "emoticons/pinch.png",
-                ":pouty:": "emoticons/pouty.png",
-                ":sick:": "emoticons/sick.png",
-                ":sideways:": "emoticons/sideways.png",
-                ":silly:": "emoticons/silly.png",
-                ":sleeping:": "emoticons/sleeping.png",
-                ":unsure:": "emoticons/unsure.png",
-                ":woot:": "emoticons/w00t.png",
-                ":wassat:": "emoticons/wassat.png"
+                ":חכהחכה:": "https://hportal.co.il/html//emoticons/wait.gif",
+                ":עף:": "https://hportal.co.il/html//emoticons/06.gif",
+                ":משתחווה:": "https://hportal.co.il/html//emoticons/s17.gif",
+                ":רגוע:": "https://hportal.co.il/html//emoticons/423523.gif",
+                ":><:": "https://hportal.co.il/html//emoticons/zftkodrmmjfi.gif",
+                "מוחעחע": "https://hportal.co.il/html//emoticons/evil.gif",
+                ":מכריז:": "https://hportal.co.il/html//emoticons/onion28.gif",
+                ":לילהטוב:": "https://hportal.co.il/html//emoticons/goon.gif",
+                ":חולה:": "https://hportal.co.il/html//emoticons/12.gif",
+                ":כדורגל:": "https://hportal.co.il/html//emoticons/f5f49335.gif",
+                ":למה:": "https://hportal.co.il/html//emoticons/why.gif",
+                ":נבוך:": "https://hportal.co.il/html//emoticons/onion52.gif",
+                ":רוחרפאים:": "https://hportal.co.il/html//emoticons/died.gif",
+                ":משעמם:": "https://hportal.co.il/html//emoticons/boring.gif",
+                ":לחץ:": "https://hportal.co.il/html//emoticons/1875cee9.gif",
+                ":פגוע:": "https://hportal.co.il/html//emoticons/s15.gif",
+                ":דם:": "https://hportal.co.il/html//emoticons/cfed93e2.gif",
+                "-_-": "https://hportal.co.il/html//emoticons/closedeyes.gif",
+                ":כדורגלן:": "https://hportal.co.il/html//emoticons/860e2a45.gif",
+                ":מתחנן:": "https://hportal.co.il/html//emoticons/fadeba25z.gif",
+                "<<": "https://hportal.co.il/html//emoticons/disgust.gif",
+                ":מעשן:": "https://hportal.co.il/html//emoticons/27.gif",
+                ":<_<:": "https://hportal.co.il/html//emoticons/dry.gif",
+                ":בוכה:": "https://hportal.co.il/html//emoticons/11111.gif",
+                ":היי2:": "https://hportal.co.il/html//emoticons/girl.gif",
+                ":מגולגל:": "https://hportal.co.il/html//emoticons/d4e4b46b.gif",
+                ":בוכהמאד:": "https://hportal.co.il/html//emoticons/crying.gif",
+                ":קר:": "https://hportal.co.il/html//emoticons/cold.gif",
+                ":8": "https://hportal.co.il/html//emoticons/cool.gif",
+                ":D": "https://hportal.co.il/html//emoticons/biggrin.gif",
+                ":בבקשה:": "https://hportal.co.il/html//emoticons/please.gif",
+                ":מת:": "https://hportal.co.il/html//emoticons/485c3a61.gif",
+                ":נהדר:": "https://hportal.co.il/html//emoticons/finger.gif",
+                ":נאנח:": "https://hportal.co.il/html//emoticons/1b38f9e2.gif",
+                ":רטוב:": "https://hportal.co.il/html//emoticons/fadeba1b-1.gif",
+                ":מגשש:": "https://hportal.co.il/html//emoticons/098eb4a5.gif",
+                ":ביי:": "https://hportal.co.il/html//emoticons/bye.gif",
+                ";:(": "https://hportal.co.il/html//emoticons/mad.gif",
+                ")-:": "https://hportal.co.il/html//emoticons/sad.gif",
+                ":!": "https://hportal.co.il/html//emoticons/sick.gif",
+                ":O": "https://hportal.co.il/html//emoticons/ohmy.gif",
+                "@_@": "https://hportal.co.il/html//emoticons/confused.gif",
+                ":יא:": "https://hportal.co.il/html//emoticons/stars.gif",
+                ":הא:": "https://hportal.co.il/html//emoticons/huh.gif",
+                ":יאי:": "https://hportal.co.il/html//emoticons/af48944b.gif",
+                ":נעלבלב:": "https://hportal.co.il/html//emoticons/s118.gif",
+                ":O_O:": "https://hportal.co.il/html//emoticons/blink.gif",
+                ":צוהל:": "https://hportal.co.il/html//emoticons/3ca8b998.gif",
+                ":תמים:": "https://hportal.co.il/html//emoticons/whistle.gif",
+                ":בעד:": "https://hportal.co.il/html//emoticons/cooli.gif",
+                "לאאאאאאאאא": "https://hportal.co.il/html//emoticons/mmgjznxegm0u.gif",
+                ":היי:": "https://hportal.co.il/html//emoticons/hi.gif",
+                "דאא": "https://hportal.co.il/html//emoticons/da.gif",
+                ":חכם:": "https://hportal.co.il/html//emoticons/dodrjmkhnmcz.gif",
+                ":מטורף:": "https://hportal.co.il/html//emoticons/63d4808b.gif",
+                ":שיניים:": "https://hportal.co.il/html//emoticons/f6eb47d3.gif",
+                ":נעלב:": "https://hportal.co.il/html//emoticons/offenced.gif",
+                ":שבע:": "https://hportal.co.il/html//emoticons/48.gif",
+                ":בשוםאופן:": "https://hportal.co.il/html//emoticons/6184ceba.gif",
+                ":תןלי:": "https://hportal.co.il/html//emoticons/comeon.gif",
+                ":לאולא:": "https://hportal.co.il/html//emoticons/df13952b.gif",
+                ":חם:": "https://hportal.co.il/html//emoticons/hot.gif",
+                ":מאוהב:": "https://hportal.co.il/html//emoticons/6f428754.gif",
+                ":גיבור:": "https://hportal.co.il/html//emoticons/hero.gif",
+                "^_^": "https://hportal.co.il/html//emoticons/happy.gif",
+                ":מסמיק:": "https://hportal.co.il/html//emoticons/embarced.gif",
+                ":מבוהל:": "https://hportal.co.il/html//emoticons/spooky.gif",
+                ":זועם:": "https://hportal.co.il/html//emoticons/215ad82f.gif",
+                ":WTF:": "https://hportal.co.il/html//emoticons/WTF.gif",
+                ":ארגג:": "https://hportal.co.il/html//emoticons/th_116_.gif",
+                ":וואו:": "https://hportal.co.il/html//emoticons/th_117_.gif",
+                ":מרושע:": "https://hportal.co.il/html//emoticons/65ac83c9d212051924a6c2462ae9a509.gif",
+                ":שנון:": "https://hportal.co.il/html//emoticons/cc51e6846ba3d7c11fde90aa07f63ca9.gif",
+                ":רותח:": "https://hportal.co.il/html//emoticons/hot2-onion-head-emoticon.gif",
+                ":מובס:": "https://hportal.co.il/html//emoticons/th_015_orz-v2.gif",
+                ":$": "https://hportal.co.il/html//emoticons/blush.gif",
+                ":עושהעיניים:": "https://hportal.co.il/html//emoticons/big-eye-onion-head-emoticon.gif",
+                ":מסמיק1:": "https://hportal.co.il/html//emoticons/61.gif",
+                ":מאסטרשיפו:": "https://hportal.co.il/html//emoticons/6167963.png"
             },
             hidden: {
                 ":whistling:": "emoticons/whistling.png",
@@ -594,6 +654,7 @@
                 i._htmlCache || (t.opts.colors.split("|").forEach(function(e) {
                     r += '<div class="sceditor-color-column">',
                     e.split(",").forEach(function(e) {
+                        console.log(e);
                         r += '<a href="#" class="sceditor-color-option" style="background-color: ' + e + '" data-color="' + e + '"></a>'
                     }),
                     r += "</div>"
@@ -1360,10 +1421,13 @@
         ,
         H = function() {
             textareaValue = De("textarea"),
+            // textareaValue.setAttribute("name", "Post"),
+            textareaValue.setAttribute("id", "textareaValue"),
             c = De("iframe", {
                 frameborder: 0,
                 allowfullscreen: !0
             }),
+            c.setAttribute("id", "WYSIWYGiframe"),
             ye.startInSourceMode ? (Ue(w, "sourceMode"),
             Be(c)) : (Ue(w, "wysiwygMode"),
             Be(textareaValue)),
@@ -1395,7 +1459,10 @@
             de.val(l.value);
             var n = ye.placeholder || Ae(l, "placeholder");
             n && (textareaValue.placeholder = n,
-            Ae(m, "placeholder", n))
+            Ae(m, "placeholder", n));
+            document.getElementById("WYSIWYGiframe").contentWindow.document.getElementById("wysiwygDivContent").addEventListener("keydown", function () {
+                document.getElementsByName("Post")[0].value = de.getWysiwygEditorValue();
+            });
         }
         ,
         A = function() {
@@ -1698,7 +1765,6 @@
                 var e = l.form;
                 e && (Oe(e, "reset", U),
                 Oe(e, "submit", de.updateOriginal)),
-                console.log(textareaValue.value);
                 Re(textareaValue),
                 Re(u),
                 Re(w),
@@ -1836,7 +1902,6 @@
             textareaValue.focus(),
             o = textareaValue.value,
             t && (e += o.substring(r, i) + t),
-            console.log(o.substring(0, r) + e + o.substring(i, o.length)),
             textareaValue.value = o.substring(0, r) + e + o.substring(i, o.length),
             textareaValue.selectionStart = r + e.length - (t ? t.length : 0),
             textareaValue.selectionEnd = textareaValue.selectionStart,
@@ -1979,6 +2044,7 @@
             de.blur(),
             e ? de.setWysiwygEditorValue(de.getSourceEditorValue()) : de.setSourceEditorValue(de.getWysiwygEditorValue()),
             p = null,
+            // de.getWysiwygEditorValue() IS THE PLACE WHERE THE VALUE OF THE BBCODE IS SET TO THE TEAXTAREA'S VALUE AHHHHHHHHHHHHHHHHHHHHHHH =============================================================================================================================================================================================================================================================================================================================================
             Le(textareaValue),
             Le(c),
             Ye(w, "wysiwygMode", e),
@@ -2174,9 +2240,9 @@
         de.focus = function(e, t, n) {
             if (we(e))
                 de.bind("focus", e, t, n);
-            else if (de.inSourceMode())
+            else if (de.inSourceMode()) {
                 textareaValue.focus();
-            else {
+            } else {
                 if (He(d, ":focus").length)
                     return;
                 var o, r = v.selectedRange();
@@ -2639,14 +2705,14 @@
                 "color" === h && (z = t[h].querySelector(".sce-color"))),
                 t[h]
             },
-            update: function(h, a) {
+            /* update: function(h, a) {
                 if (z) {
                     var v = "inherit";
                     !h && a && (v = a.ownerDocument.queryCommandValue("forecolor"),
                     parseInt(v) === v && (v = "#" + ("000000" + (v = (255 & v) << 16 | 65280 & v | (16711680 & v) >>> 16).toString(16)).slice(-6))),
                     c.css(z, "fill", v)
                 }
-            },
+            }, */
             rtl: function(h) {
                 var a = t.grip;
                 if (a) {
@@ -3696,5 +3762,5 @@
     ,
     f.formatBBCodeString = w,
     t.formats.bbcode = f,
-    t.BBCodeParser = q
+    t.BBCodeParser = q;
 }(sceditor);

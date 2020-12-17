@@ -1,5 +1,4 @@
 TODOs (Ordered by expected amount of effort to make each):
-    - Break long words
     - Hide large signatures
     - Choose if "Edited by" line is displayed by default or not
     - Change default values in inputs to placeholders (HTML attribute)

@@ -75,17 +75,16 @@ window.onload = function () {
     // --------------------------------------------
 
 
-    /*
-    var wysiwygDiv = document.createElement("DIV");
-    wysiwygDiv.setAttribute("id", "wysiwygDiv");
-    wysiwygDiv.innerHTML = '<form action="" method="post">\n    <div>\n        <textarea id="example" style="height:300px;width:600px;"></textarea>\n    </div>\n</form>';
-    document.body.appendChild(wysiwygDiv);
-    */
-
-
     var textarea = document.getElementsByName('Post')[0];
 	sceditor.create(textarea, {
 		format: 'bbcode',
         icons: 'monocons',
-	});
+    });
+    
+    document.body.addEventListener("keydown", function (e) {
+        const keyCodes = [13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 66, 67, 68, 69 /* Nice ( ͡° ͜ʖ ͡° ) */, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 83, 85, 86, 88, 89, 90, 186, 188, 190, 191, 219, 221, 222];
+        if (keyCodes.indexOf(e.keyCode) !=  -1) {
+            document.getElementById("WYSIWYGiframe").contentWindow.document.getElementById("wysiwygDivContent").focus();   
+        }
+    });
 }
