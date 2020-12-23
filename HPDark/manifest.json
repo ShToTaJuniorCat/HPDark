@@ -1,26 +1,42 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "HPDark",
   "version": "1.0",
   "description": "מוסיף עוד הרבה אפשרויות ל-HPortal.",
  
-  "icons": { "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
-
-  "background": {
-    "persistent": true,
-    "scripts": ["script.js"]
+  "icons": { 
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
 
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
+  ],
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "page_action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "web_accessible_resources": [
+    "images/*.*",
+    "options/options.html"
   ],
 
   "content_scripts": [{
     "css": ["styles.css", "/wysiwyg/wysiwyg.css"],
-    "js": ["script.js", "/wysiwyg/wysiwyg.js"],
+    "js": ["script.js", "/wysiwyg/wysiwyg.js", "jquery.min.js"],
     "matches": ["*://hportal.co.il/*"]
   }]
 

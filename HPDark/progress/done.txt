@@ -1,2 +1,6 @@
  DONEs:
     - Dark Mode switch: Toggles Dark Mode on and off.
+    
+    - Resize large images: Resizes large images into smaller versions.
+    
+    - Break long words

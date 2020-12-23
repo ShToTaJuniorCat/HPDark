@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Test Extension Options</title>
+</head>
+
+<body>
+
+    <label>
+        Show Dark Mode switch (Small moon icon, top left corner): <input type="checkbox" id="darkSwitch">
+    </label>
+    <br>
+    <label>
+        Resize images above <input type="number" id="largeSignatures"> pixels (set a negative value to ignore this feature). <button id="resetSig">Reset</button>
+    </label>
+    <br>
+    <label>
+        Show what you see is what you get as text area (Shows the comment as it will look like and not as code): <input type="checkbox" id="WYSIWYGCheckbox"> WARNING: This is an experiemental feature!
+    </label>
+
+    <div id="status"></div>
+    <button id="save">Save</button>
+
+    <script src="options.js"></script>
+</body>
+
+</html>

@@ -95,7 +95,7 @@ body .post1 {
 
     -ms-word-break: break-all;
     /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all;
+    /* word-break: break-all; */
     /* Instead use this non-standard one: */
     word-break: break-word;
 
@@ -170,39 +170,39 @@ body.darkModeOn .tablepod a {
     color: #fff !important;
 }
 
-body.darkModeOn div:not(.thin) span[style*="color:yellow"],
-    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue"],
-    body.darkModeOn div:not(.thin) span[style*="color:LightCyan"],
-    body.darkModeOn div:not(.thin) span[style*="color:Aqua"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Cyan"], 
-    body.darkModeOn div:not(.thin) span[style*="color:LightYellow"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk"], 
-    body.darkModeOn div:not(.thin) span[style*="color:White"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Snow"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Honeydew"], 
-    body.darkModeOn div:not(.thin) span[style*="color:MintCream"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Azure"], 
-    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite"],
-    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"], 
-    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"], 
-    body.darkModeOn div:not(.thin) span[style*="color:Ivory"], 
-    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush"] {
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i],
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i],
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i],
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i],
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush" i] {
         color: #373727 !important;
 }
 
-body.darkModeOn div:not(.thin) span[style*="color:yellow"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:LightCyan"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:Aqua"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:Cyan"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:LightYellow"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:White"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:Snow"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:Honeydew"]:active,
-    body.darkModeOn div:not(.thin) span[style*="color:MintCream"]:active,
-    body.darkModeOn div:not(.thin) span[style*="color:Azure"]:active, 
-    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite"]:active, 
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i]:active, 
     body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"]:active, 
     body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"]:active, 
     body.darkModeOn div:not(.thin) span[style*="color:Ivory"]:active, 
@@ -217,6 +217,14 @@ body.darkModeOn div:not(.thin) span[style*="color:yellow"]:active,
     left: 30px;
     width: 50px;
     height: 50px;
-    background-image: url("https://www.flaticon.com/svg/static/icons/svg/3608/3608837.svg");
+    background-size: 50px;
+}
+
+.settingsButton {
+    top: 0;
+    right: 10px;
+    position: fixed;
+    height: 50px;
+    width: 50px;
     background-size: 50px;
 }
