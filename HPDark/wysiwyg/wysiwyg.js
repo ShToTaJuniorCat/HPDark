@@ -431,8 +431,10 @@
                 ":מאסטרשיפו:": "https://hportal.co.il/html//emoticons/6167963.png"
             },
             hidden: {
+                /*
                 ":whistling:": "emoticons/whistling.png",
                 ":love:": "emoticons/wub.png"
+                */
             }
         },
         width: null,

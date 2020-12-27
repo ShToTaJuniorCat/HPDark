@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "HPDark",
   "version": "1.0",
   "description": "מוסיף עוד הרבה אפשרויות ל-HPortal.",
@@ -31,13 +31,32 @@
 
   "web_accessible_resources": [
     "images/*.*",
-    "options/options.html"
+    "options/*.*"
   ],
 
-  "content_scripts": [{
-    "css": ["styles.css", "/wysiwyg/wysiwyg.css"],
-    "js": ["script.js", "/wysiwyg/wysiwyg.js", "jquery.min.js"],
-    "matches": ["*://hportal.co.il/*"]
-  }]
-
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["script.js", "jquery.min.js"],
+      "matches": ["*://hportal.co.il/*"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?showtopic=*"],
+      "css": ["/wysiwyg/wysiwyg.css"],
+      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*CODE=08&*=*"],
+      "css": ["/wysiwyg/wysiwyg.css"],
+      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/edit-comment.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*showuser=*"],
+      "js": ["/pagesJS/user-profile.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
+      "js": ["/pagesJS/donate.js"]
+    }
+  ]
 }

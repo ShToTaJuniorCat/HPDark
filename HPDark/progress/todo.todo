@@ -1,10 +1,7 @@
 TODOs (Ordered by expected amount of effort to make each):
     - Ban yourself for a certain amout of time
-    - Hide large signatures
-    - Choose if "Edited by" line is displayed by default or not
     - Change default values in inputs to placeholders (HTML attribute)
     - Jump to page in forums
-    - Add a button in a profile to send sickles (This is how you say חרמשים in english, according to my true love) to that user
     - More colors in the color selection GUI
     - More font-sizes in font-size selection GUI
     - Hide QUOTE/CODE blocks in a single comment/thread
