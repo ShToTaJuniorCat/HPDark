@@ -2,8 +2,8 @@
 This page WILL need an update after an upgrade.
 Since almost NOTHING has an ID or unique class,
 I am selecting value using attributes and parent,
-Which will change if HPortal ever has an upgrade.
-Peleg, keep in mind.
+which will change if HPortal ever has an upgrade.
+@Peleg - I mean, @me - keep in mind.
 */
 
 // --------------------------------------------

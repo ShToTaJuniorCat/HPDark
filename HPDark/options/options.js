@@ -35,7 +35,10 @@ function restore_options() {
 
     addEdited: false,
 
-    showSickles: true
+    showSickles: true,
+
+    banMeMillisec: 0,
+    lockBan: false
   }, function(items) {
     document.getElementById("darkSwitch").checked = items.darkSwitch;
 
@@ -58,6 +61,13 @@ function restore_options() {
     document.getElementById("addEdited").checked = items.addEdited;
 
     document.getElementById("showSickles").checked = items.showSickles;
+
+    if((new Date()).getTime() < items.banMeMillisec) {
+      document.getElementById("banInfo").style.display = "none";
+      document.getElementById("cancelBan").style.display = (items.lockBan ? "none" : "initial");
+      // Yes, it will be pretty easy to remove the ban even if its locked.
+      // But I challenge you to remove it without using that button :)
+    }
   });
 }
 
@@ -76,6 +86,10 @@ function save_options() {
   var addEdited = document.getElementById("addEdited").checked;
 
   var showSickles = document.getElementById("showSickles").checked;
+
+  var banMeMillisec = new Date(document.getElementById("banMe").value).getTime();
+  var lockBan = document.getElementById("lockBan").checked;
+
   chrome.storage.sync.set({
     darkSwitch: darkSwitchCheckbox,
 
@@ -89,13 +103,16 @@ function save_options() {
     
     addEdited: addEdited,
 
-    showSickles: showSickles
+    showSickles: showSickles,
+
+    banMeMillisec: banMeMillisec,
+    lockBan: lockBan
   }, function() {
     // Update status to let user know options were saved.
-    var status = document.getElementById('status');
-    status.textContent = 'Options saved.';
+    var optionsSaved = document.getElementById('optionsSaved');
+    optionsSaved.textContent = 'Options saved.';
     setTimeout(function() {
-      status.textContent = '';
+      optionsSaved.textContent = '';
     }, 1000);
   });
 }
@@ -110,6 +127,7 @@ window.onload = function () {
   setPanelReady("commentsPanel", "commentsOptions");
   setPanelReady("writeCommentPanel", "writeCommentOptions");
   setPanelReady("userProfilePanel", "userProfileOptions");
+  setPanelReady("userSettingsPanel", "userSettingsOptions");
 
   // Set dark mode panel selected when opening the page
   hideAllOptions();
@@ -146,9 +164,20 @@ window.onload = function () {
     $("#largeSigInput").val(600);
   });
 
+  document.getElementById("cancelBan").addEventListener("click", function () {
+    if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
+      chrome.storage.sync.set({ banMeMillisec: 0 });
+      document.getElementById("banInfo").style.display = "initial";
+      document.getElementById("cancelBan").style.display = "none";
+    }
+  });
+
+  document.getElementById("lockBan").addEventListener("change", function () {
+    if(document.getElementById("lockBan").checked == true) {
+      document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
+    }
+  });
+
   document.getElementById('saveOptions').addEventListener('click',
     save_options);
-
-  document.getElementById("resetSig").addEventListener("click", function () { document.getElementById("largeSignatures").value = 600; });
-  document.getElementById("resetImg").addEventListener("click", function () { document.getElementById("largeImages").value = 40.781; });
 }

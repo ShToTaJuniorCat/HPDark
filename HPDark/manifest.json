@@ -2,7 +2,8 @@
   "manifest_version": 2,
   "name": "HPDark",
   "version": "1.0",
-  "description": "מוסיף עוד הרבה אפשרויות ל-HPortal.",
+  "description": "מוסיף עוד הרבה פיצ'רים ל-HPortal.",
+  "short_name": "HPD",
  
   "icons": { 
     "16": "images/icon16.png",
@@ -19,6 +20,8 @@
     "page": "options/options.html",
     "open_in_tab": true
   },
+
+  "options_page": "options/options.html",
 
   "page_action": {
     "default_icon": {
@@ -46,7 +49,7 @@
       "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php*CODE=08&*=*"],
+      "matches": ["*://hportal.co.il/index.php*CODE=08&*=*", "*://hportal.co.il/index.php?", "*://hportal.co.il/index.php?act=Post&CODE=02&*"],
       "css": ["/wysiwyg/wysiwyg.css"],
       "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/edit-comment.js"]
     },

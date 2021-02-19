@@ -18,7 +18,7 @@ window.onload = function () {
 
     // --------------------------------------------
     // WYSIWYG
-    chrome.storage.sync.get({ WYSIWYGCheckbox: true }, function(data) {
+    chrome.storage.sync.get({ WYSIWYGCheckbox: false }, function(data) {
         if(data.WYSIWYGCheckbox) {
             var textarea = document.getElementsByName('Post')[0];
 	        sceditor.create(textarea, {
@@ -40,12 +40,13 @@ window.onload = function () {
     
     // --------------------------------------------
     /*
-    Hide signatures larger than set in storage
-    600 by default. Now, you see, I really wanted to make
-    this relative, but... nah. After some testing, I found out
-    that the Zoom level in the browser changes only sligtly
+    Hide signatures larger than set in storage, 600 by
+    default. Now, you see, I really wanted to make this
+    relative, but... nah. After some testing, I found out
+    that the Zoom level in the browser only sligtly changes
     the size of the element, so it is pretty much ignorable
     and does not worth the time of testing a relative thing.
+    If you have done testing, please reach out to me.
     */
     chrome.storage.sync.get({ hideLargeSig: true, largeSignatures: 600 }, function(data) {
         if(data.hideLargeSig) { // Only hide if storage's value is positive
@@ -54,7 +55,7 @@ window.onload = function () {
             for (let i = 0; i < signatures.length; i++) {
                 const signature = signatures[i];
                 if (signature.clientHeight > data.largeSignatures) {
-                    signature.innerHTML = "This signature was hidden by HPD as it is larger than allowed. You can change that in the <a href=\"" + chrome.extension.getURL("options/options.html") + "\" target='_blank'>extension's settings</a>";
+                    signature.innerHTML = "This signature was hidden by HPD as it is larger than allowed. You can change this in the <a href=\"" + chrome.extension.getURL("options/options.html") + "\" target='_blank'>extension's settings</a>";
                 }
             }
         }

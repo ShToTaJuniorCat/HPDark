@@ -10,3 +10,5 @@
     - Choose if "Edited by" line is displayed by default or not
 
     - Send sickles to someone through their profile 
+
+    - Ban yourself for a certain amount of time (user declared)

@@ -2,20 +2,6 @@
 Hello!
 How you doin? ;)
 
-I wasted SO much time trying to figure out how to get
-a global variable with all stored data in it without
-making the user wait, I just gave up now.
-So, for myself, here is the code of getting al item
-from storage:
-chrome.storage.sync.get({ <REPLACE WITH NAME OF KEY>: <REPLACE WITH FAIL VALUE> }, function(data) { 
-    data.<REPLACE WITH NAME OF KEY>;
-});
-
-And setting a value to item:
-chrome.storage.sync.set({<REPLACE WITH NAME OF KEY>: <REPLACE WITH VALUE OF KEY>}, function() {
-  // Key is now set to the value.
-});
-
 totalHoursWastedHere = WAYTOOMUCH;
 */
 
@@ -41,7 +27,6 @@ function getCookie(name) {
 
 function switchDarkMode() {
     // Toggles the dark mode, on/off
-    
 
     chrome.storage.sync.get({ darkMode: null }, function(data) { 
         if(data.darkMode == null) {
@@ -52,21 +37,29 @@ function switchDarkMode() {
             Anyways, I'm gonna set the key back to true.
             */
             chrome.storage.sync.set({ darkMode: true }, function() {
-                console.log("darkMode key was not found in storage. Did you mess with things here?");
+                console.log("darkMode key was not found in storage. Did you mess with things here? Please look at file HPDark/script.js line 48 on github ;)");
                 document.body.classList.add("darkModeOn");
             });
         } else if(data.darkMode == true) {
-            chrome.storage.sync.set({ darkMode: false}, function() {
+            chrome.storage.sync.set({ darkMode: false }, function() {
                 console.log("Dark Mode is off.");
               });
-            document.body.classList.remove("darkModeOn");
+            document.body.classList.remove("darkModeOn"); // Turn off the lights
         } else {
-            chrome.storage.sync.set({ darkMode: true}, function() {
+            chrome.storage.sync.set({ darkMode: true }, function() {
                 console.log("Dark Mode is on.");
               });
-            document.body.classList.add("darkModeOn");
+            document.body.classList.add("darkModeOn"); // Turn on the lights
         }
     });
+}
+
+function convertMilToHourNMin(millisec) {
+    const hours = Math.floor(millisec / 1000 / 3600);
+    const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
+    const sec = Math.floor((millisec - (minutes * 1000 * 60) - (hours * 1000 * 3600)) / 1000);
+
+    return [hours, minutes, sec];
 }
 
 // --------------------------------------------
@@ -75,7 +68,7 @@ chrome.storage.sync.get({ darkMode: null }, function(data) {
     if(data.darkMode == null) {
         /* 
         No storage key named "darkMode".
-        It probably means that this is the first time the extention
+        It *probably* means that this is the first time the extention
         is used on this device, so... lets create that key!
         */
         chrome.storage.sync.set({ darkMode: true }, function() {
@@ -100,13 +93,16 @@ chrome.storage.sync.get({ darkMode: null }, function(data) {
 
 // --------------------------------------------
 // Create the extension's settings button
-var settingsButton = document.createElement("div");
+var settingsButton = document.createElement("div"); // The base element of the button
+
 settingsButton.addEventListener("click", function () {
-    window.open(chrome.extension.getURL("options/options.html"), "_blank");
+    window.open(chrome.extension.getURL("options/options.html"), "_blank"); // When {settingsButton} is clicked, open extension's option page
 });
+
 settingsButton.className = "settingsButton";
-settingsButton.style.backgroundImage = "url('" + chrome.extension.getURL("images/settings2.svg") + "')";
-document.body.appendChild(settingsButton);
+settingsButton.style.backgroundImage = "url('" + chrome.extension.getURL("images/settings2.svg") + "')"; // Background image of {settingsButton}; the only thing that shows
+
+document.body.appendChild(settingsButton); // {settingsButton}, say hello to the world!
 // --------------------------------------------
 
 
@@ -119,13 +115,42 @@ chrome.storage.sync.get({ darkSwitch: true }, function(data) {
         
         // Update: She successfully stole me, and my heart. 
 
-        var darkSwitch = document.createElement("div");
+        var darkSwitch = document.createElement("div"); // The base element of the button
+
         darkSwitch.setAttribute("class", "darkSwitch");
         darkSwitch.setAttribute("id", "darkSwitch");
-        darkSwitch.style.backgroundImage = "url('" + chrome.extension.getURL("images/moon.svg") + "')";
+
+        darkSwitch.style.backgroundImage = "url('" + chrome.extension.getURL("images/moon.svg") + "')"; // Background image of {darkSwitch}; the only thing that shows
+
         document.body.appendChild(darkSwitch);
+
         document.getElementById("darkSwitch").onclick = switchDarkMode;
     } else {
     }
+});
+// --------------------------------------------
+
+
+// --------------------------------------------
+// Ban yourself for a certain amount of time
+chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
+    var banned = false;
+    var checkTime = setInterval(() => {
+        if ((new Date()).getTime() < data.banMeMillisec) {
+            // We are behind the date to unban, still banned
+            banned = true;
+            const timeToEnd = convertMilToHourNMin(data.banMeMillisec - (new Date()).getTime());
+            
+            if(!data.lockBan) {
+                var rest = "את/ה יכול/ה לבטל את הבאן <a style='top: 50%; position: aboslute; color: white;' dir='rtl' href='" + chrome.extension.getURL("options/options.html") + "' target='_blank'>בהגדרות התוסף</a>. ";
+            } else {
+                var rest = "";
+            }
+
+            document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;' dir='rtl'>את/ה כרגע בבאן על ידי HPD (נוצר על ידי המשתמש/ת). " + rest + "הבאן יסתיים בעוד " + timeToEnd[0] + " שעות, " + timeToEnd[1] + " דקות ו-" + timeToEnd[2] + " שניות (עלול להיות לא מדויק בעד 999 אלפיות השנייה)</h2>";
+        } else if(banned) {
+            document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;'>הבאן הסתיים. <a href='javascript:location.reload()'>לחץ כאן כדי לטעון מחדש את העמוד.</a></h2>";
+        }
+    }, 1000);
 });
 // --------------------------------------------
