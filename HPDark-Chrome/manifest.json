@@ -1,0 +1,70 @@
+{
+  "manifest_version": 2,
+  "name": "HPDark",
+  "version": "1.0",
+  "description": "מוסיף עוד הרבה פיצ'רים ל-HPortal.",
+  "short_name": "HPD",
+ 
+  "icons": { 
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "options_page": "options/options.html",
+
+  "page_action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "web_accessible_resources": [
+    "images/*.*",
+    "options/*.*"
+  ],
+
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["script.js", "jquery.min.js"],
+      "matches": ["*://hportal.co.il/*"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?showtopic=*"],
+      "css": ["/wysiwyg/wysiwyg.css"],
+      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*CODE=08&*=*", "*://hportal.co.il/index.php?", "*://hportal.co.il/index.php?act=Post&CODE=02&*"],
+      "css": ["/wysiwyg/wysiwyg.css"],
+      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/edit-comment.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*showuser=*"],
+      "js": ["/pagesJS/user-profile.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
+      "js": ["/pagesJS/donate.js"]
+    }
+  ]
+}

@@ -11,17 +11,18 @@ function getCookie(name) {
     var dc = document.cookie;
     var prefix = name + "=";
     var begin = dc.indexOf("; " + prefix);
+
     if (begin == -1) {
         begin = dc.indexOf(prefix);
         if (begin != 0) return null;
-    }
-    else {
+    } else {
         begin += 2;
         var end = document.cookie.indexOf(";", begin);
         if (end == -1) {
         end = dc.length;
         }
     }
+
     return decodeURI(dc.substring(begin + prefix.length, end));
 }
 
@@ -62,9 +63,10 @@ function convertMilToHourNMin(millisec) {
     return [hours, minutes, sec];
 }
 
+
 // --------------------------------------------
 // By default, dark mode is turned on.
-chrome.storage.sync.get({ darkMode: null }, function(data) { 
+chrome.storage.sync.get({ darkMode: null }, function(data) {
     if(data.darkMode == null) {
         /* 
         No storage key named "darkMode".

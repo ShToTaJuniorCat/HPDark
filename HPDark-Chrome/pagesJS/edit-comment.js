@@ -8,7 +8,7 @@ window.onload = function () {
 
     // --------------------------------------------
     // WYSIWYG
-    chrome.storage.sync.get({ WYSIWYGCheckbox: true }, function(data) {
+    chrome.storage.sync.get({ WYSIWYGCheckbox: false }, function(data) {
         if(data.WYSIWYGCheckbox) {
             var textarea = document.getElementsByName('Post')[0];
 	        sceditor.create(textarea, {

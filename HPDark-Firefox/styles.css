@@ -1,0 +1,230 @@
+/*
+Bip boop. Boop bip?
+
+Applys custom dark mode to HPortal.co.il.
+
+Made as a part of HPDark. 
+*/
+
+
+body.darkModeOn .post1, 
+    body.darkModeOn .post2, 
+    body.darkModeOn #QUOTE, 
+    body.darkModeOn #CODE, 
+    body.darkModeOn .tablepad { 
+	/* Comments in topics, User information (to the right of comments), QUOTE block, CODE block, Quick meassage sending */
+        background-color: #353535 !important; 
+}
+
+body.darkModeOn .row5, 
+    body.darkModeOn .darkrow3, 
+    body.darkModeOn .row6, 
+    body.darkModeOn .row10, 
+    body.darkModeOn .darkrow3, 
+    body.darkModeOn .darkrow1, 
+    body.darkModeOn .darkrow2 { 
+	/* f */
+        background-image: url(../style_images/4/tile_sub.png) !important;
+}
+
+body.darkModeOn .tablepod, 
+    body.darkModeOn .row1, 
+    body.darkModeOn .row4, 
+    body.darkModeOn .pformleft, 
+    body.darkModeOn .pformright, 
+    body.darkModeOn .tablefill, 
+    body.darkModeOn .row2, 
+    body.darkModeOn .row2 a, 
+    body.darkModeOn .pname, 
+    body.darkModeOn .psubtitle, 
+    body.darkModeOn .vcjb, 
+    body.darkModeOn .nameminiprofile, 
+    body.darkModeOn .mainminiprofile, 
+    body.darkModeOn .row7, 
+    body.darkModeOn .row7 a, 
+    body.darkModeOn .row8, 
+    body.darkModeOn .row8 a, 
+    body.darkModeOn #ucpmenu, 
+    body.darkModeOn #ucpcontent, 
+    body.darkModeOn .row9, 
+    body.darkModeOn .tableborder, 
+    body.darkModeOn .dlight, /* Private Messages */
+    body.darkModeOn .row3, 
+    body.darkModeOn .pformleftw {
+        background-color: #353535 !important;
+}
+
+body.darkModeOn .hlight,
+    body.darkModeOn .hlight a {
+        background-color: #464646;
+        color: #bababa;
+}
+
+body.darkModeOn .textinput, 
+    body.darkModeOn .forminput, 
+    body.darkModeOn .codebuttons {
+        background-color: #222323 !important;
+        color: white !important;
+}
+body.darkModeOn .row4 {
+    background-color: #454545 !important;
+}
+body.darkModeOn ::-webkit-scrollbar {
+    width: 10px;
+}
+body.darkModeOn ::-webkit-scrollbar-track {
+    background: #555; 
+}
+body.darkModeOn ::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+body.darkModeOn ::-webkit-scrollbar-thumb:hover {
+    background: #000; 
+}
+body.darkModeOn .desc {
+    color: #bababa !important;
+}
+
+body .post1 {
+    /* From https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+    Breaks long words in comments and signatures */
+
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    /* word-break: break-all; */
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+body.darkModeOn .row5,
+    body.darkModeOn .darkrow3,
+    body.darkModeOn .post1, 
+    body.darkModeOn .post2, 
+    body.darkModeOn #QUOTE, 
+    body.darkModeOn #CODE, 
+    body.darkModeOn .signature, 
+    body.darkModeOn .row10, 
+    body.darkModeOn .signature a, 
+    body.darkModeOn fieldset a, 
+    body.darkModeOn .row4, 
+    body.darkModeOn .row4 a, 
+    body.darkModeOn .postcolor, 
+    body.darkModeOn .pformleft b, 
+    body.darkModeOn .pformright, 
+    body.darkModeOn .pformright a, 
+    body.darkModeOn .row2, 
+    body.darkModeOn .row2 a, 
+    body.darkModeOn #ucpmenu, 
+    body.darkModeOn #ucpmenu a, 
+    body.darkModeOn .row1, 
+    body.darkModeOn .row1 a, 
+    body.darkModeOn .darkrow1, 
+    body.darkModeOn .pformstrip, 
+    body.darkModeOn .pname, 
+    body.darkModeOn .pname a, 
+    body.darkModeOn .psubtitle, 
+    body.darkModeOn .pname h3, 
+    body.darkModeOn .pname strong, 
+    body.darkModeOn .nameminiprofile, 
+    body.darkModeOn .pname div, 
+    body.darkModeOn .pmaintitle, 
+    body.darkModeOn .row7, 
+    body.darkModeOn .row7 a, 
+    body.darkModeOn .row8, 
+    body.darkModeOn .row8 a, 
+    body.darkModeOn #ucpcontent, 
+    body.darkModeOn #ucpcontent a, 
+    body.darkModeOn .darkrow2, 
+    body.darkModeOn .row9, 
+    body.darkModeOn .tableborder, 
+    body.darkModeOn .tableborder a, 
+    body.darkModeOn .tableborder p, 
+    body.darkModeOn .tableborder td, 
+    body.darkModeOn .dlight, /* Private Messages */
+    body.darkModeOn .dlight a /* Private Messages links */ {
+        color: #BABABA !important;
+}
+
+body.darkModeOn button, 
+    body.darkModeOn input[type=button], 
+    body.darkModeOn input[type=submit] {
+        border-radius: 5px !important;
+}
+
+body.darkModeOn option {
+    color: white !important;
+    background-color: #222323;
+}
+
+body.darkModeOn .tablepod a {
+    color: #fff !important;
+}
+
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i],
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i],
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i],
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i],
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush" i] {
+        color: #373727 !important;
+}
+
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush"]:active {
+        color: yellow !important;
+}
+
+.darkSwitch {
+    position: fixed;
+    top: 0;
+    border-radius: 50%;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background-size: 50px;
+}
+
+.settingsButton {
+    top: 0;
+    right: 10px;
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    background-size: 50px;
+}

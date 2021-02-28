@@ -1,0 +1,151 @@
+html, body {
+  background-color: #353535;
+  font-size: 120%;
+  user-select: none;
+}
+
+.pannels-parent {
+  position: relative;
+  height: 100%;
+}
+
+.panel {
+  right: 0;
+  height: 15%;
+  background-color: grey;
+  border: 1px solid black;
+  width: 20%;
+  position: absolute;
+}
+
+.panelText {
+  font-size: 110%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  direction: rtl;
+}
+
+.panel:hover {
+  background-color: lightgrey;
+}
+
+.dark-mode-panel {
+  top: 0;
+}
+
+.comments-panel {
+  top: 15%;
+}
+
+.write-comment-panel {
+  top: 30%;
+}
+
+.user-profile-panel {
+  top: 45%;
+}
+
+.user-settings-panel {
+  top: 60%;
+}
+
+.options {
+  padding: 3% 25%;
+  direction: rtl;
+  font-size: 120%;
+}
+
+.checkboxOption {
+  /* width: 100%; */
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.check {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+  user-select: none;
+}
+
+.check:before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34,50,84,0.03);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+
+.check:hover svg {
+  stroke: #4285f4;
+}
+
+.hide-me:checked + .check svg {
+  stroke: #4285f4;
+}
+
+.hide-me:checked + .check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+
+.hide-me:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+
+.hide-me {
+  display: none;
+}
+
+.saveOptions {
+  width: 15%;
+  height: 8%;
+  background-color: darkgreen;
+  bottom: 5%;
+  right: 42.5%;
+  position: fixed;
+  border-radius: 12px;
+}
+
+.optionsSaved {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}

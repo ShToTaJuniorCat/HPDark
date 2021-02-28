@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Control Panel</title>
+        <link rel="stylesheet" href="/options/options.css">
+        <link rel="stylesheet" href="/crossbrowser.css">
+
+        <script src="/jquery.min.js"></script>
+        <script src="/options/options.js"></script>
+
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="panels-parent">
+            <section class="dark-mode-panel panel" id="darkModePanel">
+                <span class="panelText">
+                    דארק מוד
+                </span>
+            </section>
+            <section class="comments-panel panel" id="commentsPanel">
+                <span class="panelText">
+                    תצוגת תגובות
+                </span>
+            </section>
+            <section class="write-comment-panel panel" id="writeCommentPanel">
+                <span class="panelText">
+                    כתיבת תגובה
+                </span>
+            </section>
+            <section class="user-profile-panel panel" id="userProfilePanel">
+                <span class="panelText">
+                    פרופילי משתמשים
+                </span>
+            </section>
+            <section class="user-settings-panel panel" id="userSettingsPanel">
+                <span class="panelText">
+                    הגדרות משתמש
+                </span>
+            </section>
+        </div>
+
+        <div class="dark-mode-options options" id="darkModeOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="checkboxOption" id="showDarkSwitchTD">
+                            <input type="checkbox" id="darkSwitch" class="hide-me">
+                            <label for="darkSwitch" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                הצג כפתור שינוי מצב לדארק מוד
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="comments-options options" id="commentsOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="checkboxOption" id="hideLargeSigTD">
+                            <input type="checkbox" id="hideLargeSig" class="hide-me">
+                            <label for="hideLargeSig" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                הסתר חתימות גדולות
+                            </label>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<input type="number" style="display: none;" id="largeSigInput" placeholder="מעל למספר הפיקסלים..."/>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<button id="resetLargeSig" style="display: none;">איפוס</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="checkboxOption" id="largeImagesTD">
+                            <input type="checkbox" id="resizeLargeImages" class="hide-me">
+                            <label for="resizeLargeImages" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                הקטן תמונות גדולות
+                            </label>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<input type="number" style="display: none;" id="largeImgInput" placeholder="מעל לאחוזים מהעמוד..."/>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<button id="resetLargeImg" style="display: none;">איפוס</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="write-comment-options options" id="writeCommentOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="checkboxOption" id="wysiwygTD">
+                            <input type="checkbox" id="WYSIWYGCheckbox" class="hide-me">
+                            <label for="WYSIWYGCheckbox" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                השתמש בעורך WYSIWYG (ניסיוני, לא יציב. Watch your step with it.)
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="checkboxOption" id="addEditedTD">
+                            <input type="checkbox" id="addEdited" class="hide-me">
+                            <label for="addEdited" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                הצג שורת "נערך על ידי" באופן אוטומטי בזמן עריכת תגובה
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="user-profile-options options" id="userProfileOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="checkboxOption" id="showSicklesTD">
+                            <input type="checkbox" id="showSickles" class="hide-me">
+                            <label for="showSickles" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                הצג כפתור לשליחת חרמשים למשתמש בפרופיל המשתמש
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="user-settings-options options" id="userSettingsOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="checkboxOption" id="showSicklesTD">
+                            <label for="banMeDate">
+                                תן לי באן עד התאריך
+                                <input type="date" id="banMeDate">
+                            </label>
+                            <br>
+                            <label for="banMeTime">
+                                בשעה
+                                <input type="time" id="banMeTime" value="00:00">
+                            </label>
+                        </td>
+                        <td style="padding: 0 20px 0;">
+                            <input type="checkbox" id="lockBan" class="hide-me">
+                            <label for="lockBan" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                נעל באן? (לא תהיה לך אפשרות להוריד את הבאן עד שהזמן יסתיים)
+                            </label>
+                        </td>
+                        <td>
+                            <button id='cancelBan' style="display: none;">בטל באן פעיל</button>
+                            <span id="banInfo">אין לך באן פעיל כרגע</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <span class="optionsSaved" id="optionsSaved"></span>
+        <button id="saveOptions" class="saveOptions">שמור שינויים</button>
+    </body>
+</html>
