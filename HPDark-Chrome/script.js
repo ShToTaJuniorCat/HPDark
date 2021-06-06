@@ -26,35 +26,6 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end));
 }
 
-function switchDarkMode() {
-    // Toggles the dark mode, on/off
-
-    chrome.storage.sync.get({ darkMode: null }, function(data) { 
-        if(data.darkMode == null) {
-            /*
-            C'mon man, did you mess around with the storage?
-            Just kidding, I love to mess around with things
-            too. Keep it up! this is how I learned :)
-            Anyways, I'm gonna set the key back to true.
-            */
-            chrome.storage.sync.set({ darkMode: true }, function() {
-                console.log("darkMode key was not found in storage. Did you mess with things here? Please look at file HPDark/script.js line 48 on github ;)");
-                document.body.classList.add("darkModeOn");
-            });
-        } else if(data.darkMode == true) {
-            chrome.storage.sync.set({ darkMode: false }, function() {
-                console.log("Dark Mode is off.");
-              });
-            document.body.classList.remove("darkModeOn"); // Turn off the lights
-        } else {
-            chrome.storage.sync.set({ darkMode: true }, function() {
-                console.log("Dark Mode is on.");
-              });
-            document.body.classList.add("darkModeOn"); // Turn on the lights
-        }
-    });
-}
-
 function convertMilToHourNMin(millisec) {
     const hours = Math.floor(millisec / 1000 / 3600);
     const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
@@ -79,6 +50,12 @@ chrome.storage.sync.get({ darkMode: null }, function(data) {
         });
     } else if(data.darkMode == true) {
         // Dark mode is on in storage, so we need to turn off the lights.
+
+
+        // It's Ella now and I'm planning on stealing your favorite programmer. Cya later!
+        
+        // Update: She successfully stole me, and my heart. 
+
         document.body.classList.add("darkModeOn");
     } else {
         /*
@@ -91,6 +68,7 @@ chrome.storage.sync.get({ darkMode: null }, function(data) {
         */
     }
 });
+// --------------------------------------------
 
 
 // --------------------------------------------
@@ -105,31 +83,6 @@ settingsButton.className = "settingsButton";
 settingsButton.style.backgroundImage = "url('" + chrome.extension.getURL("images/settings2.svg") + "')"; // Background image of {settingsButton}; the only thing that shows
 
 document.body.appendChild(settingsButton); // {settingsButton}, say hello to the world!
-// --------------------------------------------
-
-
-// --------------------------------------------
-// Make a switch button to the dark mode,
-// but only if the user wants me to!
-chrome.storage.sync.get({ darkSwitch: true }, function(data) { 
-    if(data.darkSwitch) {
-        // It's Ella now and I'm planning on stealing your favorite programmer. Cya later!
-        
-        // Update: She successfully stole me, and my heart. 
-
-        var darkSwitch = document.createElement("div"); // The base element of the button
-
-        darkSwitch.setAttribute("class", "darkSwitch");
-        darkSwitch.setAttribute("id", "darkSwitch");
-
-        darkSwitch.style.backgroundImage = "url('" + chrome.extension.getURL("images/moon.svg") + "')"; // Background image of {darkSwitch}; the only thing that shows
-
-        document.body.appendChild(darkSwitch);
-
-        document.getElementById("darkSwitch").onclick = switchDarkMode;
-    } else {
-    }
-});
 // --------------------------------------------
 
 
@@ -151,7 +104,15 @@ chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
 
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;' dir='rtl'>את/ה כרגע בבאן על ידי HPD (נוצר על ידי המשתמש/ת). " + rest + "הבאן יסתיים בעוד " + timeToEnd[0] + " שעות, " + timeToEnd[1] + " דקות ו-" + timeToEnd[2] + " שניות (עלול להיות לא מדויק בעד 999 אלפיות השנייה)</h2>";
         } else if(banned) {
+            /*
+            So basically, if in the last run of {checkTime} (interval) the ban was ended, {banned} would be true.
+            In that case, this else-if statement will run, and the user will be notified.
+            */
+
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;'>הבאן הסתיים. <a href='javascript:location.reload()'>לחץ כאן כדי לטעון מחדש את העמוד.</a></h2>";
+            chrome.runtime.sendMessage({ msg: "sendNotif", title: "הבאן הסתיים!", body: "הבאן מ-HPortal הסתיים.", icon: "images/settings.svg" }); // Send a desktop notification
+            clearInterval(checkTime);
+            chrome.storage.sync.set({ banMeMillisec: 0 });
         }
     }, 1000);
 });

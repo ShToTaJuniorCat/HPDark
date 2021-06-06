@@ -1,8 +1,4 @@
 FIXMEs:
     - Dark Mode: Makes bright spots darker.
         Fixes needed:
-            - Unapply to online users list(?)
-            - Comment all places it changes on the CSS file
-    - Ban Me: Ban yourself for a certain amount of time
-        Fixes Needed:
-            - Setting up a ban, then setting another, will update the current one to the new one. Locked bans can be deleted this way.
+            * Comment all places it changes on the CSS file

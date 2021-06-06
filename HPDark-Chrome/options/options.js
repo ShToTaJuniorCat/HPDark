@@ -23,7 +23,7 @@ function setPanelReady(panelName, options) {
 // stored in chrome.storage.
 function restore_options() {
   chrome.storage.sync.get({
-    darkSwitch: true,
+    darkMode: true,
     
     hideLargeSig: true,
     largeSignatures: 600,
@@ -40,7 +40,7 @@ function restore_options() {
     banMeMillisec: 0,
     lockBan: false
   }, function(items) {
-    document.getElementById("darkSwitch").checked = items.darkSwitch;
+    document.getElementById("darkSwitch").checked = items.darkMode;
 
     document.getElementById("hideLargeSig").checked = items.hideLargeSig;
     document.getElementById("largeSigInput").value = items.largeSignatures;
@@ -63,15 +63,31 @@ function restore_options() {
     document.getElementById("showSickles").checked = items.showSickles;
 
     if((new Date()).getTime() < items.banMeMillisec) {
-      document.getElementById("banInfo").style.display = "none";
-      document.getElementById("cancelBan").style.display = (items.lockBan ? "none" : "initial");
-      // Yes, it will be pretty easy to remove the ban even if its locked.
-      // But I challenge you to remove it without using that button :)
+      document.getElementById("cancelBanDIV").innerHTML = (items.lockBan ?
+         "הבאן הנוכחי נעול." :
+          "<button id='cancelBan'>בטל באן פעיל</button>");
+      // Yes, it will be pretty easy to remove the ban even if its locked. Self control is important, people.
+      // But I challenge you to remove it without using that button :) (Its possible!)
+
+      if(items.lockBan) {
+        document.getElementById("cancelBanDIV").innerHTML = ("הבאן הנוכחי נעול.");
+      } else {
+        document.getElementById("cancelBanDIV").innerHTML = ("<button id='cancelBan'>בטל באן פעיל</button>");
+
+        document.getElementById("cancelBan").addEventListener("click", function () {
+          if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
+            chrome.storage.sync.set({ banMeMillisec: 0 });
+            document.getElementById("cancelBanDIV").innerHTML = "הבאן בוטל, יש לטעון מחדש את העמוד.";
+          }
+        });
+      }
+    } else {
+      document.getElementById("cancelBanDIV").innerHTML = "אין באן פעיל";
     }
   });
 }
 
-// Save options to chrome.storage
+// Save options to chrome storage
 function save_options() {
   var darkSwitchCheckbox = document.getElementById("darkSwitch").checked;
 
@@ -87,11 +103,20 @@ function save_options() {
 
   var showSickles = document.getElementById("showSickles").checked;
 
-  var banMeMillisec = new Date(document.getElementById("banMe").value).getTime();
-  var lockBan = document.getElementById("lockBan").checked;
+  chrome.storage.sync.get( { banMeMillisec: 0 }, function(data) {
+    if(data.banMeMillisec == 0) {
+      var banMeMillisec = new Date(document.getElementById("banMe").value).getTime();
+      var lockBan = document.getElementById("lockBan").checked;
+
+      chrome.storage.sync.set({
+        banMeMillisec: banMeMillisec,
+        lockBan: lockBan
+      });
+    }
+  });
 
   chrome.storage.sync.set({
-    darkSwitch: darkSwitchCheckbox,
+    darkMode: darkSwitchCheckbox,
 
     hideLargeSig: hideLargeSig,
     largeSignatures: largeSignaturesInput,
@@ -104,9 +129,6 @@ function save_options() {
     addEdited: addEdited,
 
     showSickles: showSickles,
-
-    banMeMillisec: banMeMillisec,
-    lockBan: lockBan
   }, function() {
     // Update status to let user know options were saved.
     var optionsSaved = document.getElementById('optionsSaved');
@@ -164,17 +186,15 @@ window.onload = function () {
     $("#largeSigInput").val(600);
   });
 
-  document.getElementById("cancelBan").addEventListener("click", function () {
-    if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
-      chrome.storage.sync.set({ banMeMillisec: 0 });
-      document.getElementById("banInfo").style.display = "initial";
-      document.getElementById("cancelBan").style.display = "none";
-    }
-  });
-
   document.getElementById("lockBan").addEventListener("change", function () {
     if(document.getElementById("lockBan").checked == true) {
       document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
+    }
+  });
+
+  chrome.storage.sync.get({ banMeMillisec: 0 }, function (data) {
+    if(data.banMeMillisec > (new Date()).valueOf()) {
+      document.getElementById("setUpBanTR").innerHTML = "<td>יש לך באן פעיל.</td>";
     }
   });
 

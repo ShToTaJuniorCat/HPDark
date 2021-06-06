@@ -62,10 +62,12 @@ body.darkModeOn .hlight,
 
 body.darkModeOn .textinput, 
     body.darkModeOn .forminput, 
-    body.darkModeOn .codebuttons {
+    body.darkModeOn .codebuttons,
+    body.darkModeOn option:not([name="fcolor"]) {
         background-color: #222323 !important;
-        color: white !important;
+        color: white;
 }
+
 body.darkModeOn .row4 {
     background-color: #454545 !important;
 }
@@ -159,11 +161,6 @@ body.darkModeOn button,
     body.darkModeOn input[type=button], 
     body.darkModeOn input[type=submit] {
         border-radius: 5px !important;
-}
-
-body.darkModeOn option {
-    color: white !important;
-    background-color: #222323;
 }
 
 body.darkModeOn .tablepod a {
