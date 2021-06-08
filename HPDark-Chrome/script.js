@@ -5,35 +5,6 @@ How you doin? ;)
 totalHoursWastedHere = WAYTOOMUCH;
 */
 
-function getCookie(name) {
-    // Returns value of cookie named {name}. Function from stackoverflow
-
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    } else {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-        end = dc.length;
-        }
-    }
-
-    return decodeURI(dc.substring(begin + prefix.length, end));
-}
-
-function convertMilToHourNMin(millisec) {
-    const hours = Math.floor(millisec / 1000 / 3600);
-    const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
-    const sec = Math.floor((millisec - (minutes * 1000 * 60) - (hours * 1000 * 3600)) / 1000);
-
-    return [hours, minutes, sec];
-}
-
 
 // --------------------------------------------
 // By default, dark mode is turned on.
@@ -88,6 +59,15 @@ document.body.appendChild(settingsButton); // {settingsButton}, say hello to the
 
 // --------------------------------------------
 // Ban yourself for a certain amount of time
+function convertMilToHourNMin(millisec) {
+    const hours = Math.floor(millisec / 1000 / 3600);
+    const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
+    const sec = Math.floor((millisec - (minutes * 1000 * 60) - (hours * 1000 * 3600)) / 1000);
+
+    return [hours, minutes, sec];
+}
+
+
 chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
     var banned = false;
     var checkTime = setInterval(() => {
