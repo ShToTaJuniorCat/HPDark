@@ -26,4 +26,29 @@ window.onload = function () {
         }
     });
     // --------------------------------------------
+
+    // --------------------------------------------
+    // Customise color in color selection GUI
+    chrome.storage.sync.get({ colors: false }, function(data) {
+        // Check if the colors are set (default is false, therefore not set)
+        if(data.colors != false) {
+            var colorNames = Object.keys(data.colors);
+
+            var fcolor = document.getElementsByName("fcolor")[0];
+
+            for(var i = fcolor.childElementCount; i > 1; i--) {
+                fcolor.removeChild(fcolor.children[i - 1]);
+            }
+
+            var option;
+            for(var i = 0; i < colorNames.length; i++) {
+                option = document.createElement("option");
+                option.setAttribute("value", colorNames[i]);
+                option.setAttribute("style", "color: " + colorNames[i]);
+                option.innerText = data.colors[colorNames[i]];    
+                fcolor.append(option);
+            }
+        }
+    });
+    // --------------------------------------------
 }

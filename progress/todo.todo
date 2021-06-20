@@ -1,7 +1,6 @@
 TODOs (Ordered by expected amount of effort to make each):
     - Change default values in inputs to placeholders (HTML attribute)
-    - Jump to page in forums
-    - More colors in the color selection GUI
+    ~ Jump to page in forums
     - More font-sizes in font-size selection GUI
     - Hide QUOTE/CODE blocks in a single comment/thread
     - More tags buttons

@@ -1,3 +1,5 @@
+var colorList = {};
+
 function hideAllOptions() {
   // Hide all options elements from displaying. 
   // We only want one options element at a time
@@ -19,6 +21,7 @@ function setPanelReady(panelName, options) {
   });
 }
 
+
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
@@ -38,7 +41,9 @@ function restore_options() {
     showSickles: true,
 
     banMeMillisec: 0,
-    lockBan: false
+    lockBan: false,
+
+    colors: false
   }, function(items) {
     document.getElementById("darkSwitch").checked = items.darkMode;
 
@@ -83,6 +88,10 @@ function restore_options() {
       }
     } else {
       document.getElementById("cancelBanDIV").innerHTML = "אין באן פעיל";
+    }
+
+    if(items.colors != false) {
+
     }
   });
 }
@@ -129,6 +138,8 @@ function save_options() {
     addEdited: addEdited,
 
     showSickles: showSickles,
+
+    colors: colorList
   }, function() {
     // Update status to let user know options were saved.
     var optionsSaved = document.getElementById('optionsSaved');
@@ -140,7 +151,6 @@ function save_options() {
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-  
 
 
 window.onload = function () {
@@ -186,18 +196,52 @@ window.onload = function () {
     $("#largeSigInput").val(600);
   });
 
-  document.getElementById("lockBan").addEventListener("change", function () {
+  $("#setColor").on("click", function () {
+    $("#color404").css("display", "none");
+
+    var elem = document.createElement("li");
+    var newColor = document.getElementById("color").value;
+    var translation = document.getElementById("translation").value;
+    
+    if(newColor != "" && translation != "") {
+      elem.setAttribute("style", "color: " + newColor);
+      elem.innerText = translation;
+    
+      document.getElementById("colorList").append(elem);
+
+      colorList[newColor] = translation;
+    } else {
+      $("#color404").css("display", "block");
+    }
+  });
+
+  $("#lockBan").on("change", function () {
     if(document.getElementById("lockBan").checked == true) {
       document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
     }
   });
+
+  $("#colorsInfo").mouseover(function () {
+    $("#colorsDesc").css('display','block');
+  });
+
+  $("#colorsInfo").on("mouseout", function () {
+    $("#colorsDesc").css('display','none');
+  });
+
+  $("#resetColors").on("click", function () {
+    if (confirm("אתה בטוח שאתה רוצה להחזיר את רשימת הצבעים לברירת המחדל שלה?")) {
+      chrome.storage.sync.set({ colors: false });
+      $("#colorList").html("");
+    }
+  })
+
+  $("#saveOptions").on('click',
+    save_options);
 
   chrome.storage.sync.get({ banMeMillisec: 0 }, function (data) {
     if(data.banMeMillisec > (new Date()).valueOf()) {
       document.getElementById("setUpBanTR").innerHTML = "<td>יש לך באן פעיל.</td>";
     }
   });
-
-  document.getElementById('saveOptions').addEventListener('click',
-    save_options);
 }
