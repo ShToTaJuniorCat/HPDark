@@ -13,7 +13,8 @@
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "notifications"
   ],
 
   "background": {
@@ -49,14 +50,13 @@
       "matches": ["*://hportal.co.il/*"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php?showtopic=*"],
+      "matches": ["*://hportal.co.il/index.php?showtopic=*", "*://hportal.co.il/index.php?act=ST&f=53&*"],
       "css": ["/wysiwyg/wysiwyg.css"],
       "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
     },
     {
       "matches": ["*://hportal.co.il/index.php*CODE=08&*=*", "*://hportal.co.il/index.php?", "*://hportal.co.il/index.php?act=Post&CODE=02&*"],
-      "css": ["/wysiwyg/wysiwyg.css"],
-      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/edit-comment.js"]
+      "js": ["/pagesJS/edit-comment.js"]
     },
     {
       "matches": ["*://hportal.co.il/index.php*showuser=*"],

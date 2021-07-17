@@ -12,3 +12,6 @@
     - Send sickles to someone through their profile 
 
     - Ban yourself for a certain amount of time (user declared)
+
+    - Customiseable colors in the color selection GUI
+      + Make in Firefox version

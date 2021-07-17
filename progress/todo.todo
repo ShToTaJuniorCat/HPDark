@@ -1,7 +1,6 @@
-TODOs (Ordered by expected amount of effort to make each):
+TODOs (Ordered by expected amount of effort to make each one):
     - Change default values in inputs to placeholders (HTML attribute)
-    - Jump to page in forums
-    - More colors in the color selection GUI
+    ~ Jump to page in forums
     - More font-sizes in font-size selection GUI
     - Hide QUOTE/CODE blocks in a single comment/thread
     - More tags buttons
@@ -10,7 +9,6 @@ TODOs (Ordered by expected amount of effort to make each):
     - Jump to page in home page
     - Separate yellow emojis from onions
     - Customiseable emojis and onions
-    - Customiseable colors in color selection bar
     - Customiseable gender
         + Check if possible
     - List of categories in home page
@@ -21,6 +19,7 @@ TODOs (Ordered by expected amount of effort to make each):
         + Probably will rely on quoting it in iFrame or something similar.
         + Therefore, probably wouldnt be possible in locked threads
     - Send sickles or PMs to many users at the same time
+        + Check if the site admins are fine with it (Yarin, mainly)
     - Split or merge long/many PMs into long one/many short ones
         + Customiseable length to spliting 
     - WYSIWYG - What You See Is What You Get 

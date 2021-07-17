@@ -50,7 +50,7 @@
                                     <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
                                     <polyline points="1 9 7 14 15 4"></polyline>
                                 </svg>
-                                הצג כפתור שינוי מצב לדארק מוד
+                                השתמש בדארק מוד בפורטל
                             </label>
                         </td>
                     </tr>
@@ -128,6 +128,40 @@
                             </label>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <hr>
+                            צבעים לבחירה: <img src="/images/info.svg" width="23px" height="23px" id="colorsInfo" />
+                            <div id="colorsDesc">
+                                בכדי להוסיף צבע לרשימה, כתוב את הקוד של הצבע בתיבת הטקסט הראשונה.
+                                <br>
+                                למשל, בכדי להוסיף את הצבע לבן, יש לכתוב שם White. בכדי להוסיף את הצבע סלמון, יש לכתוב שם Salmon, וכולי.
+                                <br>
+                                בכדי לתת שם לצבע (השם שיופיע ברשימת הצבעים כשתכתבו תגובה ותרצו לבחור את הצבע) כתבו את השם שתרצו לתת לצבע בתיבת הטקסט השנייה.
+                                <br>
+                                למשל, בכדי שהצבע Salmon יופיע ברשימה בתור סלמון, יש לכתום שם סלמון.
+                                <br>
+                            </div>
+                            <ul id="colorList">
+                            </ul>
+
+                            רשימה של כל הצבעים הזמינים בפורטל נמצאת <a href="https://hportal.co.il/index.php?showtopic=113449" target="_blank" style="color: black">פה</a>.
+
+                            <input id="color" placeholder="צבע להוספה..." />
+                            </br>
+                            <input id="translation" placeholder="שם הצבע..." />
+
+                            </br>
+
+                            <button id="setColor">הוסף את הצבע לרשימה</button>
+                            </br>
+                            <span style="color: red; display: none;" id="color404">הצבע או השם של הצבע לא נמצאו!</span>
+                            
+                            <br>
+
+                            <button id="resetColors">החזר את הצבעים לברירת המחדל</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -154,8 +188,8 @@
         <div class="user-settings-options options" id="userSettingsOptions">
             <table>
                 <tbody>
-                    <tr>
-                        <td class="checkboxOption" id="showSicklesTD">
+                    <tr id="setUpBanTR">
+                        <td class="checkboxOption" id="banMeTD">
                             <label for="banMe">
                                 תן לי באן עד 
                                 <input type="datetime-local" id="banMe">
@@ -171,9 +205,12 @@
                                 נעל באן? (לא תהיה לך אפשרות להוריד את הבאן עד שהזמן יסתיים)
                             </label>
                         </td>
+                    </tr>
+                    <tr>
                         <td>
-                            <button id='cancelBan' style="display: none;">בטל באן פעיל</button>
-                            <span id="banInfo">אין לך באן פעיל כרגע</span>
+                            <div id="cancelBanDIV">
+                                <button id='cancelBan'>בטל באן פעיל</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
