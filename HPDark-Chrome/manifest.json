@@ -50,7 +50,7 @@
       "matches": ["*://hportal.co.il/*"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php?showtopic=*"],
+      "matches": ["*://hportal.co.il/index.php?showtopic=*", "*://hportal.co.il/index.php?act=ST&f=53&*"],
       "css": ["/wysiwyg/wysiwyg.css"],
       "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
     },
