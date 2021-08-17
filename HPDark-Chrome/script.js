@@ -68,12 +68,13 @@ function convertMilToHourNMin(millisec) {
 }
 
 
-chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
+chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: false }, function(data) {
     var banned = false;
     var checkTime = setInterval(() => {
         if ((new Date()).getTime() < data.banMeMillisec) {
             // We are behind the date to unban, still banned
-            banned = true;
+            chrome.storage.sync.set({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: false });
+
             const timeToEnd = convertMilToHourNMin(data.banMeMillisec - (new Date()).getTime());
             
             if(!data.lockBan) {
@@ -83,16 +84,12 @@ chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
             }
 
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;' dir='rtl'>את/ה כרגע בבאן על ידי HPD (נוצר על ידי המשתמש/ת). " + rest + "הבאן יסתיים בעוד " + timeToEnd[0] + " שעות, " + timeToEnd[1] + " דקות ו-" + timeToEnd[2] + " שניות (עלול להיות לא מדויק בעד 999 אלפיות השנייה)</h2>";
-        } else if(banned) {
-            /*
-            So basically, if in the last run of {checkTime} (interval) the ban was ended, {banned} would be true.
-            In that case, this else-if statement will run, and the user will be notified.
-            */
-
+        } else if(!data.loggedAfterUnban) {
+            // The date unban is behind, so unban this poor guy.
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;'>הבאן הסתיים. <a href='javascript:location.reload()'>לחץ כאן כדי לטעון מחדש את העמוד.</a></h2>";
             chrome.runtime.sendMessage({ msg: "sendNotif", title: "הבאן הסתיים!", body: "הבאן מ-HPortal הסתיים.", icon: "images/settings.svg" }); // Send a desktop notification
             clearInterval(checkTime);
-            chrome.storage.sync.set({ banMeMillisec: 0 });
+            chrome.storage.sync.set({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: true });
         }
     }, 1000);
 });
