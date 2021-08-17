@@ -73,6 +73,8 @@ chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: fa
     var checkTime = setInterval(() => {
         if ((new Date()).getTime() < data.banMeMillisec) {
             // We are behind the date to unban, still banned
+            chrome.storage.sync.set({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: false });
+
             const timeToEnd = convertMilToHourNMin(data.banMeMillisec - (new Date()).getTime());
             
             if(!data.lockBan) {
