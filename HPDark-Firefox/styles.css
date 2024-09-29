@@ -210,16 +210,6 @@ body.darkModeOn div:not(.thin) span[style*="color:yellow" i]:active,
         color: yellow !important;
 }
 
-.darkSwitch {
-    position: fixed;
-    top: 0;
-    border-radius: 50%;
-    left: 30px;
-    width: 50px;
-    height: 50px;
-    background-size: 50px;
-}
-
 .settingsButton {
     top: 0;
     right: 10px;

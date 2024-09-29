@@ -1,3 +1,5 @@
+var colorList = {};
+
 function hideAllOptions() {
   // Hide all options elements from displaying. 
   // We only want one options element at a time
@@ -11,7 +13,7 @@ function removeHighlights() {
 }
 
 function setPanelReady(panelName, options) {
-  document.getElementById(panelName).addEventListener("click", function () {
+  $("#" + panelName).on("click", function () {
       hideAllOptions();
       removeHighlights();
       $("#" + options).show();
@@ -19,106 +21,144 @@ function setPanelReady(panelName, options) {
   });
 }
 
+
 // Restores select box and checkbox state using the preferences
 // stored in browser.storage.
 function restore_options() {
   browser.storage.sync.get({
-    darkSwitch: true,
+    darkMode: true,
     
     hideLargeSig: true,
     largeSignatures: 600,
 
-    resizeLargeImages: true,
-    largeImages: 40.781,
-
-    WYSIWYGCheckbox: false,
+    textSize: 9,
+    // resizeLargeImages: true,
+    // largeImages: 40.781, Hidden for lack of need. See topics.js for explanation
+    replaceSpotifyLinks: false,
 
     addEdited: false,
+    colors: false,
 
     showSickles: true,
 
     banMeMillisec: 0,
     lockBan: false
   }, function(items) {
-    document.getElementById("darkSwitch").checked = items.darkSwitch;
+    $("#darkSwitch").prop('checked', items.darkMode);
 
-    document.getElementById("hideLargeSig").checked = items.hideLargeSig;
-    document.getElementById("largeSigInput").value = items.largeSignatures;
+    $("#hideLargeSig").prop('checked', items.hideLargeSig);
+    $("#largeSigInput").val(items.largeSignatures);
     if(items.hideLargeSig) {
-      document.getElementById("largeSigInput").style.display = "initial";
-      document.getElementById("resetLargeSig").style.display = "initial";
+      $("#largeSigInput").css("display", "initial");
+      $("#resetLargeSig").css("display", "initial");
     }
 
-    document.getElementById("resizeLargeImages").checked = items.resizeLargeImages;
-    document.getElementById("largeImgInput").value = items.largeImages;
-    if(items.resizeLargeImages) {
-      document.getElementById("largeImgInput").style.display = "initial";
-      document.getElementById("resetLargeImg").style.display = "initial";
-    }
+    $("#textSize").val(items.textSize);
 
-    document.getElementById("WYSIWYGCheckbox").checked = items.WYSIWYGCheckbox;
+    // Hidden for lack of need. See topics.js for explanation
+    // $("#resizeLargeImages").prop('checked', items.resizeLargeImages);
+    // $("#largeImgInput").val(items.largeImages);
+    // if(items.resizeLargeImages) {
+    //   $("#largeImgInput").css('display', 'initial');
+    //   $("#resetLargeImg").css("display", "initial");
+    // }
     
-    document.getElementById("addEdited").checked = items.addEdited;
+    $("#addEdited").prop('checked', items.addEdited);
+    $("#replaceSpotifyLinks").prop('checked', items.replaceSpotifyLinks);
 
-    document.getElementById("showSickles").checked = items.showSickles;
+    $("#showSickles").prop('checked', items.showSickles);
 
     if((new Date()).getTime() < items.banMeMillisec) {
-      document.getElementById("banInfo").style.display = "none";
-      document.getElementById("cancelBan").style.display = (items.lockBan ? "none" : "initial");
-      // Yes, it will be pretty easy to remove the ban even if its locked.
+      // Yes, it will be pretty easy to remove the ban even if its locked. Self control is important, people.
       // But I challenge you to remove it without using that button :)
+      // Aaand now without setting the date to a past time, too
+
+      if(items.lockBan) {
+        $("#banInfo").html("הבאן הנוכחי נעול.");
+        $("#lockBanTD").css("display", "none");
+        $("#banMeTD").css("display", "none");
+      } else {
+        document.getElementById("cancelBanButton").style.display = "initial";
+        $("#banInfo").css("display", "none");
+
+        document.getElementById("cancelBanButton").addEventListener("click", function () {
+          if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
+            browser.storage.sync.set({ banMeMillisec: 0 });
+            $("#cancelBanButton").css("display", "none");
+            $("#banInfo").html("הבאן בוטל, יש לטעון מחדש את העמוד.");
+            $("#banInfo").css("display", "initial");
+          }
+        });
+      }
+    } else {
+      browser.storage.sync.set({
+        banMeMillisec: 0,
+        lockBan: false });
     }
+
+    // TODO: Check colors
   });
 }
 
-// Save options to browser.storage
+// Save options to browser storage
 function save_options() {
   var darkSwitchCheckbox = document.getElementById("darkSwitch").checked;
 
   var hideLargeSig = document.getElementById("hideLargeSig").checked;
   var largeSignaturesInput = document.getElementById("largeSigInput").value;
   
-  var resizeLargeImages = document.getElementById("resizeLargeImages").checked;
-  var largeImagesInput = document.getElementById("largeImgInput").value;
-
-  var WYSIWYGCheckbox = document.getElementById("WYSIWYGCheckbox").checked;
+  var textSize = $("#textSize").val();
+  // var resizeLargeImages = document.getElementById("resizeLargeImages").checked;
+  // var largeImagesInput = document.getElementById("largeImgInput").value; Hidden for lack of need. See topics.js for explanation
+  var replaceSpotifyLinks = document.getElementById("replaceSpotifyLinks").checked;
   
   var addEdited = document.getElementById("addEdited").checked;
 
   var showSickles = document.getElementById("showSickles").checked;
 
-  var banMeMillisec = new Date(document.getElementById("banMeDate").value + " " + document.getElementById("banMeTime").value).getTime();
-  var lockBan = document.getElementById("lockBan").checked;
+  browser.storage.sync.get({ banMeMillisec: 0,
+    lockBan: false }, function (items) {
+      var banMillisec = Math.max(items.banMeMillisec, // It should be the max of the one in the storage and the one currently selected,
+                                                //  to stop smartasses who would try to set the date to a past time
+        new Date($("#banMeDate").val() + " " + $("#banMeTime").val()).getTime() || 0); // || is needed in case first val is NaN
+      
+        // || is needed to stop smartasses setting new unlocked ban
+      var lockBan = document.getElementById("lockBan").checked || items.lockBan;
+
+      console.log(banMillisec);
+
+      browser.storage.sync.set({
+        banMeMillisec: banMillisec,
+        lockBan: lockBan });
+    }
+  );
 
   browser.storage.sync.set({
-    darkSwitch: darkSwitchCheckbox,
+    darkMode: darkSwitchCheckbox,
 
     hideLargeSig: hideLargeSig,
     largeSignatures: largeSignaturesInput,
 
-    resizeLargeImages: resizeLargeImages,
-    largeImages: largeImagesInput,
-
-    WYSIWYGCheckbox: WYSIWYGCheckbox,
+    textSize: textSize,
+    // resizeLargeImages: resizeLargeImages,
+    // largeImages: largeImagesInput, Hidden for lack of need. See topics.js for explanation
+    replaceSpotifyLinks: replaceSpotifyLinks,
     
     addEdited: addEdited,
+    colors: colorList,
 
-    showSickles: showSickles,
-
-    banMeMillisec: banMeMillisec,
-    lockBan: lockBan
+    showSickles: showSickles
   }, function() {
     // Update status to let user know options were saved.
     var optionsSaved = document.getElementById('optionsSaved');
     optionsSaved.textContent = 'Options saved.';
     setTimeout(function() {
       optionsSaved.textContent = '';
-    }, 1000);
+    }, 2000);
   });
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-  
 
 
 window.onload = function () {
@@ -146,38 +186,69 @@ window.onload = function () {
     }
   });
 
-  $("#resizeLargeImages").change(function () {
-    if(this.checked) {
-        $("#largeImgInput").css("display", "initial");
-        $("#resetLargeImg").css("display", "initial");
-    } else {
-        $("#largeImgInput").css("display", "none");
-        $("#resetLargeImg").css("display", "none");
-    }
+  $("#resetTextSize").on("click", function () {
+    $("#textSize").val(9);
   });
 
-  $("#resetLargeImg").on("click", function () {
-    $("#largeImgInput").val(40.781);
-  });
+  // Hidden for lack of need. See topics.js for explanation
+  // $("#resizeLargeImages").change(function () {
+  //   if(this.checked) {
+  //       $("#largeImgInput").css("display", "initial");
+  //       $("#resetLargeImg").css("display", "initial");
+  //   } else {
+  //       $("#largeImgInput").css("display", "none");
+  //       $("#resetLargeImg").css("display", "none");
+  //   }
+  // });
+  //
+  // $("#resetLargeImg").on("click", function () {
+  //   $("#largeImgInput").val(40.781);
+  // });
 
   $("#resetLargeSig").on("click", function () {
     $("#largeSigInput").val(600);
   });
 
-  document.getElementById("cancelBan").addEventListener("click", function () {
-    if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
-      browser.storage.sync.set({ banMeMillisec: 0 });
-      document.getElementById("banInfo").style.display = "initial";
-      document.getElementById("cancelBan").style.display = "none";
+  $("#setColor").on("click", function () {
+    $("#color404").css("display", "none");
+
+    var elem = document.createElement("li");
+    var newColor = document.getElementById("color").value;
+    var translation = document.getElementById("translation").value;
+    
+    if(newColor != "" && translation != "") {
+      elem.setAttribute("style", "color: " + newColor);
+      elem.innerText = translation;
+    
+      document.getElementById("colorList").append(elem);
+
+      colorList[newColor] = translation;
+    } else {
+      $("#color404").css("display", "block");
     }
   });
 
-  document.getElementById("lockBan").addEventListener("change", function () {
+  $("#colorsInfo").mouseover(function () {
+    $("#colorsDesc").css('display','block');
+  });
+
+  $("#colorsInfo").on("mouseout", function () {
+    $("#colorsDesc").css('display','none');
+  });
+
+  $("#resetColors").on("click", function () {
+    if (confirm("אתה בטוח שאתה רוצה להחזיר את רשימת הצבעים לברירת המחדל שלה?")) {
+      browser.storage.sync.set({ colors: false });
+      $("#colorList").html("");
+    }
+  });
+
+  $("#lockBan").on("change", function () {
     if(document.getElementById("lockBan").checked == true) {
       document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
     }
   });
 
-  document.getElementById('saveOptions').addEventListener('click',
+  $("#saveOptions").on('click',
     save_options);
 }

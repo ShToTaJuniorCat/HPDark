@@ -1,9 +1,12 @@
-window.onload = function () {
+$( document ).ready(function() {
     // --------------------------------------------
     // Resize large images
+    // Update: upon inspection this doesn't appear to be doing anything since HPortal does this automatically.
+    // Hidden for this reason. If I find HPortal's feature is acting up again, I'll bring this back.
+    /*
     browser.storage.sync.get({ resizeLargeImages: true, largeImages: 40.781 }, function(data) {
         if(data.resizeLargeImages) {
-            var images = document.getElementsByClassName("tableborder")[0].getElementsByTagName("img");
+            var images = $(".tableborder")[0].getElementsByTagName("img");
 
             for (let index = 0; index < images.length; index++) {
                 const image = images[index];
@@ -12,33 +15,28 @@ window.onload = function () {
                 }
             }
         }
-    });
+    }); */
     // --------------------------------------------
-    
 
     // --------------------------------------------
-    // WYSIWYG
     /*
-    NOT WORKING IN FIREFOX.
-    TODO, WIP
-    browser.storage.sync.get({ WYSIWYGCheckbox: false }, function(data) {
-        if(data.WYSIWYGCheckbox) {
-            var textarea = document.getElementsByName('Post')[0];
-	        sceditor.create(textarea, {
-	        	format: 'bbcode',
-                icons: 'monocons',
-            });
+    Replace links to Spotify tracks with embeds to the tracks
+    */
+    browser.storage.sync.get({ replaceSpotifyLinks: false }, function(data) {
+        if(data.replaceSpotifyLinks) { // Only replace if storage's value is positive
+            console.log("Replacing spotify shit");
 
-            document.body.addEventListener("keydown", function (e) {
-                // Make the textarea focused when any of the keys listed using keyCodes are pressed
-                const keyCodes = [13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 66, 67, 68, 69 /* Nice ( ͡° ͜ʖ ͡° ) *//*, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 83, 85, 86, 88, 89, 90, 186, 188, 190, 191, 219, 221, 222];
-                if (keyCodes.indexOf(e.keyCode) !=  -1) {
-                    document.getElementById("WYSIWYGiframe").contentWindow.document.getElementById("wysiwygDivContent").focus();   
+            let posts = document.getElementsByClassName("post1");
+            for(let i = 0; i < posts.length; i++) { 
+                let postLinks = posts[i].getElementsByTagName("a");
+                for(let j = 0; j < postLinks.length; j++) {
+                    if (postLinks[j].href.indexOf("spotify") != -1 && postLinks[j].href.split('track/').length > 1) {
+                        postLinks[j].innerHTML = '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/' + postLinks[j].href.split('track/')[1].split("?")[0] + '" width="50%" height="150px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+                    }
                 }
-            });
+            }
         }
     });
-    */
     // --------------------------------------------
 
     
@@ -65,4 +63,11 @@ window.onload = function () {
         }
     });
     // --------------------------------------------
-}
+
+    // --------------------------------------------
+    // Set comment's text size according to preferences
+    browser.storage.sync.get({ textSize: 9 }, function(data) {
+        $(".postcolor").css("font-size", data.textSize + "pt");
+    });
+    // --------------------------------------------
+});

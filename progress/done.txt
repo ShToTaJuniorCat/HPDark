@@ -2,6 +2,8 @@
     - Dark Mode switch: Toggles Dark Mode on and off.
     
     - Resize large images: Resizes large images into smaller versions.
+
+    - Set text size in comments
     
     - Break long words
 

@@ -25,35 +25,6 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end));
 }
 
-function switchDarkMode() {
-    // Toggles the dark mode, on/off
-
-    browser.storage.sync.get({ darkMode: null }, function(data) { 
-        if(data.darkMode == null) {
-            /*
-            C'mon man, did you mess around with the storage?
-            Just kidding, I love to mess around with things
-            too. Keep it up! this is how I learned :)
-            Anyways, I'm gonna set the key back to true.
-            */
-            browser.storage.sync.set({ darkMode: true }, function() {
-                console.log("darkMode key was not found in storage. Did you mess with things here? Please look at file HPDark/script.js line 48 on github ;)");
-                document.body.classList.add("darkModeOn");
-            });
-        } else if(data.darkMode == true) {
-            browser.storage.sync.set({ darkMode: false }, function() {
-                console.log("Dark Mode is off.");
-              });
-            document.body.classList.remove("darkModeOn"); // Turn off the lights
-        } else {
-            browser.storage.sync.set({ darkMode: true }, function() {
-                console.log("Dark Mode is on.");
-              });
-            document.body.classList.add("darkModeOn"); // Turn on the lights
-        }
-    });
-}
-
 function convertMilToHourNMin(millisec) {
     const hours = Math.floor(millisec / 1000 / 3600);
     const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
@@ -62,10 +33,20 @@ function convertMilToHourNMin(millisec) {
     return [hours, minutes, sec];
 }
 
+
 // --------------------------------------------
+// Handle dark mode according to preferences
 // By default, dark mode is turned on.
-browser.storage.sync.get({ darkMode: null }, function(data) { 
-    if(data.darkMode == null) {
+browser.storage.sync.get({ darkMode: null }, function(data) {
+    if(data.darkMode == true) {
+        // It's Ella now and I'm planning on stealing your favorite programmer. Cya later!
+        
+        // Update: She successfully stole me, and my heart. 
+
+
+        // Dark mode is on in storage, so we need to turn off the lights.
+        document.body.classList.add("darkModeOn");
+    } else if(data.darkMode == null) {
         /* 
         No storage key named "darkMode".
         It *probably* means that this is the first time the extention
@@ -75,9 +56,6 @@ browser.storage.sync.get({ darkMode: null }, function(data) {
             console.log("darkMode key was not found in storage. Created new key, set to true by default.");
             document.body.classList.add("darkModeOn");
         });
-    } else if(data.darkMode == true) {
-        // Dark mode is on in storage, so we need to turn off the lights.
-        document.body.classList.add("darkModeOn");
     } else {
         /*
         Dark mode if off.
@@ -89,7 +67,7 @@ browser.storage.sync.get({ darkMode: null }, function(data) {
         */
     }
 });
-
+// --------------------------------------------
 
 // --------------------------------------------
 // Create the extension's settings button
@@ -104,32 +82,6 @@ settingsButton.style.backgroundImage = "url('" + browser.extension.getURL("image
 
 document.body.appendChild(settingsButton); // {settingsButton}, say hello to the world!
 // --------------------------------------------
-
-
-// --------------------------------------------
-// Make a switch button to the dark mode,
-// but only if the user wants me to!
-browser.storage.sync.get({ darkSwitch: true }, function(data) { 
-    if(data.darkSwitch) {
-        // It's Ella now and I'm planning on stealing your favorite programmer. Cya later!
-        
-        // Update: She successfully stole me, and my heart. 
-
-        var darkSwitch = document.createElement("div"); // The base element of the button
-
-        darkSwitch.setAttribute("class", "darkSwitch");
-        darkSwitch.setAttribute("id", "darkSwitch");
-
-        darkSwitch.style.backgroundImage = "url('" + browser.extension.getURL("images/moon.svg") + "')"; // Background image of {darkSwitch}; the only thing that shows
-
-        document.body.appendChild(darkSwitch);
-
-        document.getElementById("darkSwitch").onclick = switchDarkMode;
-    } else {
-    }
-});
-// --------------------------------------------
-
 
 // --------------------------------------------
 // Ban yourself for a certain amount of time
