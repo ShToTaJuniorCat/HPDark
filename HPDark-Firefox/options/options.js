@@ -1,4 +1,4 @@
-var colorList = {};
+var localColorList = {};
 
 function hideAllOptions() {
   // Hide all options elements from displaying. 
@@ -37,7 +37,7 @@ function restore_options() {
     replaceSpotifyLinks: false,
 
     addEdited: false,
-    colors: false,
+    colors: {},
 
     showSickles: true,
 
@@ -46,6 +46,8 @@ function restore_options() {
   }, function(items) {
     $("#darkSwitch").prop('checked', items.darkMode);
 
+    $("#textSize").val(items.textSize);
+
     $("#hideLargeSig").prop('checked', items.hideLargeSig);
     $("#largeSigInput").val(items.largeSignatures);
     if(items.hideLargeSig) {
@@ -53,7 +55,7 @@ function restore_options() {
       $("#resetLargeSig").css("display", "initial");
     }
 
-    $("#textSize").val(items.textSize);
+    $("#replaceSpotifyLinks").prop('checked', items.replaceSpotifyLinks);
 
     // Hidden for lack of need. See topics.js for explanation
     // $("#resizeLargeImages").prop('checked', items.resizeLargeImages);
@@ -64,7 +66,16 @@ function restore_options() {
     // }
     
     $("#addEdited").prop('checked', items.addEdited);
-    $("#replaceSpotifyLinks").prop('checked', items.replaceSpotifyLinks);
+    
+    colorList = items.colors;
+    colorCodes = Object.keys(colorList);
+    for(let i = 0; i < colorCodes.length; i++) {
+      // Create a list item with:        color=     color's value,      id=liColor{color's value} (consistent with later use)
+      $("#colorList").append("<li style='color: " + colorCodes[i] + ";' id='liColor" + colorCodes[i] + "'>"
+        + colorList[colorCodes[i]]
+        + "</li>");
+    }
+    localColorList = colorList;
 
     $("#showSickles").prop('checked', items.showSickles);
 
@@ -95,8 +106,6 @@ function restore_options() {
         banMeMillisec: 0,
         lockBan: false });
     }
-
-    // TODO: Check colors
   });
 }
 
@@ -125,8 +134,6 @@ function save_options() {
         // || is needed to stop smartasses setting new unlocked ban
       var lockBan = document.getElementById("lockBan").checked || items.lockBan;
 
-      console.log(banMillisec);
-
       browser.storage.sync.set({
         banMeMillisec: banMillisec,
         lockBan: lockBan });
@@ -145,10 +152,12 @@ function save_options() {
     replaceSpotifyLinks: replaceSpotifyLinks,
     
     addEdited: addEdited,
-    colors: colorList,
+    colors: localColorList,
 
     showSickles: showSickles
   }, function() {
+    console.log(localColorList);
+
     // Update status to let user know options were saved.
     var optionsSaved = document.getElementById('optionsSaved');
     optionsSaved.textContent = 'Options saved.';
@@ -210,35 +219,63 @@ window.onload = function () {
   });
 
   $("#setColor").on("click", function () {
+    // Make sure the 'color not found' message is hiddeen
     $("#color404").css("display", "none");
 
-    var elem = document.createElement("li");
-    var newColor = document.getElementById("color").value;
-    var translation = document.getElementById("translation").value;
+    // Get color and it's name
+    var newColor = document.getElementById("color").value.toLowerCase();
+    var colorName = document.getElementById("colorName").value;
     
-    if(newColor != "" && translation != "") {
-      elem.setAttribute("style", "color: " + newColor);
-      elem.innerText = translation;
-    
-      document.getElementById("colorList").append(elem);
+    // Make sure the color exists and has a name
+    // TODO: Make sure the color is available
+    if(newColor != "" && colorName != "") {
+      if(Object.keys(localColorList).includes(newColor)) {
+        $("#liColor" + newColor).text(colorName);
+        localColorList[newColor] = colorName;
+      } else {
+        // Check if the color name already exists
+        // If it is, continue only if the user agrees to reuse it 
+        if(!Object.values(localColorList).includes(colorName) ||
+          (
+            Object.values(localColorList).includes(colorName) &&
+            confirm("שם הצבע הזה כבר בשימוש. להשתמש בו שוב?")
+          )
+        ) {
+          // Create a new <li> element that will display the color
+          // in the existing colors list
+          var elem = document.createElement("li");
 
-      colorList[newColor] = translation;
+          elem.innerText = colorName;
+          elem.setAttribute("style", "color: " + newColor + ";");
+          elem.setAttribute("id", "liColor" + newColor);
+        
+          document.getElementById("colorList").append(elem);
+
+          // Save the color and its name for later use
+          localColorList[newColor] = colorName;
+        }
+      }
     } else {
+      // No color set, tell the user they are dum-dum
       $("#color404").css("display", "block");
     }
   });
 
   $("#colorsInfo").mouseover(function () {
+    // Show info about this feature when hovered
     $("#colorsDesc").css('display','block');
   });
 
   $("#colorsInfo").on("mouseout", function () {
+    // Hide info about this feature when not hovered
     $("#colorsDesc").css('display','none');
   });
 
   $("#resetColors").on("click", function () {
+    // Reset color list
     if (confirm("אתה בטוח שאתה רוצה להחזיר את רשימת הצבעים לברירת המחדל שלה?")) {
-      browser.storage.sync.set({ colors: false });
+      browser.storage.sync.set({ colors: {} });
+      localColorList = {};
       $("#colorList").html("");
     }
   });
@@ -248,7 +285,21 @@ window.onload = function () {
       document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
     }
   });
-
-  $("#saveOptions").on('click',
-    save_options);
 }
+
+// TODO: Make the above code use the following
+
+$(document).on('click', "#saveOptions",
+  save_options);
+
+$(document).on('click', '#colorList li', function() {
+  // Note to self: Tried using the jQuery way, which is
+  // $(this).css('color')
+  // But it returns an RGB value of the color instead of client
+  // color. So that's not in use now.
+  console.log(this.style.color);
+  delete localColorList[this.style.color];
+
+  // Remove the color item in the list
+  $(this).remove();
+});
