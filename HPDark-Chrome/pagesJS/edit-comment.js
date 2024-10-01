@@ -31,7 +31,7 @@ window.onload = function () {
     // Customise color in color selection GUI
     chrome.storage.sync.get({ colors: false }, function(data) {
         // Check if the colors are set (default is false, therefore not set)
-        if(data.colors != false) {
+        if(data.colors != false && typeof(data.colors) == "object" && !jQuery.isEmptyObject(data.colors)) {
             var colorNames = Object.keys(data.colors);
 
             var fcolor = document.getElementsByName("fcolor")[0];
