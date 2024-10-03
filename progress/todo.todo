@@ -1,7 +1,12 @@
 TODOs (Ordered by expected amount of effort to make each one):
+    - Change color of page jumping in the owlery
     - Change default values in inputs to placeholders (HTML attribute)
-    ~ Jump to page in forums
+    - Jump to page in forums
+    - Allow users to use ezmode by default in comment writing
+        + Uses a cookie to store the preference.
+        + Will require changing function setmode(mVal) in ibfcode.js
     - More font-sizes in font-size selection GUI
+    - Auto delete owls with keywords in title after a fixed amount of time
     - Hide QUOTE/CODE blocks in a single comment/thread
     - More tags buttons
         + Examples: [S], [HTML], [SQl], others (maybe customiseable for future updates if needed)

@@ -24,8 +24,6 @@ $( document ).ready(function() {
     */
     browser.storage.sync.get({ replaceSpotifyLinks: false }, function(data) {
         if(data.replaceSpotifyLinks) { // Only replace if storage's value is positive
-            console.log("Replacing spotify shit");
-
             let posts = document.getElementsByClassName("post1");
             for(let i = 0; i < posts.length; i++) { 
                 let postLinks = posts[i].getElementsByTagName("a");

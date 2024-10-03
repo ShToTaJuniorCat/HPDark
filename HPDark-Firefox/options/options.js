@@ -1,4 +1,58 @@
-var localColorList = {};
+let localColorList = {};
+
+// I hate new version JS. Why does everything have to load fast?
+async function loadColors() {
+  const response = await fetch('./colors/colors.json');
+  if (!response.ok) {
+      throw new Error('Failed to load JSON color data');
+  }
+  return response.json();
+}
+
+async function addColor() {
+  // Hide the 'color not found' message
+  $("#color404").hide();
+
+  // Get color and its name
+  const newColor = $('#color').val().toLowerCase();
+  const colorName = $('#colorName').val();
+
+  // Ensure the color exists and has a name
+  if (newColor && colorName) {
+    if (newColor in localColorList) {
+      $("#liColor" + newColor).text(colorName);
+      localColorList[newColor] = colorName;
+    } else if (!Object.values(localColorList).includes(colorName) || 
+               confirm("שם הצבע הזה כבר בשימוש. להשתמש בו שוב?")) {
+      try {
+        // Load colors from the JSON file 
+        const data = Object.values((await loadColors())[0]).flat().map(item => item.toLowerCase());
+
+        // Check if the color is in the JSON data
+        if (data.includes(newColor)) {
+          // Create a new <li> element to display the color
+          const $elem = $('<li>', {
+            text: colorName,
+            css: { color: newColor },
+            id: 'liColor' + newColor
+          });
+
+          $('#colorList').append($elem);
+
+          // Save the color and its name for later use
+          localColorList[newColor] = colorName;
+        } else {
+          $("#color404").text("הצבע אינו קיים (מומלץ לבדוק איות)").show();
+        }
+      } catch (error) {
+        $("#color404").text("אירעה תקלה. נא לנסות שוב. אם הבעיה ממשיכה, נא ליצור קשר איתי (המפתח)").show();
+      }
+    }
+  } else {
+    // No color set, inform the user
+    $("#color404").text("צבע או שם צבע לא מוגדר").show();
+  }
+}
 
 function hideAllOptions() {
   // Hide all options elements from displaying. 
@@ -17,7 +71,7 @@ function setPanelReady(panelName, options) {
       hideAllOptions();
       removeHighlights();
       $("#" + options).show();
-      $("#" + panelName).css("background-color", "lightgreen");
+      $(this).css("background-color", "lightgreen");
   });
 }
 
@@ -70,38 +124,42 @@ function restore_options() {
     colorList = items.colors;
     colorCodes = Object.keys(colorList);
     for(let i = 0; i < colorCodes.length; i++) {
-      // Create a list item with:        color=     color's value,      id=liColor{color's value} (consistent with later use)
-      $("#colorList").append("<li style='color: " + colorCodes[i] + ";' id='liColor" + colorCodes[i] + "'>"
-        + colorList[colorCodes[i]]
-        + "</li>");
+      // Create a list item with color=color's value, id=liColor{color's value} (consistent with later use)
+      const $listItem = $('<li>', {
+        css: { color: colorCodes[i] },
+        id: 'liColor' + colorCodes[i],
+        text: colorList[colorCodes[i]]
+      });
+      
+      $('#colorList').append($listItem);
     }
     localColorList = colorList;
 
     $("#showSickles").prop('checked', items.showSickles);
 
     if((new Date()).getTime() < items.banMeMillisec) {
-      // Yes, it will be pretty easy to remove the ban even if its locked. Self control is important, people.
+      // Yes, it is pretty easy to remove the ban even if its locked.
+      // Self control is important, people.
       // But I challenge you to remove it without using that button :)
-      // Aaand now without setting the date to a past time, too
 
-      if(items.lockBan) {
+      if (items.lockBan) {
         $("#banInfo").html("הבאן הנוכחי נעול.");
-        $("#lockBanTD").css("display", "none");
-        $("#banMeTD").css("display", "none");
+        $("#lockBanTD, #banMeTD").hide();
       } else {
-        document.getElementById("cancelBanButton").style.display = "initial";
-        $("#banInfo").css("display", "none");
-
-        document.getElementById("cancelBanButton").addEventListener("click", function () {
-          if(confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
-            browser.storage.sync.set({ banMeMillisec: 0 });
-            $("#cancelBanButton").css("display", "none");
-            $("#banInfo").html("הבאן בוטל, יש לטעון מחדש את העמוד.");
-            $("#banInfo").css("display", "initial");
+        $("#banMeDate").val("");
+        $("#cancelBanButton").css("display", "initial");
+        $("#banInfo").hide();
+      
+        $("#cancelBanButton").on("click", async function () {
+          if (confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
+            await browser.storage.sync.set({ banMeMillisec: 0 });
+            $("#cancelBanButton").hide();
+            $("#banInfo").html("הבאן בוטל, יש לטעון מחדש את העמוד.").show();
           }
         });
-      }
+      }      
     } else {
+      $("#banMeDate").val("");
       browser.storage.sync.set({
         banMeMillisec: 0,
         lockBan: false });
@@ -111,28 +169,28 @@ function restore_options() {
 
 // Save options to browser storage
 function save_options() {
-  var darkSwitchCheckbox = document.getElementById("darkSwitch").checked;
+  const darkSwitchCheckbox = $("#darkSwitch").is(":checked");
 
-  var hideLargeSig = document.getElementById("hideLargeSig").checked;
-  var largeSignaturesInput = document.getElementById("largeSigInput").value;
+  const hideLargeSig = $("#hideLargeSig").is(":checked");
+  const largeSignaturesInput = $("#largeSigInput").val();
   
-  var textSize = $("#textSize").val();
-  // var resizeLargeImages = document.getElementById("resizeLargeImages").checked;
-  // var largeImagesInput = document.getElementById("largeImgInput").value; Hidden for lack of need. See topics.js for explanation
-  var replaceSpotifyLinks = document.getElementById("replaceSpotifyLinks").checked;
+  const textSize = $("#textSize").val();
+  // const resizeLargeImages = $("#resizeLargeImages").is(":checked");
+  // const largeImagesInput = $("#largeImgInput").val(); Hidden for lack of need. See topics.js for explanation
+  const replaceSpotifyLinks = $("#replaceSpotifyLinks").is(":checked");
   
-  var addEdited = document.getElementById("addEdited").checked;
+  const addEdited = $("#addEdited").is(":checked");
 
-  var showSickles = document.getElementById("showSickles").checked;
+  const showSickles = $("#showSickles").is(":checked");  
 
   browser.storage.sync.get({ banMeMillisec: 0,
     lockBan: false }, function (items) {
-      var banMillisec = Math.max(items.banMeMillisec, // It should be the max of the one in the storage and the one currently selected,
+      const banMillisec = Math.max(items.banMeMillisec, // It should be the max of the one in the storage and the one currently selected,
                                                 //  to stop smartasses who would try to set the date to a past time
         new Date($("#banMeDate").val() + " " + $("#banMeTime").val()).getTime() || 0); // || is needed in case first val is NaN
       
         // || is needed to stop smartasses setting new unlocked ban
-      var lockBan = document.getElementById("lockBan").checked || items.lockBan;
+      const lockBan = $('#lockBan').is(':checked') || items.lockBan;
 
       browser.storage.sync.set({
         banMeMillisec: banMillisec,
@@ -156,21 +214,19 @@ function save_options() {
 
     showSickles: showSickles
   }, function() {
-    console.log(localColorList);
-
-    // Update status to let user know options were saved.
-    var optionsSaved = document.getElementById('optionsSaved');
-    optionsSaved.textContent = 'Options saved.';
+    // Update status to let the user know options were saved.
+    let $optionsSaved = $('#optionsSaved');
+    $optionsSaved.text('Options saved.');
+    
     setTimeout(function() {
-      optionsSaved.textContent = '';
+        $optionsSaved.text('');
     }, 2000);
   });
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
+$(document).ready(restore_options);
 
-
-window.onload = function () {
+$(function () {
   // Set all panels ready to be clicked and used
   setPanelReady("darkModePanel", "darkModeOptions");
   setPanelReady("commentsPanel", "commentsOptions");
@@ -184,108 +240,45 @@ window.onload = function () {
   $("#darkModeOptions").show();
   $("#darkModePanel").css("background-color", "lightgreen");
 
-
   $("#hideLargeSig").change(function () {
-    if(this.checked) {
-        $("#largeSigInput").css("display", "initial");
-        $("#resetLargeSig").css("display", "initial");
-    } else {
-        $("#largeSigInput").css("display", "none");
-        $("#resetLargeSig").css("display", "none");
-    }
+    $("#largeSigInput, #resetLargeSig").css("display", this.checked ? "initial" : "none");
   });
 
   $("#resetTextSize").on("click", function () {
     $("#textSize").val(9);
   });
 
-  // Hidden for lack of need. See topics.js for explanation
-  // $("#resizeLargeImages").change(function () {
-  //   if(this.checked) {
-  //       $("#largeImgInput").css("display", "initial");
-  //       $("#resetLargeImg").css("display", "initial");
-  //   } else {
-  //       $("#largeImgInput").css("display", "none");
-  //       $("#resetLargeImg").css("display", "none");
-  //   }
-  // });
-  //
-  // $("#resetLargeImg").on("click", function () {
-  //   $("#largeImgInput").val(40.781);
-  // });
-
   $("#resetLargeSig").on("click", function () {
     $("#largeSigInput").val(600);
   });
 
-  $("#setColor").on("click", function () {
-    // Make sure the 'color not found' message is hiddeen
-    $("#color404").css("display", "none");
+  $("#setColor").on("click", addColor);
 
-    // Get color and it's name
-    var newColor = document.getElementById("color").value.toLowerCase();
-    var colorName = document.getElementById("colorName").value;
-    
-    // Make sure the color exists and has a name
-    // TODO: Make sure the color is available
-    if(newColor != "" && colorName != "") {
-      if(Object.keys(localColorList).includes(newColor)) {
-        $("#liColor" + newColor).text(colorName);
-        localColorList[newColor] = colorName;
-      } else {
-        // Check if the color name already exists
-        // If it is, continue only if the user agrees to reuse it 
-        if(!Object.values(localColorList).includes(colorName) ||
-          (
-            Object.values(localColorList).includes(colorName) &&
-            confirm("שם הצבע הזה כבר בשימוש. להשתמש בו שוב?")
-          )
-        ) {
-          // Create a new <li> element that will display the color
-          // in the existing colors list
-          var elem = document.createElement("li");
-
-          elem.innerText = colorName;
-          elem.setAttribute("style", "color: " + newColor + ";");
-          elem.setAttribute("id", "liColor" + newColor);
-        
-          document.getElementById("colorList").append(elem);
-
-          // Save the color and its name for later use
-          localColorList[newColor] = colorName;
-        }
-      }
-    } else {
-      // No color set, tell the user they are dum-dum
-      $("#color404").css("display", "block");
+  $("#colorsInfo").hover(
+    function () {
+      $("#colorsDesc").show();
+    },
+    function () {
+      $("#colorsDesc").hide();
     }
-  });
-
-  $("#colorsInfo").mouseover(function () {
-    // Show info about this feature when hovered
-    $("#colorsDesc").css('display','block');
-  });
-
-  $("#colorsInfo").on("mouseout", function () {
-    // Hide info about this feature when not hovered
-    $("#colorsDesc").css('display','none');
-  });
+  );
 
   $("#resetColors").on("click", function () {
     // Reset color list
     if (confirm("אתה בטוח שאתה רוצה להחזיר את רשימת הצבעים לברירת המחדל שלה?")) {
       browser.storage.sync.set({ colors: {} });
       localColorList = {};
-      $("#colorList").html("");
+      $("#colorList").empty();
     }
   });
 
   $("#lockBan").on("change", function () {
-    if(document.getElementById("lockBan").checked == true) {
-      document.getElementById("lockBan").checked = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
+    if (this.checked) {
+      const isConfirmed = confirm("את/ה בטוח/ה שאת/ה רוצה לסמן באן זה כבלתי ניתן לביטול?");
+      $(this).prop('checked', isConfirmed);
     }
   });
-}
+});
 
 // TODO: Make the above code use the following
 
@@ -297,7 +290,6 @@ $(document).on('click', '#colorList li', function() {
   // $(this).css('color')
   // But it returns an RGB value of the color instead of client
   // color. So that's not in use now.
-  console.log(this.style.color);
   delete localColorList[this.style.color];
 
   // Remove the color item in the list
