@@ -8,9 +8,6 @@ TODOs (Ordered by expected amount of effort to make each one):
     - More font-sizes in font-size selection GUI
     - Auto delete owls with keywords in title after a fixed amount of time
     - Hide QUOTE/CODE blocks in a single comment/thread
-    - More tags buttons
-        + Examples: [S], [HTML], [SQl], others (maybe customiseable for future updates if needed)
-    - Add source of quote and date in quote tag
     - Jump to page in home page
     - Separate yellow emojis from onions
     - Customiseable emojis and onions

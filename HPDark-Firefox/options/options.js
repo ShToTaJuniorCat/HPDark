@@ -92,6 +92,10 @@ function restore_options() {
 
     addEdited: false,
     colors: {},
+    addStrikethrough: true,
+    addQuote: false,
+    addHTML: false,
+    addSQL: false,
 
     showSickles: true,
 
@@ -134,6 +138,11 @@ function restore_options() {
       $('#colorList').append($listItem);
     }
     localColorList = colorList;
+
+    $("#addStrikethrough").prop('checked', items.addStrikethrough);
+    $("#addQuote").prop('checked', items.addQuote);
+    $("#addHTML").prop('checked', items.addHTML);
+    $("#addSQL").prop('checked', items.addSQL);
 
     $("#showSickles").prop('checked', items.showSickles);
 
@@ -180,6 +189,10 @@ function save_options() {
   const replaceSpotifyLinks = $("#replaceSpotifyLinks").is(":checked");
   
   const addEdited = $("#addEdited").is(":checked");
+  const addStrikethrough = $("#addStrikethrough").is(":checked");
+  const addQuote = $("#addQuote").is(":checked");
+  const addHTML = $("#addHTML").is(":checked");
+  const addSQL = $("#addSQL").is(":checked");
 
   const showSickles = $("#showSickles").is(":checked");  
 
@@ -211,6 +224,10 @@ function save_options() {
     
     addEdited: addEdited,
     colors: localColorList,
+    addStrikethrough: addStrikethrough,
+    addQuote: addQuote,
+    addHTML: addHTML,
+    addSQL: addSQL,
 
     showSickles: showSickles
   }, function() {
@@ -252,16 +269,15 @@ $(function () {
     $("#largeSigInput").val(600);
   });
 
+  $("#quoteInfo").on("click", function() {
+    $("#quoteDesc").toggle();
+  });
+
   $("#setColor").on("click", addColor);
 
-  $("#colorsInfo").hover(
-    function () {
-      $("#colorsDesc").show();
-    },
-    function () {
-      $("#colorsDesc").hide();
-    }
-  );
+  $("#colorsInfo").on("click", function() {
+    $("#colorsDesc").toggle();
+  });
 
   $("#resetColors").on("click", function () {
     // Reset color list

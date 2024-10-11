@@ -52,13 +52,11 @@
     },
     {
       "matches": ["*://hportal.co.il/index.php?showtopic=*", "*://hportal.co.il/index.php?act=ST&f=*&t=*"],
-      "css": ["/wysiwyg/wysiwyg.css"],
-      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/topics.js"]
+      "js": ["/pagesJS/topics.js"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php*CODE=08&*=*", "*://hportal.co.il/index.php?", "*://hportal.co.il/index.php?act=Post&CODE=02&*"],
-      "css": ["/wysiwyg/wysiwyg.css"],
-      "js": ["/wysiwyg/wysiwyg.js", "/pagesJS/edit-comment.js"]
+      "matches": ["*://hportal.co.il/index.php?act=Post&CODE=*&*=*", "*://hportal.co.il/index.php?"],
+      "js": ["/pagesJS/comment-writing.js"]
     },
     {
       "matches": ["*://hportal.co.il/index.php*showuser=*"],

@@ -15,5 +15,11 @@
 
     - Ban yourself for a certain amount of time (user declared)
 
+    - Add source of quote and date in quote tag
+
     - Customiseable colors in the color selection GUI
-      + Make in Firefox version
+  
+    - More tags buttons
+        + [S], [HTML], [SQl]
+
+    - Replace Spotify links with Spotify widgets
