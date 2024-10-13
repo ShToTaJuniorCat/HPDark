@@ -79,7 +79,7 @@ browser.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
             const timeToEnd = convertMilToHourNMin(data.banMeMillisec - (new Date()).getTime());
             
             if(!data.lockBan) {
-                rest = "את/ה יכול/ה לבטל את הבאן <a style='top: 50%; position: aboslute; color: white;' dir='rtl' href='" + browser.extension.getURL("options/options.html") + "' target='_blank'>בהגדרות התוסף</a>. ";
+                rest = "את/ה יכול/ה לבטל את הבאן <a style='top: 50%; position: aboslute; color: white;' dir='rtl' href='" + browser.runtime.getURL("options/options.html") + "' target='_blank'>בהגדרות התוסף</a>. ";
             } else {
                 rest = "";
             }

@@ -72,7 +72,7 @@ $(window).on('load', function() {
                     $signature.html(`
                         חתימה זו הוסתרה על ידי HPlus כיוון שהיא גדולה מהמותר. 
                         ביכולתך לשנות הגדרה זו 
-                        <a href="${browser.extension.getURL('options/options.html')}" target="_blank">בהגדרות התוסף</a>.
+                        <a href="${browser.runtime.getURL('options/options.html')}" target="_blank">בהגדרות התוסף</a>.
                     `);                    
                 }
             });            
