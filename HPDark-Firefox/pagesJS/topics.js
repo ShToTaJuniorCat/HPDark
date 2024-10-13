@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(window).on('load', function() {
     // --------------------------------------------
     // Resize large images
     // Update: upon inspection this doesn't appear to be doing anything since HPortal does this automatically.
@@ -24,15 +24,29 @@ $( document ).ready(function() {
     */
     browser.storage.sync.get({ replaceSpotifyLinks: false }, function(data) {
         if(data.replaceSpotifyLinks) { // Only replace if storage's value is positive
-            let posts = document.getElementsByClassName("post1");
-            for(let i = 0; i < posts.length; i++) { 
-                let postLinks = posts[i].getElementsByTagName("a");
-                for(let j = 0; j < postLinks.length; j++) {
-                    if (postLinks[j].href.indexOf("spotify") != -1 && postLinks[j].href.split('track/').length > 1) {
-                        postLinks[j].innerHTML = '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/' + postLinks[j].href.split('track/')[1].split("?")[0] + '" width="50%" height="150px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+            const $posts = $('.post1');
+
+            $posts.each(function() {
+                const $postLinks = $(this).find('a');
+                
+                $postLinks.each(function() {
+                    const $link = $(this);
+                    const href = $link.attr('href');
+
+                    if (href.indexOf('spotify') !== -1 && href.split('track/').length > 1) {
+                        const trackId = href.split('track/')[1].split('?')[0];
+                        const iframe = `
+                            <iframe style="border-radius:12px" 
+                                    src="https://open.spotify.com/embed/track/${trackId}" 
+                                    width="50%" height="150px" 
+                                    frameborder="0" allowfullscreen 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                    loading="lazy">
+                            </iframe>`;
+                        $link.html(iframe);
                     }
-                }
-            }
+                });
+            });
         }
     });
     // --------------------------------------------
@@ -43,21 +57,25 @@ $( document ).ready(function() {
     Hide signatures larger than set in storage, 600 by
     default. Now, you see, I really wanted to make this
     relative, but... nah. After some testing, I found out
-    that the Zoom level in the browser only sligtly changes
+    that the zoom level in the browser only sligtly changes
     the size of the element, so it is pretty much ignorable
     and does not worth the time of testing a relative thing.
     If you have done testing, please reach out to me.
     */
     browser.storage.sync.get({ hideLargeSig: true, largeSignatures: 600 }, function(data) {
         if(data.hideLargeSig) { // Only hide if storage's value is positive
-            const signatures = document.getElementsByClassName("signature");
-
-            for (let i = 0; i < signatures.length; i++) {
-                const signature = signatures[i];
-                if (signature.clientHeight > data.largeSignatures) {
-                    signature.innerHTML = "This signature was hidden by HPD as it is larger than allowed. You can change this in the <a href=\"" + browser.extension.getURL("options/options.html") + "\" target='_blank'>extension's settings</a>";
+            const $signatures = $('.signature');
+            
+            $signatures.each(function() {
+                const $signature = $(this);
+                if ($signature.height() > data.largeSignatures) {
+                    $signature.html(`
+                        חתימה זו הוסתרה על ידי HPlus כיוון שהיא גדולה מהמותר. 
+                        ביכולתך לשנות הגדרה זו 
+                        <a href="${browser.extension.getURL('options/options.html')}" target="_blank">בהגדרות התוסף</a>.
+                    `);                    
                 }
-            }
+            });            
         }
     });
     // --------------------------------------------

@@ -34,10 +34,9 @@ Which is only possible by creating a new script and appending it into
 the HTML. I hate it, you hate it, we all hate it.
 */
 function injectScript(scriptCont) {
-    const script = document.createElement('script');
-    script.textContent = scriptCont;
-    (document.head || document.documentElement).appendChild(script);
-    script.remove(); // Clean up the injected script tag
+    const $script = $('<script>').text(scriptCont);
+    ($('head').length ? $('head') : $('html')).append($script);
+    $script.remove(); // Clean up the injected script tag
 }
 
 function addBBCodeButton(tag, buttonName, buttonStyle, childNumber) {
@@ -52,8 +51,20 @@ function addBBCodeButton(tag, buttonName, buttonStyle, childNumber) {
     $sButton.attr("onclick", `simpletag('${tag}');`);
     $sButton.attr("onmouseover", `hstat('${buttonName}');`);
 
-    // Append the button at the 3rd child position in the 'pformright' class table
-    $('.pformright').eq(0).children().eq(childNumber).after($sButton);
+    /* Yes this is awful but I can explain.
+    The element I want to select is a TD,
+    with class "pformright", but there may be
+    up to 7 different of these. It doesnt
+    have an ID, so this is the only way I can
+    select it. It also changes it's index in
+    the list under certain circumstances.
+    However, it's the only one among those
+    that has over 20 children, so I resorted
+    to select it using that filter. */
+    $('.pformright').filter(function() {
+        return $(this).children().length > 20;
+    }).eq(0).children().eq(childNumber).after($sButton);
+
     $sButton.before(' ');
     $sButton.after(' ');
 }
@@ -62,54 +73,29 @@ window.onload = function () {
     // --------------------------------------------
     // Add "edited by" line by default
     browser.storage.sync.get({ addEdited: false }, function(data) { 
-        document.getElementsByName("add_edit")[0].checked = data.addEdited;
+        $('[name="add_edit"]').prop('checked', data.addEdited);
     });
     //---------------------------------------------
-
-    // --------------------------------------------
-    // WYSIWYG - Not in use
-    /*
-    browser.storage.sync.get({ WYSIWYGCheckbox: false }, function(data) {
-        if(data.WYSIWYGCheckbox) {
-            var textarea = document.getElementsByName('Post')[0];
-	        sceditor.create(textarea, {
-	        	format: 'bbcode',
-                icons: 'monocons',
-            });
-
-            document.body.addEventListener("keydown", function (e) {
-                // Make the textarea focused when any of the keys listed using keyCodes are pressed
-                const keyCodes = [13, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 66, 67, 68, 69 /* Nice ( ͡° ͜ʖ ͡° ) *\/, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 83, 85, 86, 88, 89, 90, 186, 188, 190, 191, 219, 221, 222];
-                if (keyCodes.indexOf(e.keyCode) !=  -1) {
-                    document.getElementById("WYSIWYGiframe").contentWindow.document.getElementById("wysiwygDivContent").focus();   
-                }
-            });
-        }
-    });
-    */
-    // --------------------------------------------
 
     // --------------------------------------------
     // Customise color in color selection GUI
     chrome.storage.sync.get({ colors: false }, function(data) {
         // Check if the colors are set (default is false, therefore not set)
         if(data.colors != false && typeof(data.colors) == "object" && !jQuery.isEmptyObject(data.colors)) {
-            var colorNames = Object.keys(data.colors);
-
-            var fcolor = document.getElementsByName("fcolor")[0];
-
-            for(var i = fcolor.childElementCount; i > 1; i--) {
-                fcolor.removeChild(fcolor.children[i - 1]);
-            }
-
-            var option;
-            for(var i = 0; i < colorNames.length; i++) {
-                option = document.createElement("option");
-                option.setAttribute("value", colorNames[i]);
-                option.setAttribute("style", "color: " + colorNames[i]);
-                option.innerText = data.colors[colorNames[i]];    
-                fcolor.append(option);
-            }
+            const colorNames = Object.keys(data.colors);
+            
+            const $fcolor = $('[name="fcolor"]');
+            
+            $fcolor.children(':gt(0)').remove();
+            
+            $.each(colorNames, function(i, colorName) {
+                const $option = $('<option>', {
+                    value: colorName,
+                    style: 'color: ' + colorName,
+                    text: data.colors[colorName]
+                });
+                $fcolor.append($option);
+            });            
         }
     });
     // --------------------------------------------

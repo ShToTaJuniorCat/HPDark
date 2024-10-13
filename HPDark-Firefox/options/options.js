@@ -162,6 +162,7 @@ function restore_options() {
         $("#cancelBanButton").on("click", async function () {
           if (confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
             await browser.storage.sync.set({ banMeMillisec: 0 });
+            $("#banMeDate").val("");
             $("#cancelBanButton").hide();
             $("#banInfo").html("הבאן בוטל, יש לטעון מחדש את העמוד.").show();
           }
@@ -295,8 +296,6 @@ $(function () {
     }
   });
 });
-
-// TODO: Make the above code use the following
 
 $(document).on('click', "#saveOptions",
   save_options);

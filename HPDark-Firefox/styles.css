@@ -18,13 +18,15 @@ body.darkModeOn .post1,
 
 body.darkModeOn .row5, 
     body.darkModeOn .darkrow3, 
-    body.darkModeOn .row6, 
-    body.darkModeOn .row10, 
-    body.darkModeOn .darkrow3, 
     body.darkModeOn .darkrow1, 
     body.darkModeOn .darkrow2 { 
-	/* f */
-        background-image: url(../style_images/4/tile_sub.png) !important;
+        background-color: #FFF;
+}
+
+body.darkModeOn .darkrow3,
+    body.darkModeOn .row10 {
+        background-image: none !important;
+        background-color: #3e3e3e;
 }
 
 body.darkModeOn .tablepod, 

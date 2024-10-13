@@ -1,9 +1,13 @@
 {
-  "manifest_version": 2,
-  "name": "HPDark",
-  "version": "1.1",
+  "manifest_version": 3,
+  "name": "HPlus",
+  "version": "2.0",
   "description": "מוסיף עוד הרבה פיצ'רים ל-HPortal.",
-  "short_name": "HPD",
+  "short_name": "HP+",
+
+  "background": {
+    "scripts": ["background.js"]
+  },
  
   "icons": { 
     "16": "images/icon16.png",
@@ -24,30 +28,32 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "justarandomname@lolitem.lolending",
-      "strict_min_version": "42.0"
+      "strict_min_version": "109.0"
     }
   },
 
-  "options_page": "options/options.html",
-
-  "page_action": {
+  "action": {
     "default_icon": {
       "16": "images/icon16.png",
       "24": "images/icon24.png",
       "32": "images/icon32.png"
-    },
-    "default_popup": "popup.html"
+    }
   },
 
   "web_accessible_resources": [
-    "images/*.*",
-    "options/*.*"
+    {
+      "resources": [
+        "images/*",
+        "options/*"
+      ],
+      "matches": ["*://hportal.co.il/*"]
+    }
   ],
 
   "content_scripts": [
     {
       "css": ["styles.css"],
-      "js": ["script.js", "jquery.min.js"],
+      "js": ["jquery.min.js", "script.js"],
       "matches": ["*://hportal.co.il/*"]
     },
     {

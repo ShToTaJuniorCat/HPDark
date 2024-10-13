@@ -87,7 +87,7 @@ chrome.storage.sync.get({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: fa
         } else if(!data.loggedAfterUnban) {
             // The date unban is behind, so unban this poor guy.
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;'>הבאן הסתיים. <a href='javascript:location.reload()'>לחץ כאן כדי לטעון מחדש את העמוד.</a></h2>";
-            chrome.runtime.sendMessage({ msg: "sendNotif", title: "הבאן הסתיים!", body: "הבאן מ-HPortal הסתיים.", icon: "images/settings.svg" }); // Send a desktop notification
+            chrome.runtime.sendMessage({ msg: "sendNotif", title: "הבאן הסתיים!", body: "הבאן מ-HPortal הסתיים.", icon: "images/settings2.svg" }); // Send a desktop notification
             clearInterval(checkTime);
             chrome.storage.sync.set({ banMeMillisec: 0, lockBan: false, loggedAfterUnban: true });
         }

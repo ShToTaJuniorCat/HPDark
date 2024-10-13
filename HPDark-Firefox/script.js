@@ -5,26 +5,6 @@ How you doin? ;)
 totalHoursWastedHere = WAYTOOMUCH;
 */
 
-function getCookie(name) {
-    // Returns value of cookie named {name}. Function from stackoverflow
-
-    var dc = document.cookie;
-    var prefix = name + "=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    }
-    else {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-        end = dc.length;
-        }
-    }
-    return decodeURI(dc.substring(begin + prefix.length, end));
-}
-
 function convertMilToHourNMin(millisec) {
     const hours = Math.floor(millisec / 1000 / 3600);
     const minutes = Math.floor((millisec - (hours * 3600000)) / 1000 / 60);
@@ -45,7 +25,7 @@ browser.storage.sync.get({ darkMode: null }, function(data) {
 
 
         // Dark mode is on in storage, so we need to turn off the lights.
-        document.body.classList.add("darkModeOn");
+        $('body').addClass('darkModeOn');
     } else if(data.darkMode == null) {
         /* 
         No storage key named "darkMode".
@@ -54,7 +34,7 @@ browser.storage.sync.get({ darkMode: null }, function(data) {
         */
         browser.storage.sync.set({ darkMode: true }, function() {
             console.log("darkMode key was not found in storage. Created new key, set to true by default.");
-            document.body.classList.add("darkModeOn");
+            $('body').addClass('darkModeOn');
         });
     } else {
         /*
@@ -71,32 +51,37 @@ browser.storage.sync.get({ darkMode: null }, function(data) {
 
 // --------------------------------------------
 // Create the extension's settings button
-var settingsButton = document.createElement("div"); // The base element of the button
-
-settingsButton.addEventListener("click", function () {
-    window.open(browser.extension.getURL("options/options.html"), "_blank"); // When {settingsButton} is clicked, open extension's option page
+let settingsButton = $("<div>", {
+    class: "settingsButton", // Class for the button
+    css: {
+        "background-image": "url('" + browser.runtime.getURL("images/settings2.svg") + "')"
+    }
 });
 
-settingsButton.className = "settingsButton";
-settingsButton.style.backgroundImage = "url('" + browser.extension.getURL("images/settings2.svg") + "')"; // Background image of {settingsButton}; the only thing that shows
+settingsButton.on("click", function () {
+    // When {settingsButton} is clicked, open extension's option page
+    window.open(browser.runtime.getURL("options/options.html"), "_blank"); 
+});
 
-document.body.appendChild(settingsButton); // {settingsButton}, say hello to the world!
+$(document.body).append(settingsButton); // {settingsButton}, say hello to the world!
 // --------------------------------------------
 
 // --------------------------------------------
 // Ban yourself for a certain amount of time
+// Yeah i'm too lazy to convert this into jQuery. Deal with it.
 browser.storage.sync.get({ banMeMillisec: 0, lockBan: false }, function(data) {
-    var banned = false;
+    let banned = false;
     var checkTime = setInterval(() => {
         if ((new Date()).getTime() < data.banMeMillisec) {
             // We are behind the date to unban, still banned
+            let rest = "";
             banned = true;
             const timeToEnd = convertMilToHourNMin(data.banMeMillisec - (new Date()).getTime());
             
             if(!data.lockBan) {
-                var rest = "את/ה יכול/ה לבטל את הבאן <a style='top: 50%; position: aboslute; color: white;' dir='rtl' href='" + browser.extension.getURL("options/options.html") + "' target='_blank'>בהגדרות התוסף</a>. ";
+                rest = "את/ה יכול/ה לבטל את הבאן <a style='top: 50%; position: aboslute; color: white;' dir='rtl' href='" + browser.extension.getURL("options/options.html") + "' target='_blank'>בהגדרות התוסף</a>. ";
             } else {
-                var rest = "";
+                rest = "";
             }
 
             document.body.innerHTML = "<h2 style='top: 50%; position: aboslute; color: white;' dir='rtl'>את/ה כרגע בבאן על ידי HPD (נוצר על ידי המשתמש/ת). " + rest + "הבאן יסתיים בעוד " + timeToEnd[0] + " שעות, " + timeToEnd[1] + " דקות ו-" + timeToEnd[2] + " שניות (עלול להיות לא מדויק בעד 999 אלפיות השנייה)</h2>";
