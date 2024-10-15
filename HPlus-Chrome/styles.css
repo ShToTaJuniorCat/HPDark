@@ -3,7 +3,7 @@ Bip boop. Boop bip?
 
 Applys custom dark mode to HPortal.co.il.
 
-Made as a part of HPDark. 
+Made as a part of HPlus. 
 */
 
 
@@ -18,13 +18,15 @@ body.darkModeOn .post1,
 
 body.darkModeOn .row5, 
     body.darkModeOn .darkrow3, 
-    body.darkModeOn .row6, 
-    body.darkModeOn .row10, 
-    body.darkModeOn .darkrow3, 
     body.darkModeOn .darkrow1, 
     body.darkModeOn .darkrow2 { 
-	/* f */
-        background-image: url(../style_images/4/tile_sub.png) !important;
+        background-color: #FFF;
+}
+
+body.darkModeOn .darkrow3,
+    body.darkModeOn .row10 {
+        background-image: none !important;
+        background-color: #3e3e3e;
 }
 
 body.darkModeOn .tablepod, 
@@ -62,12 +64,10 @@ body.darkModeOn .hlight,
 
 body.darkModeOn .textinput, 
     body.darkModeOn .forminput, 
-    body.darkModeOn .codebuttons,
-    body.darkModeOn option:not([name="fcolor"]) {
+    body.darkModeOn .codebuttons {
         background-color: #222323 !important;
-        color: white;
+        color: white !important;
 }
-
 body.darkModeOn .row4 {
     background-color: #454545 !important;
 }
@@ -163,62 +163,53 @@ body.darkModeOn button,
         border-radius: 5px !important;
 }
 
+body.darkModeOn option {
+    color: white !important;
+    background-color: #222323;
+}
+
 body.darkModeOn .tablepod a {
     color: #fff !important;
 }
 
-body.darkModeOn div.postcolor:not(.thin) span[style*="color:yellow" i],
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:AliceBlue" i],
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LightCyan" i],
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Aqua" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Cyan" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LightYellow" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Cornsilk" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:White" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Snow" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Honeydew" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:MintCream" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Azure" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:GhostWhite" i],
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:WhiteSmoke" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:FloralWhite" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Ivory" i], 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LavenderBlush" i] {
-        /* color: #373727 !important; */
-        background-color: #000;
-        color: #000 !important;
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i],
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i],
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i],
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i],
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory" i], 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush" i] {
+        color: #373727 !important;
 }
 
-body.darkModeOn div.postcolor:not(.thin) span[style*="color:yellow" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:AliceBlue" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LightCyan" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Aqua" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Cyan" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LightYellow" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Cornsilk" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:White" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Snow" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Honeydew" i]:active,
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:MintCream" i]:active,
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Azure" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:GhostWhite" i]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:FloralWhite"]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:WhiteSmoke"]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:Ivory"]:active, 
-    body.darkModeOn div.postcolor:not(.thin) span[style*="color:LavenderBlush"]:active {
-        /* color: yellow !important; */
-        background-color: #353535;
-        color: inherit !important;
-}
-
-.darkSwitch {
-    position: fixed;
-    top: 0;
-    border-radius: 50%;
-    left: 30px;
-    width: 50px;
-    height: 50px;
-    background-size: 50px;
+body.darkModeOn div:not(.thin) span[style*="color:yellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:AliceBlue" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightCyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Aqua" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cyan" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LightYellow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Cornsilk" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:White" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Snow" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Honeydew" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:MintCream" i]:active,
+    body.darkModeOn div:not(.thin) span[style*="color:Azure" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:GhostWhite" i]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:WhiteSmoke"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:FloralWhite"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:Ivory"]:active, 
+    body.darkModeOn div:not(.thin) span[style*="color:LavenderBlush"]:active {
+        color: yellow !important;
 }
 
 .settingsButton {

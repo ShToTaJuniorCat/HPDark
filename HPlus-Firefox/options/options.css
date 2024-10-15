@@ -149,18 +149,3 @@ html, body {
   transform: translate(-50%, -50%);
   color: white;
 }
-
-input {
-  background-color: #382b2b;
-  color: #FFF;
-  border-color: transparent;
-}
-
-button {
-  background-color: darkslategray;
-  border-radius: 10px;
-}
-
-#colorsDesc {
-  display: none;
-}

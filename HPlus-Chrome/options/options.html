@@ -3,7 +3,7 @@
     <head>
         <title>Control Panel</title>
         <link rel="stylesheet" href="/options/options.css">
-        <link rel="stylesheet" href="/crossbrowser.css">
+        <link rel="stylesheet" href="/crosschrome.css">
 
         <script src="/jquery.min.js"></script>
         <script src="/options/options.js"></script>
@@ -50,7 +50,7 @@
                                     <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
                                     <polyline points="1 9 7 14 15 4"></polyline>
                                 </svg>
-                                השתמש בדארק מוד בפורטל
+                                דארק מוד
                             </label>
                         </td>
                     </tr>
@@ -62,7 +62,19 @@
             <table>
                 <tbody>
                     <tr>
+                        <td class="checkboxOption" id="textSizeTD">
+                            גודל כתב ברירת מחדל בתגובה
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<input type="number" id="textSize" value="9"/>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;<button id="resetTextSize">איפוס</button>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="checkboxOption" id="hideLargeSigTD">
+                            <hr>
                             <input type="checkbox" id="hideLargeSig" class="hide-me">
                             <label for="hideLargeSig" class="check">
                                 <svg width="18px" height="18px" viewBox="0 0 18 18">
@@ -79,8 +91,10 @@
                             &nbsp;&nbsp;&nbsp;<button id="resetLargeSig" style="display: none;">איפוס</button>
                         </td>
                     </tr>
+                    <!-- Hidden for lack of need. See topics.js for explanation
                     <tr>
                         <td class="checkboxOption" id="largeImagesTD">
+                            <hr>
                             <input type="checkbox" id="resizeLargeImages" class="hide-me">
                             <label for="resizeLargeImages" class="check">
                                 <svg width="18px" height="18px" viewBox="0 0 18 18">
@@ -96,6 +110,22 @@
                         <td>
                             &nbsp;&nbsp;&nbsp;<button id="resetLargeImg" style="display: none;">איפוס</button>
                         </td>
+                    </tr> -->
+                    <tr>
+                        <td class="checkboxOption" id="replaceSpotifyLinksTD">
+                            <hr>
+                            <input type="checkbox" id="replaceSpotifyLinks" class="hide-me">
+                            <label for="replaceSpotifyLinks" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                החלף קישורים לשירים בספוטיפיי עם שיר שניתן להפעיל דרך האתר
+                            </label>
+                        </td>
+                        <td>
+                            מחליף גם היפר קישורים ויסתיר את הטקסט שלהם!
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -104,18 +134,6 @@
         <div class="write-comment-options options" id="writeCommentOptions">
             <table>
                 <tbody>
-                    <tr>
-                        <td class="checkboxOption" id="wysiwygTD">
-                            <input type="checkbox" id="WYSIWYGCheckbox" class="hide-me">
-                            <label for="WYSIWYGCheckbox" class="check">
-                                <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                    <polyline points="1 9 7 14 15 4"></polyline>
-                                </svg>
-                                השתמש בעורך WYSIWYG (ניסיוני, לא יציב. Watch your step with it.)
-                            </label>
-                        </td>
-                    </tr>
                     <tr>
                         <td class="checkboxOption" id="addEditedTD">
                             <input type="checkbox" id="addEdited" class="hide-me">
@@ -132,34 +150,88 @@
                         <td>
                             <hr>
                             צבעים לבחירה: <img src="/images/info.svg" width="23px" height="23px" id="colorsInfo" />
-                            <div id="colorsDesc">
+                            <div id="colorsDesc" style="display: none;">
                                 בכדי להוסיף צבע לרשימה, כתוב את הקוד של הצבע בתיבת הטקסט הראשונה.
                                 <br>
                                 למשל, בכדי להוסיף את הצבע לבן, יש לכתוב שם White. בכדי להוסיף את הצבע סלמון, יש לכתוב שם Salmon, וכולי.
                                 <br>
                                 בכדי לתת שם לצבע (השם שיופיע ברשימת הצבעים כשתכתבו תגובה ותרצו לבחור את הצבע) כתבו את השם שתרצו לתת לצבע בתיבת הטקסט השנייה.
                                 <br>
-                                למשל, בכדי שהצבע Salmon יופיע ברשימה בתור סלמון, יש לכתום שם סלמון.
+                                למשל, בכדי שהצבע Salmon יופיע ברשימה בתור סלמון, יש לכתוב שם סלמון.
+                                <br><br>
+                                בכדי למחוק צבע מהרשימה, לחצו עליו.
                                 <br>
                             </div>
                             <ul id="colorList">
                             </ul>
-
-                            רשימה של כל הצבעים הזמינים בפורטל נמצאת <a href="https://hportal.co.il/index.php?showtopic=113449" target="_blank" style="color: black">פה</a>.
-
                             <input id="color" placeholder="צבע להוספה..." />
-                            </br>
-                            <input id="translation" placeholder="שם הצבע..." />
-
+                            
                             </br>
 
                             <button id="setColor">הוסף את הצבע לרשימה</button>
                             </br>
-                            <span style="color: red; display: none;" id="color404">הצבע או השם של הצבע לא נמצאו!</span>
-                            
-                            <br>
+                            <span style="color: red; display: none;" id="color404">צבע או שם צבע לא מוגדר</span>
 
                             <button id="resetColors">החזר את הצבעים לברירת המחדל</button>
+                        </td>
+                        <td>
+                            רשימה של כל הצבעים הזמינים בפורטל נמצאת 
+                            <a href="./colors/colors.html" target="_blank" style="color: black">פה</a>.
+                            <br><br>
+                            <input id="colorName" placeholder="שם הצבע..." />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <hr>
+                            
+                            <span style="direction: rtl;">הוסף כפתור תגית: </span>
+                            <br>
+                            <div  style="direction: ltr;">
+                                <input type="checkbox" id="addStrikethrough" class="hide-me">
+                                <label for="addStrikethrough" class="check">
+                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                    </svg>
+                                    S
+                                </label>
+
+                                <span style="color: white;"> | </span>
+
+                                <input type="checkbox" id="addQuote" class="hide-me">
+                                <label for="addQuote" class="check">
+                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                    </svg>
+                                    CODE
+                                </label>
+                                <img src="/images/info.svg" width="23px" height="23px" id="quoteInfo" />
+
+                                <span style="color: white;"> | </span>
+
+                                <input type="checkbox" id="addHTML" class="hide-me">
+                                <label for="addHTML" class="check">
+                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                    </svg>
+                                    HTML
+                                </label>
+
+                                <span style="color: white;"> | </span>
+
+                                <input type="checkbox" id="addSQL" class="hide-me">
+                                <label for="addSQL" class="check">
+                                    <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                    </svg>
+                                    SQL
+                                </label>
+                            </div>
+                            <div id="quoteDesc" style="display: none;">מוסיף אפשרות להגדיר מקור וזמן ציטוט</div>
                         </td>
                     </tr>
                 </tbody>
@@ -188,14 +260,22 @@
         <div class="user-settings-options options" id="userSettingsOptions">
             <table>
                 <tbody>
-                    <tr id="setUpBanTR">
+                    <tr>
                         <td class="checkboxOption" id="banMeTD">
-                            <label for="banMe">
-                                תן לי באן עד 
-                                <input type="datetime-local" id="banMe">
+                            <!-- Yes, it will be pretty easy to remove the ban even if its locked. Self control is important, people.
+                            But I challenge you to remove it without using that button :)
+                            Aaand now without setting the date to a past time, too -->
+                            <label for="banMeDate">
+                                תן לי באן עד התאריך
+                                <input type="date" id="banMeDate" value="">
+                            </label>
+                            <br>
+                            <label for="banMeTime">
+                                בשעה
+                                <input type="time" id="banMeTime" value="00:00">
                             </label>
                         </td>
-                        <td style="padding: 0 20px 0;">
+                        <td style="padding: 0 20px 0;" id="lockBanTD">
                             <input type="checkbox" id="lockBan" class="hide-me">
                             <label for="lockBan" class="check">
                                 <svg width="18px" height="18px" viewBox="0 0 18 18">
@@ -205,12 +285,9 @@
                                 נעל באן? (לא תהיה לך אפשרות להוריד את הבאן עד שהזמן יסתיים)
                             </label>
                         </td>
-                    </tr>
-                    <tr>
                         <td>
-                            <div id="cancelBanDIV">
-                                <button id='cancelBan'>בטל באן פעיל</button>
-                            </div>
+                            <button id='cancelBanButton' style="display: none;">בטל באן פעיל</button>
+                            <span id="banInfo">אין לך באן פעיל כרגע</span>
                         </td>
                     </tr>
                 </tbody>
