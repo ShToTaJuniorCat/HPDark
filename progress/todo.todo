@@ -22,6 +22,11 @@ TODOs (Ordered by expected amount of effort to make each one):
         + Therefore, probably wouldnt be possible in locked threads
     - Send sickles or PMs to many users at the same time
         + Check if the site admins are fine with it (Yarin, mainly)
+    - Unlimited Owlery storage??
+        + Check if the site admins are fine with it (Yarin, mainly)
+        + Basically deletes the oldest owl when the Owlery is at 99%
+        + capacity, but store it on the user's device. Then display
+        + it as ususal when visited, just as a file and not as a url.
     - Split or merge long/many PMs into long one/many short ones
         + Customiseable length to spliting 
     - WYSIWYG - What You See Is What You Get 
