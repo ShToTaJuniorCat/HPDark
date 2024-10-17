@@ -1,14 +1,27 @@
  DONEs:
     - Dark Mode switch: Toggles Dark Mode on and off.
-    
-    - Resize large images: Resizes large images into smaller versions.
+
+
+    - Set text size in comments
+
+    - Replace Spotify links with Spotify widgets
     
     - Break long words
 
     - Hide large signatures
 
+
+    - Add source of quote and date in quote tag
+
+    - Customiseable colors in the color selection GUI
+  
+    - More tags buttons
+        + [S], [HTML], [SQl]
+
     - Choose if "Edited by" line is displayed by default or not
 
+
     - Send sickles to someone through their profile 
+
 
     - Ban yourself for a certain amount of time (user declared)

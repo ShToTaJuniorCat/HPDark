@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Categories</title>
+    <script src="/jquery.min.js"></script>
+    <script src="colors.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh; /* Full height */
+        }
+        #leftPanel {
+            background-color: #353535;
+            color: white; /* Text color for the dark background */
+            flex: 1; /* Take up 50% of the width */
+            padding: 20px;
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+        #rightPanel {
+            background-color: white;
+            flex: 1; /* Take up 50% of the width */
+            padding: 20px;
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="leftPanel">
+        <div class="colorContainer"></div>
+    </div>
+    <div id="rightPanel">
+        <div class="colorContainer"></div>
+    </div>
+    <a style="left: 70%; position: absolute;" href="https://hportal.co.il/index.php?showtopic=167395&view=findpost&p=9257388"><b>קרדיט ותודה למור & עומרי על האשכול המקורי</b></a>
+</body>
+</html>

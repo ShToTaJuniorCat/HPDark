@@ -1,0 +1,76 @@
+{
+  "manifest_version": 3,
+  "name": "HPlus",
+  "version": "2.0",
+  "description": "מוסיף עוד הרבה פיצ'רים ל-HPortal.",
+  "short_name": "HP+",
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+ 
+  "icons": { 
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "justarandomname@lolitem.lolending",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png"
+    }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "options/*"
+      ],
+      "matches": ["*://hportal.co.il/*"]
+    }
+  ],
+
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["jquery.min.js", "script.js"],
+      "matches": ["*://hportal.co.il/*"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?showtopic=*", "*://hportal.co.il/index.php?act=ST&f=*&t=*"],
+      "js": ["/pagesJS/topics.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Post&CODE=*&*=*", "*://hportal.co.il/index.php?"],
+      "js": ["/pagesJS/comment-writing.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*showuser=*"],
+      "js": ["/pagesJS/user-profile.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
+      "js": ["/pagesJS/donate.js"]
+    }
+  ]
+}

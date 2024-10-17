@@ -1,5 +1,5 @@
-# HPDark
-HPDark is a browser extension that adds lots of features to HPortal.co.il.
+# HPlus
+HPlus is a browser extension that adds lots of features to HPortal.co.il.
 Among the features:
  - Custom dark mode
  - Hiding large signatures
