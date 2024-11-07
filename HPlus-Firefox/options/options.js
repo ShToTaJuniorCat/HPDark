@@ -4,7 +4,7 @@ let localColorList = {};
 async function loadColors() {
   const response = await fetch('./colors/colors.json');
   if (!response.ok) {
-      throw new Error('Failed to load JSON color data');
+    throw new Error('Failed to load JSON color data');
   }
   return response.json();
 }
@@ -22,8 +22,8 @@ async function addColor() {
     if (newColor in localColorList) {
       $("#liColor" + newColor).text(colorName);
       localColorList[newColor] = colorName;
-    } else if (!Object.values(localColorList).includes(colorName) || 
-               confirm("שם הצבע הזה כבר בשימוש. להשתמש בו שוב?")) {
+    } else if (!Object.values(localColorList).includes(colorName) ||
+      confirm("שם הצבע הזה כבר בשימוש. להשתמש בו שוב?")) {
       try {
         // Load colors from the JSON file 
         const data = Object.values((await loadColors())[0]).flat().map(item => item.toLowerCase());
@@ -68,10 +68,10 @@ function removeHighlights() {
 
 function setPanelReady(panelName, options) {
   $("#" + panelName).on("click", function () {
-      hideAllOptions();
-      removeHighlights();
-      $("#" + options).show();
-      $(this).css("background-color", "lightgreen");
+    hideAllOptions();
+    removeHighlights();
+    $("#" + options).show();
+    $(this).css("background-color", "lightgreen");
   });
 }
 
@@ -81,7 +81,7 @@ function setPanelReady(panelName, options) {
 function restore_options() {
   browser.storage.sync.get({
     darkMode: true,
-    
+
     hideLargeSig: true,
     largeSignatures: 600,
 
@@ -101,14 +101,14 @@ function restore_options() {
 
     banMeMillisec: 0,
     lockBan: false
-  }, function(items) {
+  }, function (items) {
     $("#darkSwitch").prop('checked', items.darkMode);
 
     $("#textSize").val(items.textSize);
 
     $("#hideLargeSig").prop('checked', items.hideLargeSig);
     $("#largeSigInput").val(items.largeSignatures);
-    if(items.hideLargeSig) {
+    if (items.hideLargeSig) {
       $("#largeSigInput").css("display", "initial");
       $("#resetLargeSig").css("display", "initial");
     }
@@ -122,19 +122,19 @@ function restore_options() {
     //   $("#largeImgInput").css('display', 'initial');
     //   $("#resetLargeImg").css("display", "initial");
     // }
-    
+
     $("#addEdited").prop('checked', items.addEdited);
-    
+
     colorList = items.colors;
     colorCodes = Object.keys(colorList);
-    for(let i = 0; i < colorCodes.length; i++) {
+    for (let i = 0; i < colorCodes.length; i++) {
       // Create a list item with color=color's value, id=liColor{color's value} (consistent with later use)
       const $listItem = $('<li>', {
         css: { color: colorCodes[i] },
         id: 'liColor' + colorCodes[i],
         text: colorList[colorCodes[i]]
       });
-      
+
       $('#colorList').append($listItem);
     }
     localColorList = colorList;
@@ -146,7 +146,7 @@ function restore_options() {
 
     $("#showSickles").prop('checked', items.showSickles);
 
-    if((new Date()).getTime() < items.banMeMillisec) {
+    if ((new Date()).getTime() < items.banMeMillisec) {
       // Yes, it is pretty easy to remove the ban even if its locked.
       // Self control is important, people.
       // But I challenge you to remove it without using that button :)
@@ -158,7 +158,7 @@ function restore_options() {
         $("#banMeDate").val("");
         $("#cancelBanButton").css("display", "initial");
         $("#banInfo").hide();
-      
+
         $("#cancelBanButton").on("click", async function () {
           if (confirm("את/ה בטוח/ה שאת/ה רוצה לבטל את הבאן?")) {
             await browser.storage.sync.set({ banMeMillisec: 0 });
@@ -167,12 +167,13 @@ function restore_options() {
             $("#banInfo").html("הבאן בוטל, יש לטעון מחדש את העמוד.").show();
           }
         });
-      }      
+      }
     } else {
       $("#banMeDate").val("");
       browser.storage.sync.set({
         banMeMillisec: 0,
-        lockBan: false });
+        lockBan: false
+      });
     }
   });
 }
@@ -183,33 +184,36 @@ function save_options() {
 
   const hideLargeSig = $("#hideLargeSig").is(":checked");
   const largeSignaturesInput = $("#largeSigInput").val();
-  
+
   const textSize = $("#textSize").val();
   // const resizeLargeImages = $("#resizeLargeImages").is(":checked");
   // const largeImagesInput = $("#largeImgInput").val(); Hidden for lack of need. See topics.js for explanation
   const replaceSpotifyLinks = $("#replaceSpotifyLinks").is(":checked");
-  
+
   const addEdited = $("#addEdited").is(":checked");
   const addStrikethrough = $("#addStrikethrough").is(":checked");
   const addQuote = $("#addQuote").is(":checked");
   const addHTML = $("#addHTML").is(":checked");
   const addSQL = $("#addSQL").is(":checked");
 
-  const showSickles = $("#showSickles").is(":checked");  
+  const showSickles = $("#showSickles").is(":checked");
 
-  browser.storage.sync.get({ banMeMillisec: 0,
-    lockBan: false }, function (items) {
-      const banMillisec = Math.max(items.banMeMillisec, // It should be the max of the one in the storage and the one currently selected,
-                                                //  to stop smartasses who would try to set the date to a past time
-        new Date($("#banMeDate").val() + " " + $("#banMeTime").val()).getTime() || 0); // || is needed in case first val is NaN
-      
-        // || is needed to stop smartasses setting new unlocked ban
-      const lockBan = $('#lockBan').is(':checked') || items.lockBan;
+  browser.storage.sync.get({
+    banMeMillisec: 0,
+    lockBan: false
+  }, function (items) {
+    const banMillisec = Math.max(items.banMeMillisec, // It should be the max of the one in the storage and the one currently selected,
+      //  to stop smartasses who would try to set the date to a past time
+      new Date($("#banMeDate").val() + " " + $("#banMeTime").val()).getTime() || 0); // || is needed in case first val is NaN
 
-      browser.storage.sync.set({
-        banMeMillisec: banMillisec,
-        lockBan: lockBan });
-    }
+    // || is needed to stop smartasses setting new unlocked ban
+    const lockBan = $('#lockBan').is(':checked') || items.lockBan;
+
+    browser.storage.sync.set({
+      banMeMillisec: banMillisec,
+      lockBan: lockBan
+    });
+  }
   );
 
   browser.storage.sync.set({
@@ -222,7 +226,7 @@ function save_options() {
     // resizeLargeImages: resizeLargeImages,
     // largeImages: largeImagesInput, Hidden for lack of need. See topics.js for explanation
     replaceSpotifyLinks: replaceSpotifyLinks,
-    
+
     addEdited: addEdited,
     colors: localColorList,
     addStrikethrough: addStrikethrough,
@@ -231,13 +235,13 @@ function save_options() {
     addSQL: addSQL,
 
     showSickles: showSickles
-  }, function() {
+  }, function () {
     // Update status to let the user know options were saved.
     let $optionsSaved = $('#optionsSaved');
     $optionsSaved.text('Options saved.');
-    
-    setTimeout(function() {
-        $optionsSaved.text('');
+
+    setTimeout(function () {
+      $optionsSaved.text('');
     }, 2000);
   });
 }
@@ -251,6 +255,7 @@ $(function () {
   setPanelReady("writeCommentPanel", "writeCommentOptions");
   setPanelReady("userProfilePanel", "userProfileOptions");
   setPanelReady("userSettingsPanel", "userSettingsOptions");
+  setPanelReady("owlsSettingsPanel", "owlsSettingsOptions");
 
   // Set dark mode panel selected when opening the page
   hideAllOptions();
@@ -270,13 +275,13 @@ $(function () {
     $("#largeSigInput").val(600);
   });
 
-  $("#quoteInfo").on("click", function() {
+  $("#quoteInfo").on("click", function () {
     $("#quoteDesc").toggle();
   });
 
   $("#setColor").on("click", addColor);
 
-  $("#colorsInfo").on("click", function() {
+  $("#colorsInfo").on("click", function () {
     $("#colorsDesc").toggle();
   });
 
@@ -295,12 +300,36 @@ $(function () {
       $(this).prop('checked', isConfirmed);
     }
   });
+
+  $('#importOwlsButton').on('click', function () {
+    $('#importOwlsFile').click(); // Trigger file input click when import button is clicked
+  });
+
+  $('#importOwlsFile').on('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const importedData = JSON.parse(e.target.result);
+        browser.runtime.sendMessage({ action: "import_owls", owls: importedData }, async (response) => {
+          if (browser.runtime.lastError) {
+            console.error("Error:", browser.runtime.lastError.message);
+          } else {
+            console.log(response.reply);
+          }
+        });
+      };
+      reader.readAsText(file); // Read the file as text
+    }
+  });
+
+  $("#saveAllOwlsButton").click(saveAllOwls);
 });
 
 $(document).on('click', "#saveOptions",
   save_options);
 
-$(document).on('click', '#colorList li', function() {
+$(document).on('click', '#colorList li', function () {
   // Note to self: Tried using the jQuery way, which is
   // $(this).css('color')
   // But it returns an RGB value of the color instead of client
@@ -310,3 +339,124 @@ $(document).on('click', '#colorList li', function() {
   // Remove the color item in the list
   $(this).remove();
 });
+
+browser.runtime.sendMessage({ action: "get_all_owls" }, async (response) => {
+  if (browser.runtime.lastError) {
+    console.error("Error:", browser.runtime.lastError.message);
+  } else {
+    // Download all owls as a JSON file
+    $('#exportOwlsButton').on('click', function () {
+      const allOwls = response.reply;
+
+      // Create a blob with the JSON data
+      const blob = new Blob([JSON.stringify(allOwls, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      // Create a temporary <a> element to trigger the download
+      const tempLink = $('<a>')
+        .attr('href', url)
+        .attr('download', 'owls_backup.json');
+
+      // Trigger the download
+      tempLink[0].click();
+
+      // Clean up the URL object and remove the link
+      URL.revokeObjectURL(url);
+      tempLink.remove();
+
+      $(this).text("ינשופים יוצאו");
+
+      browser.storage.sync.set({ owlsSinceExport: newValue });
+    });
+  }
+});
+
+function saveOwl(owlID) {
+  return new Promise((resolve, reject) => {
+    browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
+      if (browser.runtime.lastError) {
+        reject("Error for owl " + owlID + ": ", response);
+      } else {
+        resolve(response.reply);
+      }
+    });
+  });
+}
+
+async function saveAllOwls() {
+  const baseURL = "https://hportal.co.il/index.php?act=Msg&CODE=1&st=";
+  let foundOwls = true;
+  let currentPage = 0;
+
+  // This will be the total number of owls wer'e trying to save
+  let totalOwls = 0;
+  // This is how many owl were successfully saved
+  let successOwls = 0;
+  // This is how many owls are a disappointment to their family
+  let failedOwls = 0;
+
+  // Dont save multiple times silly
+  $("#saveAllOwlsButton").prop('disabled', true);
+
+  // The DB needs a refresh to update
+  // So force them to refresh before exporting/importing
+  $("#exportOwlsButton, #importOwlsButton")
+    .prop('disabled', true)
+    .text('Please refresh');
+
+  while (foundOwls) {
+    $("#saveAllOwlsButton").text(`Hunting owls (page ${currentPage})...`);
+
+    await fetch(baseURL + (currentPage * 100)).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text(); // Parse the response as text
+    })
+      .then(html => {
+        console.log("Fetching for " + (currentPage * 100));
+
+        // Get first <a> in each tr.dlight, which are the links to each owl
+        const owls = $($.parseHTML(html)).find("tr.dlight");
+        if (owls.length > 0) {
+          totalOwls += owls.length;
+
+          owls.find("a:first").each(function () {
+            const href = $(this).attr('href');
+
+            saveOwl(new URLSearchParams(href).get("MSID")).then(response => {
+              successOwls++;
+
+              if(successOwls == totalOwls) {
+                $("#saveAllOwlsButton").text(`☑: ✓ ${successOwls}/${totalOwls} owls`);
+              } else if(successOwls + failedOwls == totalOwls) {
+                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+              } else {
+                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+              }
+            }).catch(error => {
+              console.log(error);
+              failedOwls++;
+
+              if(successOwls + failedOwls == totalOwls) {
+                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+              } else {
+                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+              }
+            });
+          });
+        } else {
+          foundOwls = false;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching owls:', error);
+      });
+
+    currentPage++;
+  }
+
+  setInterval(function () {
+    console.log(`Successful owls: ${successOwls}, failed owls: ${failedOwls}, total owls: ${totalOwls}`);
+  }, 10000);
+}

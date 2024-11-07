@@ -1,0 +1,9 @@
+/*
+This is solely for making owlery pages actually readable.
+What a waste of a CSS file. Eh, nobody likes CSS anyways.
+*/
+
+.white,
+.white * {
+    color: #000 !important;
+}

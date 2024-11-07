@@ -52,6 +52,10 @@ html, body {
   top: 60%;
 }
 
+.owls-settings-panel {
+  top: 75%;
+}
+
 .options {
   padding: 3% 25%;
   direction: rtl;

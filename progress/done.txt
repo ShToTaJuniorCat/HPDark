@@ -25,3 +25,6 @@
 
 
     - Ban yourself for a certain amount of time (user declared)
+
+
+    - Change color of page jumping in the owlery

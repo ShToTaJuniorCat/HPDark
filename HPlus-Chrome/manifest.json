@@ -65,6 +65,10 @@
     {
       "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
       "js": ["/pagesJS/donate.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01*", "*://hportal.co.il/index.php?act=Msg&CODE=1*"],
+      "css": ["owlery.css"]
     }
   ]
 }

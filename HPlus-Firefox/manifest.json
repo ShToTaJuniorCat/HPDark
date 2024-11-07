@@ -6,7 +6,8 @@
   "short_name": "HP+",
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "type": "module"
   },
  
   "icons": { 
@@ -44,7 +45,8 @@
     {
       "resources": [
         "images/*",
-        "options/*"
+        "options/*",
+        "savedOwls/*"
       ],
       "matches": ["*://hportal.co.il/*"]
     }
@@ -71,6 +73,22 @@
     {
       "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
       "js": ["/pagesJS/donate.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1*"],
+      "js": ["/pagesJS/owlery.js"],
+      "css": ["owlery.css"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?savedOwl=true&CODE=04&act=Msg&MID=*&MSID=*"],
+      "js": ["savedOwls/savedReply.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=03&VID=*&MSID=*"],
+      "js": ["/pagesJS/in-owl.js"]
     }
   ]
 }

@@ -37,6 +37,11 @@
                     הגדרות משתמש
                 </span>
             </section>
+            <section class="owls-settings-panel panel" id="owlsSettingsPanel">
+                <span class="panelText">
+                    הגדרות ינשופים
+                </span>
+            </section>
         </div>
 
         <div class="dark-mode-options options" id="darkModeOptions">
@@ -263,8 +268,7 @@
                     <tr>
                         <td class="checkboxOption" id="banMeTD">
                             <!-- Yes, it will be pretty easy to remove the ban even if its locked. Self control is important, people.
-                            But I challenge you to remove it without using that button :)
-                            Aaand now without setting the date to a past time, too -->
+                            But I challenge you to remove it without using that button :) -->
                             <label for="banMeDate">
                                 תן לי באן עד התאריך
                                 <input type="date" id="banMeDate" value="">
@@ -288,6 +292,27 @@
                         <td>
                             <button id='cancelBanButton' style="display: none;">בטל באן פעיל</button>
                             <span id="banInfo">אין לך באן פעיל כרגע</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="owls-settings-options options" id="owlsSettingsOptions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <!-- Export Button -->
+                            <button id='exportOwlsButton'>יצא ינשופים</button>
+                        </td>
+                        <td>
+                            <!-- Import Button -->
+                            <input type="file" id="importOwlsFile" accept=".json" style="display: none;">
+                            <button id="importOwlsButton">יבא ינשופים</button>
+                        </td>
+                        <td>
+                            <button id='saveAllOwlsButton' dir="ltr">שמור את כל הינשופים</button>
                         </td>
                     </tr>
                 </tbody>

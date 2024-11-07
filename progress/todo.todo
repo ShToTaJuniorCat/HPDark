@@ -1,5 +1,4 @@
 TODOs (Ordered by expected amount of effort to make each one):
-    - Change color of page jumping in the owlery
     - Change default values in inputs to placeholders (HTML attribute)
     - Jump to page in forums
     - Allow users to use ezmode by default in comment writing
@@ -11,8 +10,6 @@ TODOs (Ordered by expected amount of effort to make each one):
     - Jump to page in home page
     - Separate yellow emojis from onions
     - Customiseable emojis and onions
-    - Customiseable gender
-        + Check if possible
     - List of categories in home page
     - More keyboard shortcuts
     - Personal helper
