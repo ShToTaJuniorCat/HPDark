@@ -79,15 +79,26 @@
                   "*://hportal.co.il/index.php?act=Msg&CODE=1*",
                   "*://hportal.co.il/index.php?&act=Msg&CODE=01*",
                   "*://hportal.co.il/index.php?&act=Msg&CODE=1*"],
-      "js": ["/pagesJS/owlery.js"],
       "css": ["owlery.css"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php?savedOwl=true&CODE=04&act=Msg&MID=*&MSID=*"],
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1&VID=in*"],
+      "js": ["/pagesJS/owlery.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?*CODE=04*",
+                  "*://hportal.co.il/index.php?*CODE=4*"],
       "js": ["savedOwls/savedReply.js"]
     },
     {
-      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=03&VID=*&MSID=*"],
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=03&VID=in&MSID=*"],
       "js": ["/pagesJS/in-owl.js"]
     }
   ]

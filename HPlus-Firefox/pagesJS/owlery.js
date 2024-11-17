@@ -3,52 +3,102 @@
 // If it isn't, fuck it, suffer
 const OWLS_IN_PAGE = 100;
 
-const url = 'https://hportal.co.il/index.php?act=Msg&CODE=01&VID=in&sort=rdate';
-
 function saveOwl(owlID) {
-    browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
-        if (browser.runtime.lastError) {
-            console.error("Error for owl " + owlID + ": ", browser.runtime.lastError.message);
+    return new Promise((resolve, reject) => {
+        browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
+            if (response.error) {
+                reject("Error for owl " + owlID + ": " + response.error);
+            } else {
+                resolve(response.reply);
+            }
+        });
+    });
+}
+
+async function checkOldestOwl() {
+    // Save oldest owl
+    const owlCapacityMsg = $('td.row1[align="right"][colspan="3"]').text();
+
+    if(owlCapacityMsg.includes("מלאות")) {
+        console.log("Owlery is overflowing! Oldest owl is not saved. Please refer to info page for instructions what to do.");
+        
+        return;
+    }
+
+    let owlCapacity = owlCapacityMsg.match(/\d+/)[0];
+    const url = 'https://hportal.co.il/index.php?act=Msg&CODE=01&VID=in&sort=rdate';
+
+    browser.storage.sync.get({ owleryCapacityQuota: 95 }, function (items) {
+        if(parseInt(owlCapacity) >= parseInt(items.owleryCapacityQuota)) {
+            console.log("Owlery capacity exceeds allowed quota. Trying to save oldest owl.");
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text(); // Parse the response as text
+                })
+                .then(html => {
+                    // Create a new DOM parser
+                    const parser = new DOMParser();
+                    // Parse the HTML string into a document
+                    const doc = parser.parseFromString(html, 'text/html');
+    
+                    // Find the desired <a> element and get its href
+                    const href = $(doc).find('table tr td:first-child img[src="style_images/4/f_norm_no.gif"]')
+                        .closest('tr')
+                        .find('td:nth-child(2) a')
+                        .prop('href');
+    
+                    // Log the href if found
+                    if (href) {
+                        let owlID = new URLSearchParams(href.split('?')[1]).get("MSID");
+    
+                        saveOwl(owlID).then(response => {
+                            console.log("Response: " + response);
+
+                            // Display the saved owl
+                            browser.runtime.sendMessage({ action: "get_owl", owlID: owlID }, (response) => {
+                                if (browser.runtime.lastError) {
+                                    console.log("failed to get owl");
+                                } else {
+                                    displayOwl(response.reply);
+                                }
+                            });
+
+                            // Delete the original owl
+                            browser.storage.sync.get({ deleteOldestOwl: false }, function (items) {
+                                if(items.deleteOldestOwl) {
+                                    browser.runtime.sendMessage({ action: "delete_real_owl", owlID: owlID }, (response) => {
+                                        if (browser.runtime.lastError) {
+                                            console.log(browser.runtime.lastError);
+                                        } else {
+                                            console.log(response.reply);
+
+                                            $(`input[name=${owlID}]`).closest("tr").hide();
+                                        }
+                                    });
+                                } else {
+                                    console.log("Owl saved but preferences aren't set to delete it.");
+                                }
+                            });
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    } else {
+                        console.log('No matching owl found. This is likely because all owls are unread.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the page:', error, "URL: " + url);
+                });
         } else {
-            console.log(response.reply);
+            console.log("Owlery has enough capacity, stop complaining so much!");
         }
     });
 }
 
-// Save oldest owl
-// fetch(url)
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.text(); // Parse the response as text
-//     })
-//     .then(html => {
-//         // Create a new DOM parser
-//         const parser = new DOMParser();
-//         // Parse the HTML string into a document
-//         const doc = parser.parseFromString(html, 'text/html');
-
-//         // Find the desired <a> element and get its href
-//         let href = $(doc).find('table tr td:first-child img[src="style_images/4/f_norm_no.gif"]')
-//             .closest('tr')
-//             .find('td:nth-child(2) a')
-//             .prop('href');
-
-//         // Log the href if found
-//         if (href) {
-//             // TODO: Only save owl if it isn't in the DB already
-//             let owlID = new URLSearchParams(href.split('?')[1]).get("MSID");
-
-//             saveOwl(owlID);
-//         } else {
-//             console.log('No matching owl found.');
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error fetching the page:', error, "URL: " + url);
-//     });
-
+checkOldestOwl();
 
 // ------------------------------
 // Let's display the saved owls!!
@@ -57,6 +107,10 @@ function saveOwl(owlID) {
 // It's a BIG FUCKING shitshow
 // Update from me when I'm almost done here:
 // It's a BIG FUCKING shitshow
+// Update from when I'm mostly done here (cuz I wasn't even close before):
+// Yup still a shitshow
+
+// TODO: only display owls when ordered normally
 
 function getInsertIndex(dates, specificDate) {
     // Convert the specific date to a JavaScript Date object
@@ -131,6 +185,50 @@ function isInThisPage(owlTime, nextNewestTime, currentNewestTime, pageNumber) {
     )
 }
 
+function fixTime(time) {
+    /*
+    Convert some possible weird times to hportal dates
+    For example:
+     - "היום ב-22:11" --> "{today's date formatted MMM DD YYYY}, 22:11"
+     - "אתמול ב-22:11" --> "{yesterday's date formatted MMM DD YYYY}, 22:11"
+     - "awrgjsfbmg" --> "Jan 1 1970, 0:00"
+    
+    Major pain in the ass
+    */
+
+    if (isNaN(new Date(time.slice(0, -3)).getTime())) {
+        // TODO: Check both "היום" and "אתמול"
+        if (time.includes("אתמול") || time.includes("היום")) {
+            let hour = time.split("-")[1].trim();
+        
+            const currentDate = new Date();
+            let targetDate;
+        
+            if (time.includes("היום")) {
+                // Today
+                targetDate = currentDate;
+            } else if (time.includes("אתמול")) {
+                // Yesterday
+                targetDate = new Date(currentDate);
+                targetDate.setDate(currentDate.getDate() - 1);
+            }
+        
+            const month = targetDate.toLocaleString('en-US', { month: 'short' });
+            const day = String(targetDate.getDate()).padStart(2, '0');
+            const year = targetDate.getFullYear();
+        
+            return `${month} ${day} ${year}, ${hour}`;
+        } else {
+            // Symbolic date
+            // If I leave it as it is the owl just won't appear
+            // So this way it'll appear last (or among them)
+            return "Jan 1 1970, 00:00"
+        }
+    }
+
+    return time.slice(0, -3);
+}
+
 async function fetchFirstOwlTime(url) {
     try {
         const response = await fetch(url, {
@@ -142,7 +240,14 @@ async function fetchFirstOwlTime(url) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const html = await response.text();  // Get raw HTML
+        // Fetch raw binary data
+        const buffer = await response.arrayBuffer();
+
+        // Decode using TextDecoder with the correct encoding (UTF-8 or windows-1255 for Hebrew)
+        const decoder = new TextDecoder("windows-1255"); // Use "UTF-8" if the page is encoded as UTF-8
+        const html = decoder.decode(buffer);
+
+        // Parse the HTML content
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
@@ -150,9 +255,9 @@ async function fetchFirstOwlTime(url) {
         const targetElement = doc.querySelector('div.tableborder table tbody tr td:nth-child(4)');
 
         if (targetElement) {
-            return new Date(targetElement.textContent.slice(0, -3)).getTime();
+            return new Date(fixTime(targetElement.textContent)).getTime();
         } else {
-            console.log('This is the last page?????');
+            // Requested URL has no owls in it
             return null;
         }
     } catch (error) {
@@ -172,7 +277,12 @@ async function getNextNewestTime() {
 
 function getCurrentNewestTime() {
     const newestTimeElement = document.querySelector('div.tableborder table tbody tr td:nth-child(4)');
-    return new Date(newestTimeElement.textContent.slice(0, -3)).getTime()
+
+    if(newestTimeElement) {
+        return new Date(fixTime(newestTimeElement.textContent)).getTime();
+    }
+
+    return null;
 }
 
 function getPageNumber() {
@@ -181,54 +291,45 @@ function getPageNumber() {
         return 1;
     }
 
-    // Apparantly st=100 means we're on the first page, huh
+    // Apparantly st=0 means we're on the first page, huh
     return (pageOwlSt / OWLS_IN_PAGE) + 1;
-}
-
-function fixTime(time) {
-    /*
-    Convert some possible weird times to hportal dates
-    For example:
-     - "היום ב-22:11" --> "{today's date formatted MMM DD YYYY}, 22:11"
-     - "אתמול ב-22:11" --> "{yesterday's date formatted MMM DD YYYY}, 22:11"
-     - "awrgjsfbmg" --> "Jan 1 1970, 0:00"
-    */
-
-    if (isNaN(new Date(time.slice(0, -3)).getTime())) {
-        // TODO: Make a distinction between today and yesterday
-        if (time.includes("אתמול") || time.includes("היום")) {
-            let hour = time.split("-")[1];
-
-            const currentDate = new Date();
-            const month = currentDate.toLocaleString('en-US', { month: 'short' });
-            const day = String(currentDate.getDate()).padStart(2, '0');
-            const year = currentDate.getFullYear();
-
-            return `${month} ${day} ${year}, ${hour}`;
-        } else {
-            // Symbolic date
-            // If I leave it as it is the owl just won't appear
-            // So this way it'll appear last (or among them)
-            return "Jan 1 1970, 00:00"
-        }
-    }
-
-    return time.slice(0, -3);
 }
 
 function displayOwl(owl) {
     const table = $('div.tableborder table tbody');
     const owlIndex = getInsertIndex(owlDates, fixTime(owl.time));
     if (table.children().length >= owlIndex + 1) {
-        table.children().eq(owlIndex + 1).before(
-            // TODO: Store the sender username and display it
-            `<tr class="dlight">
-                <td align="center" valign="middle"><img src="style_images/4/f_norm_no.gif" border="0" alt="הודעה שנקראה"></td>
-                <td><a href="${browser.runtime.getURL('savedOwls/savedOwl.html')}?owlID=${owl.id}">${owl.title}</a></td>
-                <td><a href="https://hportal.co.il/index.php?showuser=${owl.senderID}">${owl.senderName}</a></td>
-                <td>${owl.time}</td>
-                <td align="center" dir="ltr">HP+</td>
-            </tr>`);
+        const $newRow = $(`
+            <tr class="dlight" id="HPlusOwl_${owl.id || 0}">
+                <td align="center" valign="middle">
+                    <img src="style_images/4/f_norm_no.gif" border="0" alt="הודעה שנקראה">
+                </td>
+                <td>
+                    <a href="${browser.runtime.getURL('savedOwls/savedOwl.html')}?owlID=${owl.id || 0}">${owl.title || "כותרת ינשוף"}</a>
+                </td>
+                <td>
+                    <a href="https://hportal.co.il/index.php?showuser=${owl.senderID || 0}">${owl.senderName || "שולח ינשוף"}</a>
+                </td>
+                <td>${owl.time || "זמן"}</td>
+                <td align="center" dir="ltr">
+                    <span class="deleteHPlusOwl" id="DeleteHPlusOwl_${owl.id || 0}">מחק</span>
+                </td>
+            </tr>
+        `);
+
+        table.children().eq(owlIndex + 1).before($newRow);
+
+        $("#DeleteHPlusOwl_" + owl.id).click(function () {
+            browser.runtime.sendMessage({ action: "delete_owl_from_db", owlID: owl.id }, (response) => {
+                if (browser.runtime.lastError) {
+                    console.error("Error:", browser.runtime.lastError.message);
+                    updateState("error-saving");
+                } else {
+                    console.log(response.reply);
+                    $($("#HPlusOwl_" + owl.id)).remove();
+                }
+            });
+        });
     }
 }
 
@@ -247,10 +348,6 @@ async function displayAllOwls() {
                 allOwls.sort((firstOwl, secondOwl) =>
                     new Date(fixTime(firstOwl.time)) - new Date(fixTime(secondOwl.time))
                 );
-
-                // TODO: Try to understand what the fuck should I do
-                // with owls that were sent "היום ב" or "אתמול ב"
-                // Cuz fuck me, why wouldnt there be fucking exceptions
 
                 allOwls.forEach(owlObject => {
                     if (isInThisPage(
@@ -274,3 +371,23 @@ const owlDates = $('div.tableborder table tbody tr td:nth-child(4)').map(functio
 }).get();
 
 displayAllOwls();
+
+browser.storage.sync.get({ owlsSinceExport: 0, owlsWarningInput: 5 }, function (items) {
+    if (items.owlsSinceExport >= items.owlsWarningInput) {
+        $("<span>", {
+            id: "owlsOverflowWarning",
+            text: ` ${items.owlsSinceExport} ינשופים נשמרו מאז הייצוא האחרון!`,
+            css: {
+                color: "yellow",
+                fontWeight: "bold",
+                fontSize: "20px"
+            }
+        }).appendTo("td#ucpcontent div.maintitle")
+    }
+});
+
+$('input[type="submit"][name="delete"]').on('click', function (event) {
+    if (!confirm("אתה בטוח שאתה רוצה למחוק לצמיתות את הינשופים שנבחרו? תוכנם לא ניתן יהיה לשחזור.")) {
+        event.preventDefault(); // Cancel the form submission
+    }
+});

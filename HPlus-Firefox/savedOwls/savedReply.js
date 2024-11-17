@@ -1,44 +1,31 @@
-// Function to fetch the owl from IndexedDB
-function fetchOwlFromDB(owlID) {
-    return new Promise((resolve, reject) => {
-        // Open the IndexedDB
-        const request = indexedDB.open("owlDB", 1);
-        
-        request.onerror = function(event) {
-            reject("Error opening database");
-        };
-        
-        request.onsuccess = function(event) {
-            const db = event.target.result;
-            const transaction = db.transaction(["owls"], "readonly");
-            const objectStore = transaction.objectStore("owls");
-            const owlRequest = objectStore.get(owlID);
-            
-            owlRequest.onsuccess = function(event) {
-                const owl = event.target.result;
-                if (owl) {
-                    resolve(owl);
-                } else {
-                    reject("Owl not found");
-                }
-            };
-            
-            owlRequest.onerror = function(event) {
-                reject("Error fetching owl");
-            };
-        };
-    });
-}
+const urlSearch = new URLSearchParams(window.location.search);
 
-async function setOwl() {
-    try {
-        const owlID = new URLSearchParams(window.location.search).get('MSID');
-        const owl = await fetchOwlFromDB(owlID);
-        document.getElementsByName("msg_title")[0].value = owl.title;
-        document.getElementById("Post").value = "[QUOTE]" + owl.bbcode + "[/QUOTE]";
-    } catch (error) {
-        document.getElementById("Post").value = 'Failed to fetch owl: ' + error;
+if(urlSearch.get("savedOwl")) {
+    // Find requested owl ID
+    const owlID = urlSearch.get('MSID');
+
+    if(owlID) {
+        // Fetch the owl from IndexedDB and set it's value in the textarea
+        browser.runtime.sendMessage({ action: "get_owl", owlID: owlID }, (response) => {
+            if (browser.runtime.lastError) {
+                document.getElementById("Post").value = 'Failed to fetch owl: ' + browser.runtime.lastError.message;
+            } else {
+                if(response.reply) {
+                    const owl = response.reply;
+                    document.getElementsByName("msg_title")[0].value = owl.title;
+                    document.getElementById("Post").value = "[QUOTE]" + owl.bbcode + "[/QUOTE]";
+                } else {
+                    document.getElementById("Post").value = "בקשה שגויה. וודא שה-ID שמור באמצעות HP+ או נסה שוב מאוחר יותר.";
+                }
+            }
+        });
     }
 }
 
-setOwl();
+// Set the save copy of sent owl checkbox to whatever it's set to
+// This page affects saved replies, non-saved replies, forwards, new owls
+// and basically anything that sends an owl. This way I catch 'em all.
+// Yeah I'm lazy to do it better, suffer
+browser.storage.sync.get({ checkSaveSent: true }, function (items) {
+    $('input[name="add_sent"]').prop('checked', items.checkSaveSent);
+});

@@ -100,7 +100,14 @@ function restore_options() {
     showSickles: true,
 
     banMeMillisec: 0,
-    lockBan: false
+    lockBan: false,
+
+    checkSaveSent: true,
+
+    owlsWarningInput: 5,
+    owlsSinceExport: 0,
+    owleryCapacityQuota: 95,
+    deleteOldestOwl: false
   }, function (items) {
     $("#darkSwitch").prop('checked', items.darkMode);
 
@@ -175,6 +182,16 @@ function restore_options() {
         lockBan: false
       });
     }
+    
+    if(items.owlsSinceExport >= items.owlsWarningInput) {
+      $("#owlsOverflowWarning").text(`${items.owlsSinceExport} ינשופים נשמרו מאז הייצוא האחרון!`)
+      $("#owlsOverflowWarning").show();
+    }
+
+    $("#owlsWarningInput").val(items.owlsWarningInput);
+    $("#owleryCapacityQuota").val(items.owleryCapacityQuota);
+    $("#checkSaveSent").prop('checked', items.checkSaveSent);
+    $("#checkDeleteOldestOwl").prop('checked', items.deleteOldestOwl);
   });
 }
 
@@ -213,8 +230,12 @@ function save_options() {
       banMeMillisec: banMillisec,
       lockBan: lockBan
     });
-  }
-  );
+  });
+
+  const owlsWarningInput = $("#owlsWarningInput").val();
+  const owleryCapacityQuota = $("#owleryCapacityQuota").val();
+  const checkSaveSent = $("#checkSaveSent").is(":checked");
+  const checkDeleteOldestOwl = $("#checkDeleteOldestOwl").is(":checked");
 
   browser.storage.sync.set({
     darkMode: darkSwitchCheckbox,
@@ -234,7 +255,12 @@ function save_options() {
     addHTML: addHTML,
     addSQL: addSQL,
 
-    showSickles: showSickles
+    showSickles: showSickles,
+
+    owlsWarningInput: owlsWarningInput,
+    checkSaveSent: checkSaveSent,
+    owleryCapacityQuota: owleryCapacityQuota,
+    deleteOldestOwl: checkDeleteOldestOwl
   }, function () {
     // Update status to let the user know options were saved.
     let $optionsSaved = $('#optionsSaved');
@@ -316,6 +342,9 @@ $(function () {
             console.error("Error:", browser.runtime.lastError.message);
           } else {
             console.log(response.reply);
+            $("#importOwlsButton")
+              .prop("disabled", true)
+              .text("ינשופים יובאו בהצלחה!");
           }
         });
       };
@@ -324,6 +353,38 @@ $(function () {
   });
 
   $("#saveAllOwlsButton").click(saveAllOwls);
+
+  // Handle button that deletes all saved owls
+  $("#deleteAllSavedOwlsButton").click(function () {
+    if(prompt("למחוק את כל הינשופים השמורים? הקלד/י \"מחק הכל\" (ללא גרשיים) בכדי לאשר.") == "מחק הכל") {
+      browser.runtime.sendMessage({ action: "delete_all_saved_owls" }, (reply) => {
+        if (reply.error) {
+          console.log("Error for owl " + owlID + ": ", reply);
+        } else {
+          console.log(reply.reply);
+          $("#deleteAllSavedOwlsButton")
+            .prop('disabled', true)
+            .text("כל הינשופים השמורים נמחקו.");
+        }
+      });
+    }
+  });
+
+  // Handle button that deletes all owls with saved copy
+  $("#deleteOwlsWithCopyButton").click(function () {
+    if(prompt("למחוק את כל הינשופים שיש להם עותק שמור? הקלד/י \"מחק ינשופים עם עותק\" (ללא גרשיים) בכדי לאשר.") == "מחק ינשופים עם עותק") {
+      browser.runtime.sendMessage({ action: "delete_owl_with_copy" }, (reply) => {
+        if (reply.error) {
+          console.log("Error: ", reply);
+        } else {
+          console.log(reply.reply);
+          $("#deleteOwlsWithCopyButton")
+            .prop('disabled', true)
+            .text("כל הינשופים עם עותק שמור נמחקו.");
+        }
+      });
+    }
+  });
 });
 
 $(document).on('click', "#saveOptions",
@@ -366,7 +427,7 @@ browser.runtime.sendMessage({ action: "get_all_owls" }, async (response) => {
 
       $(this).text("ינשופים יוצאו");
 
-      browser.storage.sync.set({ owlsSinceExport: newValue });
+      browser.storage.sync.set({ owlsSinceExport: 0 });
     });
   }
 });
@@ -402,10 +463,10 @@ async function saveAllOwls() {
   // So force them to refresh before exporting/importing
   $("#exportOwlsButton, #importOwlsButton")
     .prop('disabled', true)
-    .text('Please refresh');
+    .text('לא זמין');
 
   while (foundOwls) {
-    $("#saveAllOwlsButton").text(`Hunting owls (page ${currentPage})...`);
+    $("#saveAllOwlsButton").text(`צד ינשופים... (עמוד ${currentPage})`);
 
     await fetch(baseURL + (currentPage * 100)).then(response => {
       if (!response.ok) {
@@ -428,20 +489,20 @@ async function saveAllOwls() {
               successOwls++;
 
               if(successOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`☑: ✓ ${successOwls}/${totalOwls} owls`);
+                $("#saveAllOwlsButton").text(`ינשופים ☑: ✓ ${successOwls}/${totalOwls}`);
               } else if(successOwls + failedOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               } else {
-                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               }
             }).catch(error => {
               console.log(error);
               failedOwls++;
 
               if(successOwls + failedOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               } else {
-                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls} owls`);
+                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               }
             });
           });

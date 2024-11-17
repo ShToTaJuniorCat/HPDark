@@ -314,6 +314,52 @@
                         <td>
                             <button id='saveAllOwlsButton' dir="ltr">שמור את כל הינשופים</button>
                         </td>
+                        <td>
+                            <button id='deleteAllSavedOwlsButton'>מחק את כל הינשופים השמורים</button>
+                        </td>
+                        <td>
+                            <button id='deleteOwlsWithCopyButton'>מחק ינשופים עם עותק שמור</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <span style="color: red; font-weight: bold; display: none;" id="owlsOverflowWarning">5 או יותר ינשופים נשמרו מאז הייצוא האחרון!</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            הזהר כאשר <input type="number" id="owlsWarningInput" style="width: 60px;" value="5" /> ומעלה ינשופים נשמרו מאז הייצוא האחרון
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            שמור ינשוף ישן ביותר כשהינשופייה בתפוסת <input type="number" id="owleryCapacityQuota" style="width: 60px;" value="95" />% ומעלה
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="checkbox" id="checkDeleteOldestOwl" class="hide-me">
+                            <label for="checkDeleteOldestOwl" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                מחק ינשוף ישן ביותר אם נשמר
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <hr>
+                            <input type="checkbox" id="checkSaveSent" class="hide-me">
+                            <label for="checkSaveSent" class="check">
+                                <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                    <polyline points="1 9 7 14 15 4"></polyline>
+                                </svg>
+                                תוסיף עותק של הודעה נשלחת לתיקיית ינשופים שנשלחו
+                            </label>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -28,15 +28,21 @@ function openDatabase() {
 function getBBCodeContent(owlID) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        const url = "https://hportal.co.il/index.php?CODE=04&act=Msg&MID=81871&MSID=" + owlID;
+        const url = "https://hportal.co.il/index.php?CODE=04&act=Msg&MSID=" + owlID;
         xhr.open('GET', url);
         xhr.onload = () => {
             if (xhr.status === 200) {
                 const responseHTML = xhr.responseText;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(responseHTML, 'text/html');
-                const bbcode = doc.querySelector('textarea#Post').value.slice(7, -9);
-                resolve(bbcode);
+                const bbcode = doc.querySelector('textarea#Post').value;
+                if(bbcode == "") {
+                    // The specified owl ID doesn't exist
+                    reject("Owl with ID " + owlID + " doesn't exist.");
+                }
+
+                // Resolve for BBCode, slicing off the [QUOTE][/QUOTE] tags
+                resolve(bbcode.slice(7, -9));
             } else {
                 reject('Failed to fetch BBCode');
             }
@@ -85,7 +91,41 @@ function getHTMLContent(owlID) {
     });
 }
 
+async function IsOwlInDB(owlID) {
+    try {
+        const db = await openDatabase();
+        const transaction = db.transaction('owls', 'readonly');
+        const owlStore = transaction.objectStore('owls');
+        
+        return new Promise((resolve, reject) => {
+            const request = owlStore.get(owlID);
+
+            request.onsuccess = () => {
+                if (request.result) {
+                    resolve(true); // Owl exists
+                } else {
+                    resolve(false); // Owl does not exist
+                }
+            };
+
+            request.onerror = () => {
+                reject('Error checking for owl in the database.');
+            };
+        });
+    } catch (error) {
+        throw new Error('Error opening database');
+    }
+}
+
 export async function saveOwlToDB(owlID) {
+    const isInDB = await IsOwlInDB(owlID);
+
+    if(isInDB) {
+        return new Promise((resolve, reject) => {
+            reject("Owl " + owlID + " already exists in DB.");
+        });
+    }
+
     try {
         // Fetch BBCode and HTML content
         const bbcodeContent = await getBBCodeContent(owlID);
@@ -97,10 +137,20 @@ export async function saveOwlToDB(owlID) {
             if(time.includes("אתמול") || time.includes("היום")) {
                 let hour = time.split("-")[1];
                 
-                const currentDate = new Date();
-                const month = currentDate.toLocaleString('en-US', { month: 'short' });
-                const day = String(currentDate.getDate()).padStart(2, '0');
-                const year = currentDate.getFullYear();
+                let targetDate;
+
+                if (time.includes("היום")) {
+                    // Today
+                    targetDate = new Date();
+                } else if (time.includes("אתמול")) {
+                    // Yesterday
+                    targetDate = new Date();
+                    targetDate.setDate(targetDate.getDate() - 1);
+                }
+                
+                const month = targetDate.toLocaleString('en-US', { month: 'short' });
+                const day = String(targetDate.getDate()).padStart(2, '0');
+                const year = targetDate.getFullYear();
 
                 /* Now you are probably wondering: Why "XM"?
                 Well, the dates are saved in a 24-hour format,
@@ -204,6 +254,7 @@ export async function getAllOwls() {
 }
 
 export async function saveImportedOwls(owlsData) {
+    // TODO: Check owl has all required fields
     return new Promise(async (resolve, reject) => {
         const db = await openDatabase();
         const transaction = db.transaction('owls', 'readwrite');
@@ -224,7 +275,7 @@ export async function saveImportedOwls(owlsData) {
             } catch (error) {
                 console.error(error);
                 reject(`Import failed on owl with ID: ${owl.id}`);
-                return; // Exit the function early on error
+                allSaved = false;
             }
         }
 
@@ -233,5 +284,148 @@ export async function saveImportedOwls(owlsData) {
         } else {
             reject('Some owls could not be saved.');
         }
+    });
+}
+
+export async function deleteOwlByID(owlID) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const db = await openDatabase();
+            const transaction = db.transaction('owls', 'readwrite');
+            const owlStore = transaction.objectStore('owls');
+
+            const request = owlStore.delete(owlID);
+
+            request.onsuccess = () => {
+                resolve(`Owl with ID ${owlID} deleted from DB successfully.`);
+            };
+
+            request.onerror = (event) => {
+                reject(`Failed to delete owl with ID ${owlID} from DB`);
+            };
+        } catch (error) {
+            reject('Database error');
+        }
+    });
+}
+
+export async function deleteAllSavedOwls() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const db = await openDatabase(); // Open the IndexedDB using your existing openDatabase() function
+            const transaction = db.transaction('owls', 'readwrite');
+            const owlStore = transaction.objectStore('owls');
+
+            // Clear all records in the owls object store
+            const clearRequest = owlStore.clear();
+
+            clearRequest.onsuccess = () => {
+                resolve("All owls have been deleted successfully.");
+            };
+
+            clearRequest.onerror = (error) => {
+                reject("Error deleting all owls: " + error);
+            };
+
+            // Wait for transaction to complete
+            await transaction.complete;
+            db.close();
+        } catch (error) {
+            reject("Failed to delete all owls: " + error);
+        }
+    });
+}
+
+/**
+ * Delete all real owls that have a copy of them in the DB.
+*/
+export async function deleteAllRealOwlsWithCopy() {
+    /**
+     * Basically we're deleting from hportal all owls that exist in the DB,
+     * not even checking if they still exist on hportal
+     * That's because of how hportal handles owl deletion.
+     * Don't ask questions.
+     */
+    return new Promise(async (resolve, reject) => {
+        try {
+            const allOwls = await getAllOwls(); // Fetch all owls from the database
+
+            if(!allOwls || allOwls < 1) {
+                resolve("There are no saved owls.");
+            } else {
+                // Extract IDs from the returned owl objects
+                const ids = allOwls.map(owl => owl.id);
+                let owlsToDelete = ids.map(owlID => `${owlID}=1&msgid_${owlID}=yes&`)
+                                    .join('');;
+
+                await fetch("https://hportal.co.il/index.php?CODE=06&act=Msg", {
+                    "credentials": "include",
+                    "headers": {
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                        "Accept-Language": "en-US,en;q=0.5",
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Upgrade-Insecure-Requests": "1",
+                        "Sec-Fetch-Dest": "document",
+                        "Sec-Fetch-Mode": "navigate",
+                        "Sec-Fetch-Site": "same-origin",
+                        "Sec-Fetch-User": "?1",
+                        "Sec-GPC": "1",
+                        "Priority": "u=0, i"
+                    },
+                    "referrer": "https://hportal.co.il/index.php?act=Msg&CODE=01",
+                    "body": owlsToDelete + "VID=in&delete=%E4%F1%F8",
+                    "method": "POST",
+                    "mode": "cors"
+                }).then(response => {
+                    if(response.ok) {
+                        resolve("Owls with copy deleted successfully.");
+                    } else {
+                        reject("Error deleting owls with copy. Response:", response)
+                    }
+                });
+            }
+        } catch (error) {
+            reject('Error retrieving all owls: ' + error);
+        }
+    });
+}
+
+/**
+ * Delete an owl from hportal itself by it's ID.
+*/
+export async function deleteRealOwl(owlID) {
+    /**
+     * Basically we're deleting it without checking if it exists.
+     * If it doesn't exist, nothing actually happens.
+     * That's because of how hportal handles owl deletion.
+     * Don't ask questions.
+     */
+    
+    return new Promise(async (resolve, reject) => {
+        await fetch("https://hportal.co.il/index.php?CODE=06&act=Msg", {
+            "credentials": "include",
+            "headers": {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Upgrade-Insecure-Requests": "1",
+                "Sec-Fetch-Dest": "document",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-Site": "same-origin",
+                "Sec-Fetch-User": "?1",
+                "Sec-GPC": "1",
+                "Priority": "u=0, i"
+            },
+            "referrer": "https://hportal.co.il/index.php?act=Msg&CODE=01",
+            "body": `${owlID}=1&msgid_${owlID}=yes&VID=in&delete=%E4%F1%F8`,
+            "method": "POST",
+            "mode": "cors"
+        }).then(response => {
+            if(response.ok) {
+                resolve("Owl " + owlID + " deleted successfully.");
+            } else {
+                reject("Error deleting owl " + owlID + ". Response:", response)
+            }
+        });
     });
 }
