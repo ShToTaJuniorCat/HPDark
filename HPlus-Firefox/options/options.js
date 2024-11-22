@@ -107,7 +107,8 @@ function restore_options() {
     owlsWarningInput: 5,
     owlsSinceExport: 0,
     owleryCapacityQuota: 95,
-    deleteOldestOwl: false
+    deleteOldestOwl: false,
+    maxOwleryStorage: 300
   }, function (items) {
     $("#darkSwitch").prop('checked', items.darkMode);
 
@@ -192,6 +193,7 @@ function restore_options() {
     $("#owleryCapacityQuota").val(items.owleryCapacityQuota);
     $("#checkSaveSent").prop('checked', items.checkSaveSent);
     $("#checkDeleteOldestOwl").prop('checked', items.deleteOldestOwl);
+    $("#maxOwleryStorage").val(items.maxOwleryStorage);
   });
 }
 
@@ -236,6 +238,7 @@ function save_options() {
   const owleryCapacityQuota = $("#owleryCapacityQuota").val();
   const checkSaveSent = $("#checkSaveSent").is(":checked");
   const checkDeleteOldestOwl = $("#checkDeleteOldestOwl").is(":checked");
+  const maxOwleryStorage = $("#maxOwleryStorage").val();
 
   browser.storage.sync.set({
     darkMode: darkSwitchCheckbox,
@@ -260,7 +263,8 @@ function save_options() {
     owlsWarningInput: owlsWarningInput,
     checkSaveSent: checkSaveSent,
     owleryCapacityQuota: owleryCapacityQuota,
-    deleteOldestOwl: checkDeleteOldestOwl
+    deleteOldestOwl: checkDeleteOldestOwl,
+    maxOwleryStorage: maxOwleryStorage
   }, function () {
     // Update status to let the user know options were saved.
     let $optionsSaved = $('#optionsSaved');
@@ -326,6 +330,8 @@ $(function () {
       $(this).prop('checked', isConfirmed);
     }
   });
+
+  $("#statsPageURL").attr("href", browser.runtime.getURL('options/owleryPages/owleryStats/stats.html'));
 
   $('#importOwlsButton').on('click', function () {
     $('#importOwlsFile').click(); // Trigger file input click when import button is clicked
@@ -516,8 +522,4 @@ async function saveAllOwls() {
 
     currentPage++;
   }
-
-  setInterval(function () {
-    console.log(`Successful owls: ${successOwls}, failed owls: ${failedOwls}, total owls: ${totalOwls}`);
-  }, 10000);
 }

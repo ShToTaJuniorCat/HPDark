@@ -118,6 +118,13 @@ async function IsOwlInDB(owlID) {
 }
 
 export async function saveOwlToDB(owlID) {
+    console.log(await getRemainingStorageSpace());
+    if(await getRemainingStorageSpace() < 10) {
+        return new Promise((resolve, reject) => {
+            reject("Couldn't save owl " + owlID + "; storage is full.");
+        });
+    }
+
     const isInDB = await IsOwlInDB(owlID);
 
     if(isInDB) {
@@ -192,6 +199,11 @@ export async function saveOwlToDB(owlID) {
             request.onsuccess = () => {
                 browser.storage.sync.get({ owlsSinceExport: 0 }, function (result) {
                     const currentValue = result.owlsSinceExport || 0; // Fallback to 0 if not set
+
+                    if(currentValue % 10 == 0) {
+                        updateIndexedDBUsage();
+                    }
+
                     const newValue = currentValue + 1;
                 
                     // Save the incremented value
@@ -206,7 +218,7 @@ export async function saveOwlToDB(owlID) {
             };
         });
     } catch (error) {
-        return new Promise((reject) => {
+        return new Promise((resolve, reject) => {
             reject("Error fetching owl data: " + error);
         });
     }
@@ -330,6 +342,8 @@ export async function deleteAllSavedOwls() {
             // Wait for transaction to complete
             await transaction.complete;
             db.close();
+
+            updateIndexedDBUsage();
         } catch (error) {
             reject("Failed to delete all owls: " + error);
         }
@@ -427,5 +441,52 @@ export async function deleteRealOwl(owlID) {
                 reject("Error deleting owl " + owlID + ". Response:", response)
             }
         });
+    });
+}
+
+export async function getIndexedDBUsage() {
+    try {
+        const allOwls = await getAllOwls(); // Retrieve all owls from the IndexedDB
+
+        // Calculate the size of each owl in bytes
+        const totalSize = allOwls.reduce((acc, owl) => {
+            const jsonString = JSON.stringify(owl);
+            return acc + new TextEncoder().encode(jsonString).length;
+        }, 0);
+
+        return totalSize;
+    } catch (error) {
+        return -1;
+    }
+}
+
+export async function updateIndexedDBUsage() {
+    const indexedDBUsage = await getIndexedDBUsage();
+    await browser.storage.sync.set({ indexedDBUsage: indexedDBUsage });
+}
+
+async function getRemainingStorageSpace() {
+    const currentSize = await browser.storage.sync.get('indexedDBUsage');
+    const maxStorage = await browser.storage.sync.get('maxOwleryStorage');
+    
+    // Convert the storage to be in MB as intended
+    return (maxStorage.maxOwleryStorage * 1000000) - currentSize.indexedDBUsage;
+}
+
+export async function getSavedOwlCount() {
+    const db = await openDatabase(); // Open the IndexedDB database
+    const transaction = db.transaction(['owls'], 'readonly'); // Open a read-only transaction
+    const objectStore = transaction.objectStore('owls');
+
+    return new Promise((resolve, reject) => {
+        const countRequest = objectStore.count(); // Count all records in the 'owls' store
+
+        countRequest.onsuccess = () => {
+            resolve(countRequest.result); // Return the count of saved owls
+        };
+
+        countRequest.onerror = () => {
+            reject('Failed to count saved owls'); // Handle errors
+        };
     });
 }

@@ -46,7 +46,8 @@
       "resources": [
         "images/*",
         "options/*",
-        "savedOwls/*"
+        "savedOwls/*",
+        "owleryPages/"
       ],
       "matches": ["*://hportal.co.il/*"]
     }

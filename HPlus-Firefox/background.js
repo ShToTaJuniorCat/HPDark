@@ -1,5 +1,14 @@
 import { 
-    saveOwlToDB, getAllOwls, getOwlByID, saveImportedOwls, deleteOwlByID, deleteAllSavedOwls, deleteAllRealOwlsWithCopy, deleteRealOwl
+    saveOwlToDB,
+    getAllOwls, 
+    getOwlByID, 
+    saveImportedOwls, 
+    deleteOwlByID, 
+    deleteAllSavedOwls,
+    deleteAllRealOwlsWithCopy, 
+    deleteRealOwl,
+    getIndexedDBUsage,
+    getSavedOwlCount
 } from './owlsDBFunctions.js';
 
 // Handle background messages 
@@ -19,6 +28,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     } else if (message.action == "get_all_owls") {
         console.log("attempting to get all owls");
+
         getAllOwls()
             .then(response => {
                 console.log("Success!");
@@ -98,6 +108,32 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (message.action == "delete_real_owl" && message.owlID) {
         console.log("Attempting to delete owl " + message.owlID + " from hportal");
         deleteRealOwl(message.owlID)
+            .then(response => {
+                console.log(response);
+                sendResponse({ reply: response });
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+                sendResponse({ reply: error });
+            });
+        
+        return true;
+    } else if (message.action == "get_db_storage_size") {
+        console.log("Attempting to get IndexedDB storage size");
+        getIndexedDBUsage()
+            .then(response => {
+                console.log(response);
+                sendResponse({ reply: response });
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+                sendResponse({ reply: error });
+            });
+        
+        return true;
+    } else if (message.action == "get_saved_owls_count") {
+        console.log("Attempting to saved owl count");
+        getSavedOwlCount()
             .then(response => {
                 console.log(response);
                 sendResponse({ reply: response });

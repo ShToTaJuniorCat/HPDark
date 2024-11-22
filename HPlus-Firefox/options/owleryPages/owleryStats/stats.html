@@ -1,0 +1,180 @@
+<!-- 
+Behold this page, a true delight,  
+Its code’s so clean, it shines so bright.  
+Unlike the rest, my tangled spree,  
+This masterpiece was shaped by ChatGPT.  
+
+My usual work? A coder's crime,  
+With hacks and quirks and wasted time.  
+But here, perfection's proudly shown,  
+(Though let’s be real, I can't claim it my own).  
+
+For ChatGPT, with tireless flair,  
+Made this page beyond compare.  
+It’s polished, sharp, and far from lame,  
+While my past work wallows in shame.  
+
+And now you read this rhyme of wit,  
+Let me confess the cheek of it:  
+This poem too, as you can see,  
+Was penned with ease by ChatGPT. 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>סטטיסטיקות אחסון ינשופים</title>
+    <link rel="stylesheet" href="stats.css">
+</head>
+<body dir="rtl">
+    <header>
+        <h1>סטטיסטיקות אחסון ינשופים</h1>
+    </header>
+
+    <main>
+        <!-- Graph 1: User-Set Quota -->
+        <section class="graph-section">
+            <h2>שימוש באחסון (הגבלת המשתמש)</h2>
+            ביחס לאחסון המקסימלי שהגדרת בהגדרות.
+            <div class="storage-bar" id="user-quota-bar">
+                <div class="bar-fill" id="user-indexeddb-bar"></div>
+                <div class="bar-fill" id="user-available-bar"></div>
+            </div>
+            <div class="storage-legend">
+                <p>
+                    <div class="color-box" id="user-indexeddb-box"></div>
+                    אחסון בשימוש עבור ינשופים: <span id="user-indexeddb-percent">0%</span>
+                </p>
+                <p>
+                    <div class="color-box" id="user-available-box"></div>
+                    אחסון פנוי: <span id="user-available-percent">0%</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Graph 2: Browser's Max Quota -->
+        <section class="graph-section">
+            <h2>שימוש באחסון (הגבלת הדפדפן)</h2>
+            ביחס למקסימום האחסון המותר על ידי הדפדפן.
+            <div class="storage-bar" id="browser-quota-bar">
+                <div class="bar-fill" id="browser-indexeddb-bar"></div>
+                <div class="bar-fill" id="browser-other-bar"></div>
+                <div class="bar-fill" id="browser-available-bar"></div>
+            </div>
+            <div class="storage-legend">
+                <p>
+                    <div class="color-box" id="browser-indexeddb-box"></div>
+                    אחסון בשימוש עבור ינשופים: <span id="browser-indexeddb-percent">0%</span>
+                </p>
+                <p>
+                    <div class="color-box" id="browser-other-box"></div>
+                    אחסון בשימוש עבור דברים אחרים: <span id="browser-other-percent">0%</span>
+                </p>
+                <p>
+                    <div class="color-box" id="browser-available-box"></div>
+                    אחסון פנוי: <span id="browser-available-percent">0%</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Graph 3: Total Storage Used -->
+        <section class="graph-section">
+            <h2>אחסון בשימוש (סך האחסון בשימוש)</h2>
+            ביחס לכל האחסון המשומש בדפדפן.
+            <div class="storage-bar" id="total-storage-bar">
+                <div class="bar-fill" id="total-indexeddb-bar"></div>
+                <div class="bar-fill" id="total-other-bar"></div>
+            </div>
+            <div class="storage-legend">
+                <p>
+                    <div class="color-box" id="total-indexeddb-box"></div>
+                    אחסון בשימוש עבור ינשופים: <span id="total-indexeddb-percent">0%</span>
+                </p>
+                <p>
+                    <div class="color-box" id="total-other-box"></div>
+                    אחסון בשימוש עבור דברים אחרים: <span id="total-other-percent">0%</span>
+                </p>
+            </div>
+        </section>
+        
+        <!-- Raw Data; Displayed As Plain Text -->
+        <section class="raw-data-section">
+            <h2>סטטיסטיקות</h2>
+            <ul class="raw-data-list">
+                <li>האחסון המקסימלי המותר על ידי הדפדפן: <span id="raw-max-quota">0MB</span></li>
+                <li>אחסון המשומש בדפדפן: <span id="raw-total-used">0MB</span></li>
+                <li>אחסון פנוי בדפדפן: <span id="raw-available-storage">0MB</span></li>
+                <li>אחוז האחסון המותר על ידי הדפדפן בשימוש: <span id="raw-percent-max-used">0%</span></li>
+                <li>אחוז האחסון המותר על ידי הדפדפן בשימוש עבור ינשופים: <span id="raw-percent-indexeddb-browser">0%</span></li>
+                <li>הגבלת המשתמש לאחסון ינשופים: <span id="raw-user-quota">0MB</span></li>
+                <li>אחסון המשומש לינשופים: <span id="raw-indexeddb-used">0MB</span></li>
+                <li>אחוז הגבלת המשתמש בשימוש: <span id="raw-percent-user-used">0%</span></li>
+                <li>מספר הינשופים השמורים: <span id="raw-owl-count">0</span></li>
+                <li>גודל אחסון ממוצע לינשוף: <span id="raw-avg-storage-per-owl">0MB</span></li>
+                <li>מספר הינשופים הנוספים שניתן לשמור (הערכה): <span id="raw-more-owls">0</span></li>
+                <li>גודל קובץ גיבוי מוערך: <span id="raw-backup-size">0MB</span></li>
+                <li>מספר הינשופים שנשמרו מאז הגיבוי האחרון: <span id="raw-owls-since-backup">0</span></li>
+            </ul>
+        </section>
+
+        <!--
+        TODO: Add information section
+        What's the difference between browser quota and user quota,
+        how are stuff calculated,
+        why are only 22000 more owls can be saved
+        -->
+        <section class="info-section">
+            <h2 class="info-title">מידע נוסף והסברים</h2>
+            <p class="info-text">
+                יש מספר דברים בעמוד הזה שעלולים להיות מבלבלים או לא ברורים - אני כאן לעשות סדר!
+            </p>
+            <p class="info-text">
+                העמוד הזה אמור לעזור לכם לעקוב אחרי השימוש באחסון של הינשופים בתוסף. התוסף שומר את כל המידע על הינשופים במסד נתונים בדפדפן, והמידע הזה תופס מקום. לכן, בעמוד הזה תוכלו לראות כמה מקום השתמשתם, כמה מקום נשאר, ועוד סטטיסטיקות מעניינות.
+            </p>
+            <h3 class="info-subtitle">הגבלות על האחסון:</h3>
+            <ul class="info-list">
+                <li><strong>הגבלת הדפדפן:</strong> זוהי הגבלה שנקבעת על ידי הדפדפן עצמו. היא קבועה ולא ניתנת לשינוי.</li>
+                <li><strong>הגבלת המשתמש:</strong> זוהי הגבלה שניתן להגדיר בעמוד ההגדרות של התוסף. ברירת המחדל היא 300MB. תוכלו לשנות אותה מתי ולכמה שתרצו, כל עוד היא לא חורגת מהאחסון הפנוי בדפדפן.</li>
+            </ul>
+            <p class="info-text">* שימו לב שאני לא ממליץ להעלות את ההגבלה מעל ל-300MB. מעבר ל-300MB באחסון עלול להאט את הדפדפן. חוץ מזה, 300MB לינשופים זה המוווווווון.</p>
+            <h3 class="info-subtitle">מהם הגרפים בעמוד הזה?</h3>
+            <p class="info-text">
+                בעמוד הזה יש שלושה גרפים, שכל אחד מהם מציג את השימוש באחסון מזווית שונה:
+            </p>
+            <ul class="info-list">
+                <li><strong>גרף 1:</strong> מציג את האחסון ביחס להגבלה שהגדרתם בעמוד ההגדרות.</li>
+                <li><strong>גרף 2:</strong> מציג את האחסון ביחס להגבלת האחסון של הדפדפן.</li>
+                <li><strong>גרף 3:</strong> מציג את השימוש באחסון על ידי ינשופים אל מול השימוש שאינו בעבור ינשופים.</li>
+            </ul>
+            <h3 class="info-subtitle">איך עובד הגיבוי?</h3>
+            <p class="info-text">
+                הגודל של קובץ הגיבוי שווה לכמות המידע השמור. אם <b>איכשהו</b> הגעתם להגבלת האחסון, תוכלו:
+            </p>
+            <ul class="info-list">
+                <li>להגדיל את ההגבלה בעמוד ההגדרות.</li>
+                <li>להוריד קובץ גיבוי, למחוק ינשופים מהתוסף ולהחזיר אותם מתי שתרצו.</li>
+            </ul>
+            <p class="info-text">* שימו לב שההגבלה חלה על כלל הינשופים שבתוסף - גם אלה שהוחזרו באמצעות קובץ גיבוי.</p>
+            <h3 class="info-subtitle">איך מחשבים את הנתונים בעמוד הזה?</h3>
+            <p class="info-text">
+                הנתונים מחושבים בעזרת שישה פרמטרים בסיסיים:
+            </p>
+            <ul class="info-list">
+                <li>הגבלת האחסון שהוגדרה בעמוד ההגדרות</li>
+                <li>הגבלת האחסון של הדפדפן</li>
+                <li>כמות האחסון בשימוש עבור ינשופים</li>
+                <li>כמות האחסון הכללית בשימוש</li>
+                <li>מספר הינשופים השמורים</li>
+                <li>מספר הינשופים מאז השמירה האחרונה</li>
+            </ul>
+            <p class="info-text">
+                מתוך נתונים אלה ניתן לחשב את כל שאר הנתונים המופיעים בעמוד זה. למשל, גודל הינשוף הממוצע שווה לאחסון שבשימוש עבור הינשופים חלקי כמות הינשופים השמורים.<br> הערכת כמות הינשופים הנוספים שניתן לשמור מתבצעת באמצעות חילוק השטח הפנוי בגודל הינשוף הממוצעת ולכן מדובר בהערכה יחסית גסה (אך היא נהיית טובה יותר ככל שמספר הינשופים גדל).
+            </p>
+        </section>
+    </main>
+
+    <script src="stats.js"></script>
+</body>
+</html>

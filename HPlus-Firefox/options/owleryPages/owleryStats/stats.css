@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333; /* Dark background */
+    color: #f1f1f1; /* Light text for contrast */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1e1e1e; /* Dark header */
+    color: #f9f9f9;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #333; /* Subtle separator */
+}
+
+main {
+    padding: 1rem 2rem;
+}
+
+.graph-section {
+    margin-bottom: 2rem;
+}
+
+.storage-bar {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    background-color: #292929; /* Darker bar background */
+    border-radius: 15px;
+    margin: 1rem 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border-radius: 4px;
+}
+
+.storage-legend {
+    display: flex;
+    gap: 1rem;
+}
+
+.raw-data-section {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #333; /* Darker raw data section */
+    border: 2px solid #1e1e1e; /* Subtle border */
+    border-radius: 5px;
+    color: #f1f1f1; /* Match body text color */
+}
+
+.raw-data-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #f9f9f9; /* Brighter heading */
+}
+
+.raw-data-list {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.raw-data-list li {
+    margin: 5px 0;
+}
+
+.raw-data-list span {
+    font-weight: bold;
+    color: #f9f9f9; /* Ensure contrast for bold labels */
+}
+
+/* Colors for the bars (maintaining distinct contrast) */
+#user-indexeddb-bar { 
+    background-color: #76c7c0; /* Soft teal */
+}
+
+#user-available-bar { 
+    background-color: #f4a261; /* Muted orange */
+}
+
+#user-indexeddb-box {
+    background-color: #76c7c0;
+}
+
+#user-available-box {
+    background-color: #f4a261;
+}
+
+#browser-indexeddb-bar {
+    background-color: #76c7c0;
+}
+
+#browser-other-bar {
+    background-color: #f4a261;
+}
+
+#browser-available-bar {
+    background-color: #e63946; /* Muted red for available space */
+}
+
+#browser-indexeddb-box {
+    background-color: #76c7c0;
+}
+
+#browser-other-box {
+    background-color: #f4a261;
+}
+
+#browser-available-box {
+    background-color: #e63946;
+}
+
+#total-indexeddb-bar {
+    background-color: #76c7c0;
+}
+
+#total-other-bar {
+    background-color: #f4a261;
+}
+
+#total-indexeddb-box {
+    background-color: #76c7c0;
+}
+
+#total-other-box {
+    background-color: #f4a261;
+}
+
+.info-section {
+    background-color: #222;
+    color: #ccc;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+  
+.info-title {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+  
+.info-subtitle {
+    font-size: 20px;
+    color: #f0f0f0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+  
+.info-text {
+    margin-bottom: 15px;
+}
+  
+.info-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+  
+.info-list li {
+    margin-bottom: 10px;
+}
+  
+.info-list strong {
+    color: #fff;
+}
+  
