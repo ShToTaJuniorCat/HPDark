@@ -118,7 +118,6 @@ async function IsOwlInDB(owlID) {
 }
 
 export async function saveOwlToDB(owlID) {
-    console.log(await getRemainingStorageSpace());
     if(await getRemainingStorageSpace() < 10) {
         return new Promise((resolve, reject) => {
             reject("Couldn't save owl " + owlID + "; storage is full.");
@@ -129,7 +128,7 @@ export async function saveOwlToDB(owlID) {
 
     if(isInDB) {
         return new Promise((resolve, reject) => {
-            reject("Owl " + owlID + " already exists in DB.");
+            resolve("Owl " + owlID + " already exists in DB.");
         });
     }
 
@@ -265,8 +264,28 @@ export async function getAllOwls() {
     });
 }
 
+/**
+ * Validates that an owl object has all required fields.
+ * @param {Object} owlData - The owl object to validate.
+ * @returns {boolean} - Returns true if valid, false otherwise.
+ */
+function validateOwlData(owlData) {
+    // Define the required fields
+    const requiredFields = [
+        'id',
+        'senderID',
+        'senderName',
+        'title',
+        'time',
+        'bbcode',
+        'html',
+    ];
+
+    // Check if each required field exists and is not undefined or null
+    return requiredFields.every(field => owlData.hasOwnProperty(field) && owlData[field] != null);
+}
+
 export async function saveImportedOwls(owlsData) {
-    // TODO: Check owl has all required fields
     return new Promise(async (resolve, reject) => {
         const db = await openDatabase();
         const transaction = db.transaction('owls', 'readwrite');
@@ -275,6 +294,9 @@ export async function saveImportedOwls(owlsData) {
         let allSaved = true;
 
         for (const owl of owlsData) {
+            if(!validateOwlData(owl)) {
+                reject("אחד או יותר מהינשופים בפורמט לא נכון. הבקשה נדחתה.");
+            }
             try {
                 await new Promise((resolveOwl, rejectOwl) => {
                     const request = owlStore.put(owl); // Use `put` to update if exists

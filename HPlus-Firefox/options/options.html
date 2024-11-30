@@ -299,83 +299,94 @@
         </div>
 
         <div class="owls-settings-options options" id="owlsSettingsOptions">
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <!-- Export Button -->
-                            <button id='exportOwlsButton'>יצא ינשופים</button>
-                        </td>
-                        <td>
-                            <!-- Import Button -->
-                            <input type="file" id="importOwlsFile" accept=".json" style="display: none;">
-                            <button id="importOwlsButton">יבא ינשופים</button>
-                        </td>
-                        <td>
-                            <button id='saveAllOwlsButton' dir="ltr">שמור את כל הינשופים</button>
-                        </td>
-                        <td>
-                            <button id='deleteAllSavedOwlsButton'>מחק את כל הינשופים השמורים</button>
-                        </td>
-                        <td>
-                            <button id='deleteOwlsWithCopyButton'>מחק ינשופים עם עותק שמור</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <span style="color: red; font-weight: bold; display: none;" id="owlsOverflowWarning">5 או יותר ינשופים נשמרו מאז הייצוא האחרון!</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            הזהר כאשר <input type="number" id="owlsWarningInput" style="width: 60px;" value="5" /> ומעלה ינשופים נשמרו מאז הייצוא האחרון
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            שמור ינשוף ישן ביותר כשהינשופייה בתפוסת <input type="number" id="owleryCapacityQuota" style="width: 60px;" value="95" />% ומעלה
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <input type="checkbox" id="checkDeleteOldestOwl" class="hide-me">
-                            <label for="checkDeleteOldestOwl" class="check">
-                                <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                    <polyline points="1 9 7 14 15 4"></polyline>
-                                </svg>
-                                מחק ינשוף ישן ביותר אם נשמר
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            הגבל גודל אחסון לינשופים שמורים ל<input type="number" id="maxOwleryStorage" style="width: 80px;" value="300" />MB
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5">
-                            <a id="statsPageURL" href="#" style="color: black;">לחץ כאן בכדי להגיע לעמוד סטטיסטיקות והסבר על אחסון ינשופים</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <hr>
-                            <input type="checkbox" id="checkSaveSent" class="hide-me">
-                            <label for="checkSaveSent" class="check">
-                                <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                    <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                                    <polyline points="1 9 7 14 15 4"></polyline>
-                                </svg>
-                                תוסיף עותק של הודעה נשלחת לתיקיית ינשופים שנשלחו
-                            </label>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <!--
+            Yes this looks like a beautiful UFO in a village of barbarians.
+            Yes it's because ChatGPT designed it. No I don't care.
+            Yes I tried redesigning the entire page with ChatGPT. No it didn't work.
+            Maybe some day I'll have a random urge to redesign it, or maybe you will.
+            If you do have a random urge to redesign it, please do so and each out to me,
+            as theres a significant chance your design will be here instead of mine.
+            -->
+            <div id="owl-options-page">
+                <h2 class="page-title">הגדרות ינשופים</h2>
+                <a href="owleryPages/about/about.html" class="statistics-link">לחצו כאן להסבר על עמוד זה</a>
+                <p style="font-size: small;">* בשימושכם בתוסף זה אתם מאשרים שאני, מפתח התוסף, איני אחראי לכל מקרה של אובדן מידע מהאתר. עם זאת, במקרה כזה, אשמח לעמוד לעזרתכם.</p>
+            
+                <!-- Owl Actions -->
+                <section id="owl-actions-section" class="options-section">
+                    <h3 class="section-title">פעולות</h3>
+                    <div class="button-group">
+                        <button id="exportOwlsButton" class="action-button">יצא ינשופים</button>
+                        <input type="file" id="importOwlsFile" accept=".json" style="display: none;">
+                        <button id="importOwlsButton" class="action-button">יבא ינשופים</button>
+                        <button id="saveAllOwlsButton" class="action-button">שמור את כל הינשופים</button>
+                        <button id="deleteAllSavedOwlsButton" class="action-button">מחק את כל הינשופים השמורים</button>
+                        <button id="deleteOwlsWithCopyButton" class="action-button">מחק ינשופים עם עותק שמור</button>
+                    </div>
+                    <div id="owl-action-status" class="status-message">
+                        <!-- Status messages for actions will appear here -->
+                    </div>
+                </section>
+            
+                <!-- Storage and Quota Settings -->
+                <section id="storage-settings-section" class="options-section">
+                    <h3 class="section-title">הגדרות אחסון</h3>
+                    <div class="input-group">
+                        <label for="owlsWarningInput" class="input-label">הזהר כאשר</label>
+                        <input type="number" id="owlsWarningInput" class="number-input" min="0" step="1" placeholder="Number of owls">
+                        <span class="input-label">ינשופים או יותר נשמרו מאז הייצוא האחרון</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="checkbox" id="saveOldestOwl" class="checkbox-input">
+                        <label for="owleryCapacityQuota" class="input-label"><strong>שמור ינשוף ישן ביותר כאשר אחסון הינשופייה עובר</strong></label>
+                        <input type="number" id="owleryCapacityQuota" class="number-input" min="0" max="100" step="1" placeholder="Percentage">
+                        <span class="input-description">%</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="maxOwleryStorage" class="input-label">הגבל את אחסון הינשופייה ל</label>
+                        <span class="input-description">MB</span>
+                        <input type="number" id="maxOwleryStorage" class="number-input" min="0" step="1" placeholder="MB">
+                    </div>
+                    <div class="input-group">
+                        <a href="owleryPages/owleryStats/stats.html" class="statistics-link">לחץ כאן לעמוד סטטיסטיקות אחסון</a>
+                    </div>
+                </section>
+            
+                <!-- Behavior Settings -->
+                <section id="behavior-settings-section" class="options-section">
+                    <h3 class="section-title">הגדרות אחרות</h3>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="displaySavedOwls" class="checkbox-input">
+                        <label for="displaySavedOwls" class="checkbox-label">הצג ינשופים שמורים</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="displayDuplicateOwls" class="checkbox-input">
+                        <label for="displayDuplicateOwls" class="checkbox-label">הצג ינשוף שמור גם כשהמקור מוצג</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkDeleteOldestOwl" class="checkbox-input">
+                        <label for="checkDeleteOldestOwl" class="checkbox-label">מחק את הינשוף הישן ביותר לאחר שנמחק בהצלחה</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkSaveSent" class="checkbox-input">
+                        <label for="checkSaveSent" class="checkbox-label">הוסף ינשוף נשלח לתיקיית "ינשופים שנשלחו" באופן אוטומטי</label>
+                    </div>
+                </section>
+            
+                <!-- Link to Statistics -->
+                <section id="statistics-link-section" class="options-section">
+                    <h3 class="section-title">סטטיסטיקות ומידע</h3>
+                    <p class="statistics-description">
+                        רוצה לראות סטטיסטיקות על אופן השימוש שלך בינשופים וללמוד מידע נוסף?
+                        <a href="owleryPages/owleryStats/stats.html" class="statistics-link">עבור לעמוד הסטטיסטיקות</a>
+                    </p>
+                </section>
+            </div>            
         </div>
 
-        <span class="optionsSaved" id="optionsSaved"></span>
+        <!-- Contact Me Button -->
+        <a href="./owleryPages/contact/contact.html" id="contactMeButton" class="contact-btn">צור קשר</a>
+
         <button id="saveOptions" class="saveOptions">שמור שינויים</button>
     </body>
 </html>

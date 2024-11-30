@@ -177,4 +177,22 @@ main {
 .info-list strong {
     color: #fff;
 }
-  
+
+/* Footer */
+.about-footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #181818; /* Slightly darker footer */
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.about-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.about-footer a:hover {
+    text-decoration: underline;
+}

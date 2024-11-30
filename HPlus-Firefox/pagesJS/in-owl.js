@@ -13,8 +13,8 @@ const image = $("<img>")
         const owlID = new URLSearchParams(window.location.search).get("MSID");
 
         browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
-            if (browser.runtime.lastError) {
-                console.error("Error:", browser.runtime.lastError.message);
+            if (response.error || browser.runtime.lastError) {
+                console.error("Error:", (response.error || browser.runtime.lastError));
                 updateState("error-saving");
             } else {
                 console.log("Success! Response: ", response.reply);

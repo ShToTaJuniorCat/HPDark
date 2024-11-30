@@ -6,8 +6,8 @@ const OWLS_IN_PAGE = 100;
 function saveOwl(owlID) {
     return new Promise((resolve, reject) => {
         browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
-            if (response.error) {
-                reject("Error for owl " + owlID + ": " + response.error);
+            if (response.error || browser.runtime.lastError) {
+                reject("Error for owl " + owlID + ": " + (response.error || browser.runtime.lastError));
             } else {
                 resolve(response.reply);
             }
@@ -98,7 +98,13 @@ async function checkOldestOwl() {
     });
 }
 
-checkOldestOwl();
+browser.storage.sync.get({ saveOldestOwl: true }, function (items) {
+    if (items.saveOldestOwl) {
+        checkOldestOwl();
+    } else {
+        console.log("Oldest owl not saved because of preferences.")
+    }
+});
 
 // ------------------------------
 // Let's display the saved owls!!
@@ -109,8 +115,8 @@ checkOldestOwl();
 // It's a BIG FUCKING shitshow
 // Update from when I'm mostly done here (cuz I wasn't even close before):
 // Yup still a shitshow
-
-// TODO: only display owls when ordered normally
+// Update from when I'm done: Yk how when you finish something and look back at it,
+// it seems like it was pretty easy? So nah it didn't happen here. Still a shitshow.
 
 function getInsertIndex(dates, specificDate) {
     // Convert the specific date to a JavaScript Date object
@@ -197,7 +203,6 @@ function fixTime(time) {
     */
 
     if (isNaN(new Date(time.slice(0, -3)).getTime())) {
-        // TODO: Check both "היום" and "אתמול"
         if (time.includes("אתמול") || time.includes("היום")) {
             let hour = time.split("-")[1].trim();
         
@@ -267,7 +272,7 @@ async function fetchFirstOwlTime(url) {
 }
 
 async function getNextNewestTime() {
-    const pageOwlSt = new URLSearchParams(window.location.search).get("st") ?? 0;
+    const pageOwlSt = new URLSearchParams(window.location.search).get("st") || 0;
 
     const nextNewestTime = await fetchFirstOwlTime(
         "https://hportal.co.il/index.php?act=Msg&CODE=1&VID=in&sort=&st=" + (parseInt(pageOwlSt) + OWLS_IN_PAGE));
@@ -333,6 +338,11 @@ function displayOwl(owl) {
     }
 }
 
+function isIDExist(owlID) {
+    // Check if there is an owl displayed in this page with ID = owlID
+    return document.querySelector(`a[href*="MSID=${owlID}"]`) != null;
+}
+
 async function displayAllOwls() {
     try {
         browser.runtime.sendMessage({ action: "get_all_owls" }, async (response) => {
@@ -349,13 +359,21 @@ async function displayAllOwls() {
                     new Date(fixTime(firstOwl.time)) - new Date(fixTime(secondOwl.time))
                 );
 
+                let displayDuplicateOwls = await browser.storage.sync.get('displayDuplicateOwls');
+                displayDuplicateOwls = displayDuplicateOwls.displayDuplicateOwls;
+
                 allOwls.forEach(owlObject => {
-                    if (isInThisPage(
-                        new Date(fixTime(owlObject.time)),
-                        nextNewestTime,
-                        currentNewestTime,
-                        pageNumber
-                    )) {
+                    // Display if (user wants to display duplicates) or (user doesn't and owl isn't duplicated)
+                    //  (                                 ||                                        )
+                    //  (                                 \/                                        )
+                    if (((!displayDuplicateOwls && !isIDExist(owlObject.id)) || displayDuplicateOwls) &&
+                        isInThisPage(
+                            new Date(fixTime(owlObject.time)),
+                            nextNewestTime,
+                            currentNewestTime,
+                            pageNumber
+                        )
+                    ) {
                         displayOwl(owlObject);
                     }
                 });
@@ -370,9 +388,7 @@ const owlDates = $('div.tableborder table tbody tr td:nth-child(4)').map(functio
     return fixTime($(this).text());
 }).get();
 
-displayAllOwls();
-
-browser.storage.sync.get({ owlsSinceExport: 0, owlsWarningInput: 5 }, function (items) {
+browser.storage.sync.get({ owlsSinceExport: 0, owlsWarningInput: 5, displaySavedOwls: true }, function (items) {
     if (items.owlsSinceExport >= items.owlsWarningInput) {
         $("<span>", {
             id: "owlsOverflowWarning",
@@ -384,8 +400,17 @@ browser.storage.sync.get({ owlsSinceExport: 0, owlsWarningInput: 5 }, function (
             }
         }).appendTo("td#ucpcontent div.maintitle")
     }
+
+    // Only display saved owls if the user wants us to
+    if(items.displaySavedOwls) {
+        const sort = new URLSearchParams(window.location.search).get("msg_date");
+        if(sort == null || sort == "msg_date") {
+            displayAllOwls();
+        }
+    }
 });
 
+// Warn the user when they delete real owls
 $('input[type="submit"][name="delete"]').on('click', function (event) {
     if (!confirm("אתה בטוח שאתה רוצה למחוק לצמיתות את הינשופים שנבחרו? תוכנם לא ניתן יהיה לשחזור.")) {
         event.preventDefault(); // Cancel the form submission

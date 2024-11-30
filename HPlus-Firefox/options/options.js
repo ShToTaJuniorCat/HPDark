@@ -107,8 +107,11 @@ function restore_options() {
     owlsWarningInput: 5,
     owlsSinceExport: 0,
     owleryCapacityQuota: 95,
+    saveOldestOwl: true,
     deleteOldestOwl: false,
-    maxOwleryStorage: 300
+    maxOwleryStorage: 300,
+    displayDuplicateOwls: false,
+    displaySavedOwls: true
   }, function (items) {
     $("#darkSwitch").prop('checked', items.darkMode);
 
@@ -193,7 +196,10 @@ function restore_options() {
     $("#owleryCapacityQuota").val(items.owleryCapacityQuota);
     $("#checkSaveSent").prop('checked', items.checkSaveSent);
     $("#checkDeleteOldestOwl").prop('checked', items.deleteOldestOwl);
+    $("#saveOldestOwl").prop('checked', items.saveOldestOwl);
     $("#maxOwleryStorage").val(items.maxOwleryStorage);
+    $("#displayDuplicateOwls").prop('checked', items.displayDuplicateOwls);
+    $("#displaySavedOwls").prop('checked', items.displaySavedOwls);
   });
 }
 
@@ -238,7 +244,10 @@ function save_options() {
   const owleryCapacityQuota = $("#owleryCapacityQuota").val();
   const checkSaveSent = $("#checkSaveSent").is(":checked");
   const checkDeleteOldestOwl = $("#checkDeleteOldestOwl").is(":checked");
+  const saveOldestOwl = $("#saveOldestOwl").is(":checked");
   const maxOwleryStorage = $("#maxOwleryStorage").val();
+  const displayDuplicateOwls = $("#displayDuplicateOwls").is(":checked");
+  const displaySavedOwls = $("#displaySavedOwls").is(":checked");
 
   browser.storage.sync.set({
     darkMode: darkSwitchCheckbox,
@@ -263,15 +272,20 @@ function save_options() {
     owlsWarningInput: owlsWarningInput,
     checkSaveSent: checkSaveSent,
     owleryCapacityQuota: owleryCapacityQuota,
+    saveOldestOwl: saveOldestOwl,
     deleteOldestOwl: checkDeleteOldestOwl,
-    maxOwleryStorage: maxOwleryStorage
+    maxOwleryStorage: maxOwleryStorage,
+    displayDuplicateOwls: displayDuplicateOwls,
+    displaySavedOwls: displaySavedOwls
   }, function () {
     // Update status to let the user know options were saved.
-    let $optionsSaved = $('#optionsSaved');
-    $optionsSaved.text('Options saved.');
+    let $optionsSaved = $('#saveOptions');
+    $optionsSaved.text('שינויים נשמרו.');
+    $optionsSaved.prop("disabled", true)
 
     setTimeout(function () {
-      $optionsSaved.text('');
+      $optionsSaved.text('שמור שינויים');
+      $optionsSaved.prop("disabled", false)
     }, 2000);
   });
 }
@@ -331,8 +345,6 @@ $(function () {
     }
   });
 
-  $("#statsPageURL").attr("href", browser.runtime.getURL('options/owleryPages/owleryStats/stats.html'));
-
   $('#importOwlsButton').on('click', function () {
     $('#importOwlsFile').click(); // Trigger file input click when import button is clicked
   });
@@ -342,17 +354,30 @@ $(function () {
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        const importedData = JSON.parse(e.target.result);
-        browser.runtime.sendMessage({ action: "import_owls", owls: importedData }, async (response) => {
-          if (browser.runtime.lastError) {
-            console.error("Error:", browser.runtime.lastError.message);
-          } else {
-            console.log(response.reply);
-            $("#importOwlsButton")
-              .prop("disabled", true)
-              .text("ינשופים יובאו בהצלחה!");
-          }
-        });
+        try {
+          const importedData = JSON.parse(e.target.result);
+          browser.runtime.sendMessage({ action: "import_owls", owls: importedData }, async (reply) => {
+            if (browser.runtime.lastError || reply.error) {
+              $("#owl-action-status").text((reply.error || browser.runtime.lastError.message) + " אם זה ממשיך לקרות, אנא צרו איתי קשר.");
+              console.error("Error:", (reply.error || browser.runtime.lastError.message));
+            } else {
+              console.log(reply.reply);
+
+              $("#exportOwlsButton, #saveAllOwlsButton, #deleteAllSavedOwlsButton, #deleteOwlsWithCopyButton")
+                .prop('disabled', true)
+                .text('לא זמין');
+
+              $("#importOwlsButton")
+                .prop("disabled", true);
+
+              $("#owl-action-status, #importOwlsButton")
+                .text("ינשופים יובאו בהצלחה!");
+            }
+          });
+        } catch(error) {
+          $("#owl-action-status").text("לא ניתן לייבא ינשופים, הקובץ אינו מתאים.");
+          console.error("Error:", error);
+        }
       };
       reader.readAsText(file); // Read the file as text
     }
@@ -368,8 +393,14 @@ $(function () {
           console.log("Error for owl " + owlID + ": ", reply);
         } else {
           console.log(reply.reply);
-          $("#deleteAllSavedOwlsButton")
+          $("#exportOwlsButton, #importOwlsButton, #saveAllOwlsButton, #deleteOwlsWithCopyButton")
             .prop('disabled', true)
+            .text('לא זמין');
+
+          $("#deleteAllSavedOwlsButton")
+            .prop('disabled', true);
+
+          $("#owl-action-status, #deleteAllSavedOwlsButton")
             .text("כל הינשופים השמורים נמחקו.");
         }
       });
@@ -381,12 +412,18 @@ $(function () {
     if(prompt("למחוק את כל הינשופים שיש להם עותק שמור? הקלד/י \"מחק ינשופים עם עותק\" (ללא גרשיים) בכדי לאשר.") == "מחק ינשופים עם עותק") {
       browser.runtime.sendMessage({ action: "delete_owl_with_copy" }, (reply) => {
         if (reply.error) {
+          $("#owl-action-status").text("Error: " + reply);
           console.log("Error: ", reply);
         } else {
           console.log(reply.reply);
-          $("#deleteOwlsWithCopyButton")
-            .prop('disabled', true)
+          $("#owl-action-status, #deleteOwlsWithCopyButton")
             .text("כל הינשופים עם עותק שמור נמחקו.");
+          
+          $("#deleteOwlsWithCopyButton").prop('disabled', true);
+
+          $("#exportOwlsButton, #importOwlsButton, #saveAllOwlsButton, #deleteAllSavedOwlsButton")
+            .prop('disabled', true)
+            .text('לא זמין');
         }
       });
     }
@@ -431,7 +468,7 @@ browser.runtime.sendMessage({ action: "get_all_owls" }, async (response) => {
       URL.revokeObjectURL(url);
       tempLink.remove();
 
-      $(this).text("ינשופים יוצאו");
+      $("#owl-action-status").text("ינשופים יוצאו");
 
       browser.storage.sync.set({ owlsSinceExport: 0 });
     });
@@ -441,8 +478,8 @@ browser.runtime.sendMessage({ action: "get_all_owls" }, async (response) => {
 function saveOwl(owlID) {
   return new Promise((resolve, reject) => {
     browser.runtime.sendMessage({ action: "save_owl", owlID: owlID }, (response) => {
-      if (browser.runtime.lastError) {
-        reject("Error for owl " + owlID + ": ", response);
+      if (response.error || browser.runtime.lastError) {
+        reject((response.error || browser.runtime.lastError));
       } else {
         resolve(response.reply);
       }
@@ -462,17 +499,17 @@ async function saveAllOwls() {
   // This is how many owls are a disappointment to their family
   let failedOwls = 0;
 
-  // Dont save multiple times silly
+  // Dont save multiple times, silly
   $("#saveAllOwlsButton").prop('disabled', true);
 
   // The DB needs a refresh to update
   // So force them to refresh before exporting/importing
-  $("#exportOwlsButton, #importOwlsButton")
+  $("#exportOwlsButton, #importOwlsButton, #deleteAllSavedOwlsButton, #deleteOwlsWithCopyButton")
     .prop('disabled', true)
     .text('לא זמין');
 
   while (foundOwls) {
-    $("#saveAllOwlsButton").text(`צד ינשופים... (עמוד ${currentPage})`);
+    $("#owl-action-status").text(`צד ינשופים... (עמוד ${currentPage})`);
 
     await fetch(baseURL + (currentPage * 100)).then(response => {
       if (!response.ok) {
@@ -495,20 +532,20 @@ async function saveAllOwls() {
               successOwls++;
 
               if(successOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`ינשופים ☑: ✓ ${successOwls}/${totalOwls}`);
+                $("#owl-action-status").text(`ינשופים ☑: ✓ ${successOwls}/${totalOwls}`).css("color", "green");
               } else if(successOwls + failedOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
+                $("#owl-action-status").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`).css("color", "#ff5555");;
               } else {
-                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
+                $("#owl-action-status").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               }
             }).catch(error => {
-              console.log(error);
               failedOwls++;
+              console.log("Failed to save owl: " + error);
 
               if(successOwls + failedOwls == totalOwls) {
-                $("#saveAllOwlsButton").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
+                $("#owl-action-status").text(`☑: (✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`).css("color", "#ff5555");
               } else {
-                $("#saveAllOwlsButton").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
+                $("#owl-action-status").text(`(✓ ${successOwls}, ✗ ${failedOwls})/${totalOwls}`);
               }
             });
           });
