@@ -17,6 +17,8 @@
   
     - More tags buttons
         + [S], [HTML], [SQl]
+    
+    - Add source and time of quote when quoting
 
     - Choose if "Edited by" line is displayed by default or not
 
@@ -28,3 +30,10 @@
 
 
     - Change color of page jumping in the owlery
+
+
+    - Unlimited Owlery storage!!
+        + Site admins are fine with it
+        + Basically deletes the oldest owl when the Owlery is at some
+        + capacity, but store it on the user's device. Then display
+        + it as ususal when visited, just as a file and not as a url.
