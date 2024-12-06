@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+
+<head>
+    <script src="savedOwl.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+
+    <base href="https://hportal.co.il/">
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="NetsparkQuiltingResult" total-length="25122" removed="0" rules-found="130375 -10, 86320 52," />
+    <meta property="fb:admins" content="1125152741" />
+    <meta name="msvalidate.01" content="6E1E946D413940898CB8636C1EC4A00E" />
+
+    <title>ינשוף שמור באמצעות HPlus</title>
+
+    <!-- You might be asking:
+     Why do you keep all this CSS? Most of it looks redundant in this file!
+     Your're right! I'm just too lazy to check what is redundant and what isn't.
+     Keep in mind that BBCode content might be affected from some of it,
+     and I definitely am too lazy to check all BBCode tags. -->
+    <style type='text/css'>
+        html {
+            overflow: auto;
+        }
+
+        BODY {
+            font-family: Verdana, Tahoma, Arial, sans-serif;
+            font-size: 11px;
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+            color: #000;
+            background-color: #282F2B;
+        }
+
+        TABLE,
+        TR,
+        TD {
+            font-family: Verdana, Tahoma, Arial, sans-serif;
+            font-size: 11px;
+            color: #000;
+        }
+
+        #ipbwrapper {
+            text-align: right;
+            width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            border-top: 0px;
+            background-color: #282F2B;
+            border: solid #424242 3px;
+        }
+
+        #ipbwrapper img {
+            vertical-align: middle;
+            border: 0px;
+        }
+
+        a:link {
+            text-decoration: underline;
+            color: #000;
+        }
+
+        a:visited {
+            text-decoration: underline;
+            color: #000;
+        }
+
+        a:active {
+            text-decoration: underline;
+            color: gray;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: gray;
+        }
+
+        fieldset.search {
+            padding: 6px;
+            line-height: 150%;
+        }
+
+        form {
+            display: inline;
+        }
+
+        img.attach {
+            padding: 2px;
+            border: 2px outset #EEF2F7;
+        }
+
+        #padandcenter {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding: 14px 0px 14px 0px;
+        }
+
+        #profilename {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        #calendarname {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        #photowrap {
+            padding: 6px;
+        }
+
+        #phototitle {
+            font-size: 24px;
+            border-bottom: 1px solid black;
+        }
+
+        #photoimg {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #ucpmenu {
+            line-height: 150%;
+            width: 22%;
+            background-color: #F5F9FD;
+            border: 1px solid #242424;
+        }
+
+        #ucpmenu p {
+            padding: 2px 5px 6px 9px;
+            margin: 0px;
+        }
+
+        #ucpcontent {
+            line-height: 150%;
+            width: auto;
+            background-color: #F5F9FD;
+            border: 1px solid #242424;
+        }
+
+        #ucpcontent p {
+            padding: 10px;
+            margin: 0px;
+        }
+
+        #ipsbanner {
+            position: absolute;
+            top: 1px;
+            right: 5%;
+        }
+
+        #submenu {
+            font-size: 10px;
+            margin: 3px 0px 3px 0px;
+            font-weight: bold;
+            color: #3A4F6C;
+            background-color: #DFE6EF;
+            border: 1px solid #3a3a3a;
+        }
+
+        #submenu a:link,
+        #submenu a:visited,
+        #submenu a:active {
+            font-weight: bold;
+            font-size: 10px;
+            text-decoration: none;
+            color: #3A4F6C;
+        }
+
+        #logo {
+            background-color: black;
+        }
+
+        #glol {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            overflow: hidden;
+        }
+
+        #glol a:active,
+        #glol a:visited,
+        #glol a:link {
+            text-decoration: none;
+            color: #FFF;
+        }
+
+        #navstrip a {
+            color: #fff;
+        }
+
+        #navstripp a {
+            color: #fff;
+        }
+
+        #navstrippp a {
+            color: #fff;
+        }
+
+        .navstrip2 a {
+            color: #fff;
+        }
+
+        .hiddeninput {
+            font-family: arial;
+            color: black;
+            background-color: transparent;
+        }
+
+        .tagsdiv {
+            border-collapse: collapse;
+            color: white;
+            background-color: #282f2b;
+            border: 1px solid black;
+        }
+
+        .activeuserstrip {
+            color: #3A4F6C;
+            background-color: #333333;
+        }
+
+        .pformstrip {
+            padding: 7px;
+            font-weight: bold;
+            margin-top: 1px;
+            color: #fff;
+            background-image: url(../style_images/4/tile_sub.png);
+            text-align: right;
+            direction: rtl;
+        }
+
+        .pformleft {
+            overflow: scroll;
+            padding: 6px;
+            margin-top: 1px;
+            width: 25%;
+            border-right: 1px solid #C2CFDF;
+            background-color: #F5F9FD;
+        }
+
+        .rleft {
+            border-top: 1px solid #C2CFDF;
+            width: 50%;
+            background-color: #F5F9FD;
+        }
+
+        .pformleftw {
+            padding: 6px;
+            margin-top: 1px;
+            width: 40%;
+            border-top: 1px solid #C2CFDF;
+            border-right: 1px solid #C2CFDF;
+            background-color: #F5F9FD;
+        }
+
+        .pformright {
+            padding: 6px;
+            margin-top: 1px;
+            border-top: 1px solid #C2CFDF;
+            background-color: #F5F9FD;
+        }
+
+        .signature {
+            font-size: 10px;
+            line-height: 150%;
+            color: #339;
+        }
+
+        .postdetails {
+            font-size: 10px;
+        }
+
+        .postcolor {
+            font-size: 12px;
+            line-height: 160%;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .normalname {
+            font-size: 12px;
+            font-weight: bold;
+            color: #003;
+        }
+
+        .normalname a:link,
+        .normalname a:visited,
+        .normalname a:active {
+            font-size: 12px;
+        }
+
+        .unreg {
+            font-size: 11px;
+            font-weight: bold;
+            color: #900;
+        }
+
+        .post1 {
+            background-color: #F5F9FD;
+        }
+
+        .post2 {
+            background-color: #EEF2F7;
+        }
+
+        .row1 {
+            background-color: #d5d5d5;
+        }
+
+        .row2 {
+            background-color: #d6d7d8;
+        }
+
+        .row3 {
+            color: #fff;
+            background-color: #EEF2F7;
+        }
+
+        .row4 {
+            background-color: #d8d8d8;
+        }
+
+        .row5 {
+            color: #fff;
+            background-image: url(../style_images/4/tile_sub.png);
+        }
+
+        .row5 a {
+            color: #fff;
+        }
+
+        .row5 a:visited {
+            color: #fff;
+        }
+
+        .row6 {
+            background-color: #e2e2e2;
+        }
+
+        .row7 {
+            background-color: #d8dadb;
+        }
+
+        .row8 {
+            background-color: #d8d8d8;
+        }
+
+        .row9 {
+            background-color: #e2e2e2;
+        }
+
+        .row10 {
+            color: #3A4F6C;
+            background-image: url(../style_images/4/tile_sub2.gif);
+        }
+
+        .darkrow1 {
+            color: #2d2d2d;
+            background-image: url(../style_images/4/tile_sub2.gif);
+        }
+
+        .darkrow2 {
+            color: #2d2d2d;
+            background-image: url(../style_images/4/tile_sub2.gif);
+        }
+
+        .darkrow3 {
+            color: #252525;
+            background-image: url(../style_images/4/tile_sub2.gif);
+        }
+
+        .hlight {
+            background-color: #DFE6EF;
+        }
+
+        .dlight {
+            background-color: #EEF2F7;
+        }
+
+        .titlemedium {
+            height: 25px;
+            font-weight: bold;
+            color: #FFF;
+            background-image: url(../style_images/4/tile_sub.png);
+        }
+
+        .titlemedium a:link,
+        .titlemedium a:visited,
+        .titlemedium a:active {
+            text-decoration: underline;
+            color: #fff;
+        }
+
+        .titlemedium a {
+            color: #fff;
+        }
+
+        .portaltitle {
+            vertical-align: middle;
+            font-weight: bold;
+            padding: 8px 0px 8px 5px;
+            color: #FFF;
+            background-image: url(../style_images/4/tile_portal.png);
+        }
+
+        .portaltitle a:link,
+        .maintitle a:visited,
+        .maintitle a:active {
+            text-decoration: none;
+            color: #FFF;
+        }
+
+        .portaltitle a:hover {
+            text-decoration: underline;
+        }
+
+        .maintitle {
+            vertical-align: middle;
+            font-weight: bold;
+            padding: 8px 0px 8px 5px;
+            color: #FFF;
+            background-image: url(../style_images/4/tile_back.png);
+        }
+
+        .maintitle a:link,
+        .maintitle a:visited,
+        .maintitle a:active {
+            text-decoration: none;
+            color: #FFF;
+        }
+
+        .maintitle a:hover {
+            text-decoration: underline;
+        }
+
+        .plainborder {
+            background-color: #F5F9FD;
+            border: 1px solid #242424;
+        }
+
+        .tableborder {
+            background-color: #FFF;
+            border: 1px solid #242424;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .tablefill {
+            padding: 6px;
+            background-color: #F5F9FD;
+            border: 1px solid #242424;
+        }
+
+        .tablepad {
+            padding: 6px;
+            background-color: #F5F9FD;
+        }
+
+        .tablebasic {
+            width: 100%;
+            padding: 0px 0px 0px 0px;
+            margin: 0px;
+            border: 0px;
+        }
+
+        .wrapmini {
+            float: left;
+            line-height: 1.5em;
+            width: 25%;
+        }
+
+        .pagelinks {
+            float: left;
+            line-height: 1.2em;
+            width: 35%;
+        }
+
+        .desc {
+            font-size: 10px;
+            color: #434951;
+        }
+
+        .edit {
+            font-size: 9px;
+        }
+
+        .searchlite {
+            font-weight: bold;
+            color: #F00;
+            background-color: #FF0;
+        }
+
+        #QUOTE {
+            white-space: normal;
+            font-family: Verdana, Arial;
+            font-size: 11px;
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+            color: #465584;
+            background-color: #FAFCFE;
+            border: 1px solid #000;
+        }
+
+        #SPOILER {
+            font-family: Verdana, Arial;
+            font-size: 8pt;
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+            color: #FAFCFE;
+            background-color: #FAFCFE;
+            border: 1px solid Black;
+        }
+
+        #CODE {
+            white-space: normal;
+            direction: ltr;
+            text-align: left;
+            font-family: Courier, Courier New, Verdana, Arial;
+            font-size: 11px;
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+            color: #465584;
+            background-color: #FAFCFE;
+            border: 1px solid #000;
+        }
+
+        .copyright {
+            font-family: Verdana, Tahoma, Arial, Sans-Serif;
+            font-size: 9px;
+            line-height: 12px;
+        }
+
+        .codebuttons {
+            font-size: 10px;
+            font-family: verdana, helvetica, sans-serif;
+            vertical-align: middle;
+        }
+
+        .forminput,
+        .textinput,
+        .radiobutton,
+        .checkbox {
+            font-size: 11px;
+            font-family: verdana, helvetica, sans-serif;
+            vertical-align: middle;
+        }
+
+        .thin {
+            padding: 6px 0px 6px 0px;
+            line-height: 140%;
+            margin: 2px 0px 2px 0px;
+            border-top: 1px solid #FFF;
+            border-bottom: 1px solid #FFF;
+        }
+
+        .purple {
+            font-weight: bold;
+            color: purple;
+        }
+
+        .red {
+            font-weight: bold;
+            color: red;
+        }
+
+        .green {
+            font-weight: bold;
+            color: green;
+        }
+
+        .blue {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .orange {
+            font-weight: bold;
+            color: #F90;
+        }
+
+        .white {
+            font-weight: bold;
+            color: white;
+        }
+
+        .ewhite {
+            vertical-align: top;
+            color: white;
+        }
+
+        .white2 {
+            color: white;
+        }
+
+        .btd1 {
+            background-color: #0f0f57;
+        }
+
+        .btd2 {
+            background-color: #4261a1;
+        }
+
+        .white a {
+            color: #fff;
+        }
+
+        .white a:active {
+            color: #fff;
+        }
+
+        .white a:visited {
+            color: #fff;
+        }
+
+        .white2 a {
+            color: #fff;
+        }
+
+        .white2 a:visited {
+            color: #fff;
+        }
+
+        h1.class {
+            color: #32CD32;
+        }
+
+        h1.class:hover {
+            font-style: italic;
+            color: #32CD32;
+        }
+
+        .pmaintitle {
+            /*background-image: url(../style_images/profile/tile_back.gif);*/
+
+            background-color: #282f2b;
+            border-bottom: 1px solid #656F7B;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 8px;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+        }
+
+        .pmaintitle a:link,
+        .maintitle a:visited,
+        .maintitle a:active {
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        .pmaintitle a:hover {
+            text-decoration: none;
+            color: #F1F1F1;
+        }
+
+        .pborderwrap {
+            background: #FFF;
+            padding: 1px;
+            margin: 0px;
+            border: 1px solid #c4c4c4;
+        }
+
+        .psubtitle {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px;
+            background: #d8d8d8;
+            border-bottom: 1px solid #9aa4b1;
+            color: #2d2d2d;
+        }
+
+        text {
+            font-size: 10px;
+            color: gray;
+        }
+
+        .pname {
+            background: #eeeeee;
+            margin: 0px;
+            padding: 10px;
+        }
+
+        .pname h3 {
+            margin: 0px;
+            padding: 0px 0px 5px 0px;
+            font-size: 24px;
+        }
+
+        .mainminiprofile {
+            font-size: 12px;
+            font-weight: bold;
+            color: #AFAFAF;
+            background-color: #F7F7F7;
+            border: 1px solid #8E8E8E;
+        }
+
+        .nameminiprofile {
+            font-size: 11px;
+            color: #000;
+            background-color: #d8d8d8;
+            border: 1px solid gray;
+        }
+
+        .mainminiprofile,
+
+        .nameminiprofile {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        div.commentAdd {
+            padding: 3px;
+            position: absolute;
+            visibility: hidden;
+            color: Gray;
+            background-color: White;
+        }
+
+        .tomerlol {
+            vertical-align: middle;
+            height: 27px;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .tomerlol p {
+            font-size: 11px;
+            margin: 10px 0 0 0;
+        }
+
+        .tomer lol a:link,
+        .tomerlol a:visited,
+        .tomerlol a:active {
+            text-decoration: none;
+            color: #FFF;
+        }
+
+        .tomerlol a:hover {
+            text-decoration: none;
+        }
+
+        .tomerlol a {
+            color: #fff;
+        }
+
+        .tomerlolR {
+            font-size: 11px;
+            margin: 10px 100px 0 0;
+        }
+
+        .tomerlolL {
+            font-size: 11px;
+            margin: 10px 0 0 10px;
+        }
+
+        .TopbarBackground {
+            vertical-align: middle;
+            height: 47px;
+            color: #FFF;
+            background-image: url(../style_images/4/TopbarBackground.png);
+        }
+
+        .shadow {
+            vertical-align: middle;
+            height: 27px;
+            font-weight: bold;
+            color: #FFF;
+            background-image: url(../style_images/4/shadow.jpg);
+        }
+
+        A.style5:link,
+        A.style5:visited,
+        A.style5:active {
+            TEXT-DECORATION: none;
+            color: #993333;
+        }
+
+        A.style5:hover {
+            TEXT-DECORATION: underline;
+            color: #997733;
+        }
+
+        #dark {
+            position: fixed;
+            background-color: black;
+        }
+
+        .homelink {
+            text-decoration: underline;
+        }
+
+        epoints {
+            color: white;
+        }
+
+        #Rules a:link {
+            text-decoration: underline;
+            color: #fff;
+        }
+
+        #Rules a:visited,
+        a:active {
+            text-decoration: underline;
+            color: #000;
+        }
+
+        #Rules a:hover {
+            text-decoration: underline;
+            color: gray;
+        }
+
+        .staticsrow {
+            background-color: #252525;
+        }
+
+        .bbcodew {
+            font-weight: bold;
+            color: white;
+        }
+
+        .bbcodew2 {
+            color: white;
+        }
+
+        .bbcodew a {
+            color: #fff;
+        }
+
+        .bbcodew a:active {
+            color: #fff;
+        }
+
+        .bbcodew a:visited {
+            color: #fff;
+        }
+
+        .bbcodew2 a {
+            color: #fff;
+        }
+
+        .bbcodew2 a:visited {
+            color: #fff;
+        }
+
+        #Pointshape {
+            background: transparent url(../style_images/4/PointsShape.png) no-repeat;
+            height: 35px;
+            width: 234px;
+            margin: 0 0 0 0;
+        }
+
+        #pmlinks a:link,
+
+        #pmlinks a:visited,
+
+        #pmlinks a:active {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        #pmlinks a:hover {
+            text-decoration: underline;
+            color: gray;
+        }
+
+        #addcontact {
+            background: transparent url(../style_images/4/acontact.png);
+            height: 16px;
+            width: 16px;
+        }
+
+        .drag {
+            position: relative;
+        }
+
+        .newsblock {
+            vertical-align: middle;
+            font-weight: bold;
+            padding: 8px 0px 8px 5px;
+            border-bottom: 1px solid #242424;
+            color: #FFF;
+            background-image: url(../style_images/4/tile_portal.png);
+        }
+
+        .vcjb {
+            background-color: #d8d8d8;
+            border: 1px solid gray;
+        }
+
+        .HPlanet1 {
+            height: 50px;
+            width: 90%;
+            direction: rtl;
+            text-align: center;
+            font-size: 25px;
+            color: white;
+            background-color: #424242;
+        }
+
+        .HPlanet2 {
+            height: 50px;
+            width: 10%;
+            direction: rtl;
+            text-align: center;
+            font-size: 15px;
+            color: white;
+            background-color: #738F13;
+        }
+
+        .HPlanet3 {
+            height: 50px;
+            direction: rtl;
+            text-align: center;
+            color: white;
+            background-color: #738F13;
+        }
+
+        .HPlanet4 {
+            border-spacing: 0px;
+            margin: 0px;
+            width: 500px;
+        }
+    </style>
+
+
+</head>
+
+<body class="darkModeOn">
+    <div id="ipbwrapper">
+        <table cellspacing="0" cellpadding="0" width="100%">
+            <tbody>
+                <tr>
+
+                    <td><!-- --></td>
+                    <!-- Start main CP area -->
+                    <td id="ucpcontent" valign="top">
+                        <div class="maintitle">ינשוף זה נשמר באמצעות HPlus</div>
+
+                        <div class="pformstrip"> <span id="pmlinks">[ <a href="" id="replyToMessageTop">הגב</a> ]</span>
+                        </div>
+
+                        <div class="tableborder">
+                        </div>
+                        <div align="left" style="padding:6px;font-weight:bold">
+                            [ <a href="" id="replyToMessageBottom">הגב</a> ]
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <div></div>
+        </table>
+</body>
+
+</html>

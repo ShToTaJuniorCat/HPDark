@@ -52,6 +52,10 @@ html, body {
   top: 60%;
 }
 
+.owls-settings-panel {
+  top: 75%;
+}
+
 .options {
   padding: 3% 25%;
   direction: rtl;
@@ -148,4 +152,208 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+/* General Styles */
+#owl-options-page {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e2e; /* Dark mode background */
+  color: #e0e0e0; /* Light text for dark background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Page Title */
+.page-title {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffcb6b; /* Highlighted color */
+}
+
+/* Section Styles */
+.options-section {
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #444; /* Subtle border */
+  border-radius: 8px;
+  background-color: #282a36; /* Slightly lighter background for sections */
+}
+
+.section-title {
+  font-size: 1.4em;
+  margin-bottom: 15px;
+  color: #82aaff; /* Section headers in blue */
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.action-button {
+  padding: 10px 15px;
+  font-size: 1em;
+  background-color: #44475a;
+  color: #e0e0e0;
+  border: 1px solid #6272a4;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-button:hover {
+  background-color: #6272a4;
+  transform: translateY(-2px);
+}
+
+.action-button:disabled {
+  background-color: #333;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.status-message {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: black; /* Warning red for status updates */
+}
+
+/* Input Group */
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-label {
+  font-size: 1em;
+  color: #e0e0e0;
+}
+
+.number-input {
+  width: 80px;
+  padding: 5px;
+  font-size: 1em;
+  background-color: #1e1e2e;
+  color: #e0e0e0;
+  border: 1px solid #6272a4;
+  border-radius: 4px;
+}
+
+.number-input:focus {
+  outline: none;
+  border-color: #82aaff;
+}
+
+.input-description {
+  font-size: 0.9em;
+  color: #888;
+}
+
+/* Statistics Link */
+.statistics-description {
+  text-align: center;
+  font-size: 1em;
+  margin-top: 10px;
+  color: #f8f8f2;
+}
+
+.statistics-link {
+  color: #8be9fd; /* Bright teal for links */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.statistics-link:hover {
+  text-decoration: underline;
+  color: #50fa7b; /* Green hover effect */
+}
+
+/* Enhanced Checkbox Styles */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px; /* Adds spacing between checkbox and label */
+}
+
+.checkbox-input {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  background-color: #44475a; /* Matches button styling */
+  border: 2px solid #6272a4; /* Subtle border */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-input:checked {
+  background-color: #ff79c6; /* Pink for checked state */
+  border-color: #ff79c6;
+}
+
+.checkbox-input::before {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
+  color: #1e1e2e; /* Matches background when checked */
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.checkbox-input:checked::before {
+  opacity: 1; /* Shows the checkmark */
+}
+
+.checkbox-input:hover {
+  border-color: #82aaff; /* Blue highlight on hover */
+  background-color: #3c4054;
+}
+
+.checkbox-label {
+  font-size: 1em;
+  color: #e0e0e0;
+  cursor: pointer; /* Allows clicking the label to toggle */
+}
+
+.checkbox-label:hover {
+  color: #8be9fd; /* Matches link hover effect */
+}
+
+/* Contact Me Button Styles */
+.contact-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #3498DB; /* Button color */
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 1000; /* Makes sure the button stays on top of other content */
+}
+
+/* Hover effect */
+.contact-btn:hover {
+  background-color: #2980B9; /* Darker blue */
+  transform: translateY(-5px); /* Button moves up slightly */
+}
+
+/* Active effect (when clicked) */
+.contact-btn:active {
+  background-color: #1D70B8;
+  transform: translateY(1px); /* Button sinks slightly when clicked */
 }

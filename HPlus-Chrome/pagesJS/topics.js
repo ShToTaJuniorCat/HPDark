@@ -57,7 +57,7 @@ $(window).on('load', function() {
     Hide signatures larger than set in storage, 600 by
     default. Now, you see, I really wanted to make this
     relative, but... nah. After some testing, I found out
-    that the zoom level in the chrome only sligtly changes
+    that the zoom level in the browser only sligtly changes
     the size of the element, so it is pretty much ignorable
     and does not worth the time of testing a relative thing.
     If you have done testing, please reach out to me.

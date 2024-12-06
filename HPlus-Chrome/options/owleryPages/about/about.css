@@ -1,0 +1,147 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #353535; /* Dark mode background */
+    color: #f0f0f0; /* Light text for contrast */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Container */
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+}
+
+/* Header */
+.about-header {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #1e1e1e; /* Slightly lighter background for header */
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.about-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #4CAF50; /* Bright green accent */
+}
+
+.about-header p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: #c1c1c1; /* Softer gray for subtitle */
+}
+
+/* Content sections */
+.about-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #1e1e1e; /* Slightly lighter for section blocks */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.about-title {
+    font-size: 1.8rem;
+    color: #4CAF50; /* Same accent color as header */
+    margin-bottom: 0.5rem;
+}
+
+.about-description {
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-top: 0.5rem;
+}
+
+/* Footer */
+.about-footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #181818; /* Slightly darker footer */
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.about-footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.about-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Links */
+a {
+    color: #3498db; /* Blue accent for inline links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .about-container {
+        padding: 1rem;
+    }
+
+    .about-header h1 {
+        font-size: 2rem;
+    }
+
+    .about-title {
+        font-size: 1.5rem;
+    }
+    
+    .fun-fact {
+        font-size: 0.9rem;
+    }
+
+    .fun-fact strong {
+        font-size: 1rem;
+    }
+}
+
+/* Fun fact box */
+.fun-fact {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #ffeaa7; /* Bright, playful yellow */
+    color: #2d3436; /* Contrasting dark gray for text */
+    border: 2px dashed #fd79a8; /* Pink dashed border for a cartoonish feel */
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    font-style: italic;
+    text-align: center;
+    animation: bounce 3s infinite;
+}
+
+/* Text styling */
+.fun-fact strong {
+    color: #d63031; /* Bright red for emphasis */
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}

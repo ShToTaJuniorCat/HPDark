@@ -2,3 +2,5 @@ FIXMEs:
     - Dark Mode: Makes bright spots darker.
         Fixes needed:
             * Comment all places it changes on the CSS file
+    
+    - Make code buttons and help lines available in chrome

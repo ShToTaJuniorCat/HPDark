@@ -6,7 +6,8 @@
   "short_name": "HP+",
 
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js",
+    "type": "module"
   },
  
   "icons": { 
@@ -16,13 +17,19 @@
   },
 
   "permissions": [
-    "activeTab",
     "storage"
   ],
 
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "justarandomname@lolitem.lolending",
+      "strict_min_version": "109.0"
+    }
   },
 
   "action": {
@@ -38,7 +45,8 @@
       "resources": [
         "images/*",
         "options/*",
-        "/pagesJS/JS-for-comment.js"
+        "savedOwls/*",
+        "owleryPages/"
       ],
       "matches": ["*://hportal.co.il/*"]
     }
@@ -65,6 +73,33 @@
     {
       "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
       "js": ["/pagesJS/donate.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1*"],
+      "css": ["owlery.css"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1&VID=in*"],
+      "js": ["/pagesJS/owlery.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?*CODE=04*",
+                  "*://hportal.co.il/index.php?*CODE=4*"],
+      "js": ["savedOwls/savedReply.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=03&VID=in&MSID=*"],
+      "js": ["/pagesJS/in-owl.js"]
     }
   ]
 }
